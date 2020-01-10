@@ -1,0 +1,32 @@
+<input type="text" id="cc">
+<br>
+<input type="button" value="1" onclick="aaa(1)">
+<input type="button" value="2" onclick="aaa(2)">
+<input type="button" value="3">
+<br>
+<input type="button" value="4">
+<input type="button" value="5">
+<input type="button" value="6">
+<br>
+<input type="button" value="7">
+<input type="button" value="8">
+<input type="button" value="9">
+<br>
+<input type="button" value="0">
+<input type="button" value="+" onclick="aaa('+')">
+<input type="button" value="-">
+<br>
+<input type="button" value="*">
+<input type="button" value="/">
+<input type="button" value="=" onclick="ccc()">
+<br>
+<input type="button" value="c">
+
+<script>
+    function aaa(bbb) {
+        document.getElementById("cc").value = document.getElementById("cc").value + bbb;
+    }
+    function ccc() {
+        document.getElementById("cc").value = eval(document.getElementById("cc").value);
+    }
+    </script>
