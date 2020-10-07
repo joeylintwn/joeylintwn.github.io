@@ -10484,7 +10484,7 @@ textarea.tt-hint {
   margin-bottom: 0;
 }
 
-.form-check-inline {
+.form-check  {
   display: inline-flex;
   align-items: center;
   padding-left: 0;
