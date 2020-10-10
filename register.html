@@ -103,6 +103,7 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
+    
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="../../vendors/base/vendor.bundle.base.js"></script>
@@ -154,7 +155,7 @@
                     console.log(idx + ':' + $(this).attr('id'));
                     if ($(this).val() == "") {
                         $(this).css("border", "red 1px solid");
-                        ($(this).attr('placeholder') != undefined) ? checkmsg += $(this).attr('placeholder')+'\n' : '';
+                        ($(this).attr('placeholder') != undefined) ? checkmsg += $(this).attr('placeholder')+'<br>' : '';
                     } else {
                         $(this).css("border", "");
                     }
@@ -162,8 +163,9 @@
 
                 
                 if (checkmsg != '') {
-                    checkmsg += '------\n以上欄位為必填，請檢查';
-                    alert(checkmsg);
+                    checkmsg += '<span style="color:red">以上欄位為必填，請檢查</span>';
+                    //alert(checkmsg);
+                    $('body').loading({ message: checkmsg, stoppable: true, theme: 'dark' });
                 }
 
                 //--通過驗證後開始連接資料庫
@@ -228,8 +230,9 @@
             });
         }
         
-
+   
 
     </script>
+    
 </body>
 </html>
