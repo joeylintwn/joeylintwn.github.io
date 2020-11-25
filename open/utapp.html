@@ -103,7 +103,7 @@
                             <br>
                             <a href="https://joeylintwn.github.io/wrqrcode?uuid=6ed19367-b489-4295-9059-9b8047cc3c87" target="_blank" class="text-muted">
                                 下水道-水資中心QRCode查詢設備資料
-                            </a><br>
+                            <img src="../images/qr_code.png" onclick="getqrcode('https://joeylintwn.github.io/wrqrcode?uuid=6ed19367-b489-4295-9059-9b8047cc3c87')" /><br>
                             <br>
                             
 </div>
@@ -137,6 +137,15 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="utapp.js"></script> 
+    <script type="text/javascript">
+
+        function getqrcode(gourl) {
+            let githubURL = new URL(location.href);
+            uuid = githubURL.searchParams.get('uuid');
+            var WA;
+            WA = window.open("https://chart.googleapis.com/chart?cht=qr&chs=128x128&chl=" + gourl, "", "toolbar=no,location=no,directories=no");
+        }
+    </script>
 <!-- End custom js for this page-->
 </body>
 
