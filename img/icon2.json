@@ -1,0 +1,58 @@
+{
+    "frames": {
+        "bt_zoomin.png": {
+            "frame": { "x": 414, "y": 2070, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_nextpage.png": {
+            "frame": { "x": 414, "y": 1966.5, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_prevpage.png": {
+            "frame": { "x": 310.5, "y": 1966.5, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_pen.png": {
+            "frame": { "x": 0, "y": 103.5, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_selpage.png": {
+            "frame": { "x": 0, "y": 1656, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_firstpage.png": {
+            "frame": { "x": 0, "y": 1656, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_lastpage.png": {
+            "frame": { "x": 0, "y": 1656, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_goto.png": {
+            "frame": { "x": 0, "y": 1656, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        },
+        "bt_zoomout.png": {
+            "frame": { "x": 517.5, "y": 2070, "w": 70, "h": 70 },
+            "rotated": false,
+            "trimmed": false
+        }
+    },
+    "meta": {
+        "app": "",
+        "version": "1.0",
+        "image": "icon2.png",
+        "format": "RGBA8888",
+        "size": { "w": 1024, "h": 2048 },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:17e4a2d92ff3e27832c3f4938cec7c85$"
+    }
+}

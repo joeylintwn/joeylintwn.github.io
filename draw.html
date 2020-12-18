@@ -1,0 +1,529 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>畫筆</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+    
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div id="body_div" style="width:720px;height:1280px;position: absolute;left:0px;top:0;overflow:hidden;-webkit-transform-origin:0% 0%;transform-style: preserve-3d;perspective: 1000px;background-color:#ffffff;background-image:url('');background-repeat:no-repeat;background-size:100% 100%;">
+                </div>
+                
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+ 
+    
+    
+
+    <script src="../../scripts/easeljs-min.js"></script>
+    <script src="../../scripts/swiper.min.js"></script>
+    <script src="../../scripts/jquery-min.js"></script>
+    <script src="../../scripts/lz-string.min.js"></script>
+    <script src="../../scripts/setwebkit.js"></script>
+    <script src="../../scripts/velocity.min.js"></script>
+    <script src="../../scripts/tweenjs.min.js"></script>
+    <script src="../../scripts/Chart.bundle.min.js"></script>
+    <script src="../../scripts/pixi.min.js"></script>
+
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/jquery.loading.min.js"></script>
+    
+    <!-- endinject -->
+    <script type="text/javascript">
+
+
+        var main_wordlistdown = 0;
+        var ajax_loading = 0;
+        var str_server = "";
+        //startwebkit('x=N,y=N,旋轉=N,x縮放=N,y縮放=N,x軸旋轉=N,y軸旋轉=N,透明度=1,動態時間=0,目標=loadpic,間隔時間=N,轉場=N');
+        //fn_dragstart(欲拖拉的ID,內包圖片需重定位的中心點%數w,h);
+        //soundplay(event.currentTarget.id,'snd_1', 'mp3/1.mp3', ($('#' + event.currentTarget.id).position().left + $('#snd_1').position().left), ($('#' + event.currentTarget.id).position().top + $('#snd_1').position().top),1);
+        var lastdowntime = 0;
+        var touchlength = 0;
+        var drag_id = '';
+        var drag_place = '';
+        var drag_downx = 0;
+        var drag_downy = 0;
+        var drag_flag = 0;
+        var drag_area_min_x = 0;
+        var drag_area_min_y = 0;
+        var drag_area_max_x = window.innerWidth;
+        var drag_area_max_y = window.innerHeight;
+        var scrolldown = 0;
+        var scrollhave = false;
+        //記錄touch point
+        var touchpos = {
+            pot0: [],
+            pot1: []
+        }
+
+
+
+
+
+
+        //觸控避免預設設定，如果是input跟textarea類型，還有title 設為scroll的不避免預設
+        /*
+        document.body.addEventListener('touchmove', function (event) {
+            if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" || event.target.title == 'scroll' ) { return };
+            event.preventDefault();
+        });
+        */
+
+
+        document.body.addEventListener('touchstart', function (event) {
+            //預防長按選取
+            var parentEls = $(event.target).parents();
+            var needscroll = 0;
+            for (var i = 0; i < parentEls.length; i++) {
+                if ($(parentEls[i]).attr('title') == 'scroll') {
+                    needscroll = 1;
+                    i = 9999;//一找到就結束迴圈
+                    scrolldown = 1;
+                }
+            }
+            if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" || needscroll == 1) { return };
+            //if ((event.timeStamp - lastdowntime) < 300) { event.preventDefault(); }//預防連點
+            event.preventDefault();
+            lastdowntime = event.timeStamp; touchlength = event.touches.length;
+        });
+
+        document.body.addEventListener('touchend', function (event) {
+
+
+        });
+
+
+        document.body.addEventListener('mousedown', function (event) {
+            if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA") { return };
+            event.preventDefault();
+        });
+
+
+        document.body.addEventListener(eventmove, function (event) {
+            if (scrolldown > 0 && scrollhave == false) {
+                scrolldown += 1;
+                if (scrolldown > 1) {
+                    scrollhave = true;
+                }
+            }
+            if (drag_flag == 1) {//拖拉
+                getxy(event);
+                var tox = outxy.x - drag_downx;
+                if (tox < drag_area_min_x) { tox = drag_area_min_x } else if (tox > drag_area_max_x) { tox = drag_area_max_x }
+                var toy = outxy.y - drag_downy;
+                if (toy < drag_area_min_y) { toy = drag_area_min_y } else if (toy > drag_area_max_y) { toy = drag_area_max_y }
+                startwebkit('x=' + (tox) / scalerate + ',y=' + (toy) / scalerate + ',旋轉=N,x縮放=N,y縮放=N,x軸旋轉=N,y軸旋轉=N,透明度=N,動態時間=0,目標=' + drag_id + ',間隔時間=N,轉場=N');
+            }
+        });
+
+
+        document.body.addEventListener(eventup, function (event) {
+            diffdrag = 0;
+            scrolldown = 0;
+            scrollhave = false;
+            mousedown = 0;
+            main_wordlistdown = 0;
+            if (drag_flag == 1) {//拖拉
+                drag_flag = 0;
+                $('#' + drag_id).css('z-index', 0);
+                startwebkit('x=N,y=N,旋轉=N,x縮放=N,y縮放=N,x軸旋轉=N,y軸旋轉=N,透明度=1,動態時間=0,目標=' + drag_id + ',間隔時間=N,轉場=N');
+                drag_id = '';
+                drag_place = '';
+            }
+            //touchlength 共變，取得有幾個點擊點
+            (eventup == 'touchend' ? touchlength = event.touches.length : '')
+
+            if (event.type.toString().indexOf('touch') > -1 && event.touches.length == 0) {
+                havescale = false;
+            }
+        });
+
+
+
+        $(function () {
+            //********上架記得拿掉******暫時讓測試平版用chrome連，強迫走非ios通道
+            //isios = -1;
+            if (isios == -1) {
+                index_init();
+            }
+        })
+
+        function index_init() {
+
+            //畫面偵測調整
+            drag_area_max_x = window.innerWidth;
+            drag_area_max_y = window.innerHeight;
+            //$('#body_div').css('width', (window.innerWidth-2) + 'px');
+            //$('#body_div').css('height', (window.innerHeight-2) + 'px');
+            scale_showall();
+
+
+            //loading畫面
+            /*
+            loadingpie1.data.datasets.push({
+                data: [0, Object.keys(dbprocess.dbstr).length],
+                backgroundColor: ['rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)'],
+                label: 'Dataset 1'
+            })
+            loadingpie1.options['animation'] = {//動畫設定
+                duration: 0
+            }
+            loadingpie1.options['legend'] = {//隱藏標簽
+                display: false
+            }
+
+            loadingpie1.data.labels = ['', ''];
+            loadingpie1.init('dv_loading', 20);
+            */
+
+           
+
+
+
+            //$("#body_div").show();
+            //bodyload('css_table.html');//css按鈕表
+            //bodyload('rwfile.html');//讀寫檔案
+            //bodyload('record.html');//錄音存檔
+            //bodyload('picture.html');//拍照
+            //----需要預先載入的圖檔
+            var preloadimg_src = [];
+            /*
+            var preloadimg_src = ['bg.jpg', 'lk_1.png', 'lk_2.png', 'lk_3.png', 'lk_4.png', 'lk_5.png', 'lk_6.png', 'loading.png', 'fenceLow_2.png',
+                'loading_3.png', 'ser1_sign_1.png', 'snd_pause.png', 'snd_play.png', 'snd_stop.png', 'star1.png', 'star2.png', 'woodsign.png'
+            ]
+            */
+
+            $.each(preloadimg_src, function (i, preloadimgsrc) {
+                var preloadimg = new Image();
+                preloadimg.src = projectPath + '/img/' + preloadimgsrc;
+                preloadimg.addEventListener("load", function () {
+                    img_set.loadcnt += 1;//預載圖檔
+                }, false);
+            });
+
+
+            //----需要預先載入的圖檔
+
+            dbprocess.init();
+            dbprocess.dbinitchk = setInterval(function () {
+                //if (dbprocess.initcnt == Object.keys(dbprocess.dbstr).length) {
+                if (dbprocess.initcnt == Object.keys(dbprocess.dbstr).length && img_set.loadcnt == (preloadimg_src.length + 2)) {
+                    //dbinit執行完畢，預載圖檔載入完成
+                    clearInterval(dbprocess.dbinitchk);
+                    //alert('全部載完')
+                    //$('#sp1').append('全部載入' + '\r\n');
+
+                    //程式進入點進入程式主畫面
+                    //setTimeout(function () {
+
+                    var canvas1 = canvasgen('canvas1', 0, 0);
+                    canvas1.append('body_div');
+                    //$('#body_loading').hide();
+                    //}, 1500)
+
+                }
+            }, 100);
+      
+        }
+
+
+
+        function bodyload(src) {
+            /// <summary>載入外部內容內容</summary>
+            /// <param name="src" type="String">欲加載的內容url</param>
+            //全部收掉
+            //index_closeall();
+            //startwebkit('x=0,y=N,旋轉=N,x縮放=N,y縮放=N,x軸旋轉=N,y軸旋轉=N,透明度=N,動態時間=0,目標=body_div,間隔時間=N,轉場=N');
+            if (src != '') {
+                $("#body_div").load(projectPath + (projectPath == '' ? '' : '/') + src + '?q=' + String((new Date).getTime()), function () {
+                    $("#body_div").show();
+                    if (isios != -1) {
+
+                        setTimeout(function () {
+                            navigator.splashscreen.hide();
+                        }, 2000);
+                    }
+                    //程式準備完畢
+                });
+            } else {
+                $("#body_div").html('');
+            }
+        }
+
+
+
+        function index_closeall() {
+            /// <summary>關閉所有畫面，返回index</summary>
+        }
+
+        var isdrawing = false;
+        document.body.addEventListener(eventup, function (event) {
+            //取消所有按下事件flag
+            isdrawing = false;
+            isdown = 0;
+            movedis = 0;
+            //console.log($('canvas [畫布]').length)
+            $('div [畫布]').each(function (i) {
+                //console.log(i);
+                if (window[$(this).attr('id')] != null) {
+                    window[$(this).attr('id')].downflag = false;
+                }
+            })
+        });
+
+        document.body.addEventListener(eventdown, function (event) {
+            getxy(event);
+            var tgid = document.elementFromPoint((outxy.x), (outxy.y)).id;
+        });
+
+        var scalerate = 1;
+        var scalestartx = 0;
+        var scalestarty = 0;
+        function scale_showall() {
+            //以IPAD 1024*768計算，後來如果有做16:10的，用1280*800，16:9用1280*720
+            var scw = window.innerWidth / 720;
+            var sch = window.innerHeight / 1280;
+            if (scw < sch) {
+                scalerate = scw;
+                //document.body.style.zoom = scalerate;
+                scalestarty = ((window.innerHeight / 2)) - (1280 * scalerate / 2);
+
+            } else {
+                scalerate = sch;
+                //document.body.style.zoom = scalerate;
+                scalestartx = ((window.innerWidth / 2)) - (720 * scalerate / 2);
+            }
+            startwebkit('x=' + scalestartx + ',y=' + scalestarty + ',旋轉=N,x縮放=' + scalerate + ',y縮放=' + scalerate + ',x軸旋轉=N,y軸旋轉=N,透明度=N,動態時間=0,目標=body_div,間隔時間=N,轉場=N');
+
+
+
+
+        }
+
+        /*
+        //視窗捲動軸寬高
+        document.body.scrollWidth
+        document.body.scrollHeight
+        //螢幕寬高-工具列，與視窗無關
+        window.screen.availWidth
+        window.screen.availHeight
+        //螢幕寬高
+        window.screen.width
+        window.screen.height
+        //可用視窗內寬高
+        window.innerWidth
+        window.innerHeight
+        */
+
+        
+
+        document.body.addEventListener('keydown', function (event) {
+            //任何不是textarea 的按下enter，縮小(虛擬鍵盤)
+            if (event.keyCode == 13 && $(event.target).is('textarea') == false) {
+                $('#focusable').setfocus();
+            }
+        });
+
+
+
+        function getquery(drawsavestr) {
+            console.log('開始傳送資料');
+            $('body').loading({ message: '儲存資料中…', stoppable: false, theme: 'dark' });
+            let githubURL = new URL(location.href);
+            uuid = githubURL.searchParams.get('uuid');
+
+            var formdata = {
+                callfun: 'drawsave',
+                // cond: ["姓名|%|林一", "地址|=|宜蘭"], //1.欄位|2.=全部符合 %部份符合|3.值
+                //cond: ["uuid|%|16a7d9f3-dc9e-46a6-8828-27125e9e7336", "地址|=|宜蘭"], //複合式條件
+                drawsave: drawsavestr,
+                //$('#參數').val()
+                postsize: 0
+            }
+            //計算post長度
+            var totallen = 0;
+            $.each(Object.keys(formdata), function (j, keyar_val) {
+                if (formdata[keyar_val].length) {
+                    totallen += parseInt(formdata[keyar_val].length);
+                    console.log(keyar_val + ' 長度: ' + formdata[keyar_val].length);
+                } else {
+                    console.log(keyar_val + ' 取無長度 ');
+                    totallen += 10;
+                }
+
+            });
+            console.log(formdata.toString().length);
+            formdata.postsize = parseInt(formdata.postsize) + totallen;
+            console.log(formdata.postsize);
+            $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbzZY0pSKZBPyJ2idcN9UKot25ejJpZ-2d5Bo2ElKh9DhVhqa2s/exec',
+                data: formdata,
+                type: 'POST',
+                timeout: 200000, //超過5秒沒回應就timeout
+                cache: false,
+                error: function (xhr, status, error) {
+                    ajax_loading = 0;
+                    console.log(error)
+                    alert('伺服器連線失敗\n1.請檢查您的網路狀態\n2.請稍候再試');
+                },
+                success: function (data) {
+                    //成功寫入資料
+                    ajax_loading = 0;
+                    console.log(data);
+                    console.log("======");
+                    //console.log(data.rtn.parameters['cond[]']);
+                    console.log(data.rtn3);
+
+                    //saveloading.savedone(fileName);
+                    //alert(data);
+                    //alert('php save OK');
+
+                    $('body').loading('stop');
+                }
+
+            });
+        }
+   
+        function getload(id) {
+            console.log('開始讀取資料');
+            $('body').loading({ message: '讀取資料中…', stoppable: false, theme: 'dark' });
+            let githubURL = new URL(location.href);
+            uuid = githubURL.searchParams.get('uuid');
+
+            var formdata = {
+                callfun: 'drawload',
+                // cond: ["姓名|%|林一", "地址|=|宜蘭"], //1.欄位|2.=全部符合 %部份符合|3.值
+                //cond: ["uuid|%|16a7d9f3-dc9e-46a6-8828-27125e9e7336", "地址|=|宜蘭"], //複合式條件
+                
+                //$('#參數').val()
+                postsize: 0
+            }
+            //計算post長度
+            var totallen = 0;
+            $.each(Object.keys(formdata), function (j, keyar_val) {
+                if (formdata[keyar_val].length) {
+                    totallen += parseInt(formdata[keyar_val].length);
+                    console.log(keyar_val + ' 長度: ' + formdata[keyar_val].length);
+                } else {
+                    console.log(keyar_val + ' 取無長度 ');
+                    totallen += 10;
+                }
+
+            });
+            console.log(formdata.toString().length);
+            formdata.postsize = parseInt(formdata.postsize) + totallen;
+            console.log(formdata.postsize);
+            $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbzZY0pSKZBPyJ2idcN9UKot25ejJpZ-2d5Bo2ElKh9DhVhqa2s/exec',
+                data: formdata,
+                type: 'POST',
+                timeout: 200000, //超過5秒沒回應就timeout
+                cache: false,
+                error: function (xhr, status, error) {
+                    ajax_loading = 0;
+                    console.log(error)
+                    alert('伺服器連線失敗\n1.請檢查您的網路狀態\n2.請稍候再試');
+                },
+                success: function (data) {
+                    //成功寫入資料
+                    ajax_loading = 0;
+                    console.log(data);
+                    console.log("======");
+                    //console.log(data.rtn.parameters['cond[]']);
+                    console.log(data.rtn3);
+                    console.log(data.rtn3[0]['紀錄']);
+                    
+                    //console.log(str);
+                    //console.log(id + '有存檔 讀取');
+                    window[id].posstr = LZString.decompressFromEncodedURIComponent(data.rtn3[0]['紀錄']);
+                    //console.log(window[id].posstr);
+
+                    var posar = window[id].posstr.split('[');
+                    posar.splice(0, 1);
+                    $.each(posar, function (i, posar_val) {
+                        window[id].posar.push([]);
+                        var posval_ar = posar_val.split('_');
+                        $.each(posval_ar, function (j, posval_arval) {
+                            var posval_arval_ar = posval_arval.split(',');
+                            if (posval_arval_ar.length > 1) {
+                                window[id].posar[window[id].posar.length - 1].push([parseInt(posval_arval_ar[0]), (j == 0) ? posval_arval_ar[1] : parseInt(posval_arval_ar[1])]);
+                            }
+                        });
+                    });
+                    //delete posar[0];
+
+                    //console.log(posar);
+                    //console.log(window[id].posar);
+
+                    //重繪
+                    var egidctx = id + 'ctx';
+                    var tgid = id;
+
+                    window[egidctx] = document.getElementById('canvas_' + tgid).getContext("2d");
+
+                    $.each(window[id].posar, function (i, posar_val) {
+                        $.each(posar_val, function (j, posar_val_val) {
+                            if (j == 0) {
+                                window[egidctx].lineWidth = posar_val_val[0];
+                                window[egidctx].strokeStyle = posar_val_val[1];
+
+                            } else if (j == 1) {
+                                window[egidctx].beginPath();
+                                var posx = posar_val_val[0];
+                                var posy = posar_val_val[1];
+                                window[egidctx].moveTo(posx, posy);
+                                window[egidctx].stroke(); // Draw it
+                            } else {
+                                var posx = posar_val_val[0];
+                                var posy = posar_val_val[1];
+                                //console.log('lineto: '+posx + '_' + posy);
+                                window[egidctx].stroke(); // Draw it
+                                window[egidctx].lineTo(posx, posy);
+                                window[egidctx].stroke(); // Draw it
+
+                            }
+                        });
+                    });
+                    //saveloading.savedone(fileName);
+                    //alert(data);
+                    //alert('php save OK');
+                    $('#mask_' + id).hide();
+                    $('body').loading('stop');
+                }
+
+            });
+        }
+
+    </script>
+    
+</body>
+</html>
