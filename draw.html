@@ -19,16 +19,7 @@
 </head>
 <body>
     
-    <div class="container-scroller">
-        <div class="container-fluid page-body-wrapper full-page-wrapper">
-            <div class="content-wrapper d-flex align-items-center auth px-0">
-                <div id="body_div" style="width:100%;height:100%;overflow:hidden;-webkit-transform-origin:0% 0%;transform-style: preserve-3d;perspective: 1000px;background-color:#ffffff;background-image:url('');background-repeat:no-repeat;background-size:100% 100%;">
-                </div>
-                
-            </div>
-            <!-- content-wrapper ends -->
-        </div>
-        <!-- page-body-wrapper ends -->
+    <div id="body_div" style="width:720px;height:1280px;position: absolute;left:0px;top:0;overflow:hidden;-webkit-transform-origin:0% 0%;transform-style: preserve-3d;perspective: 1000px;background-color:#ffffff;background-image:url('');background-repeat:no-repeat;background-size:100% 100%;">
     </div>
     
     <!-- container-scroller -->
@@ -90,12 +81,12 @@
 
 
         //觸控避免預設設定，如果是input跟textarea類型，還有title 設為scroll的不避免預設
-        /*
+        
         document.body.addEventListener('touchmove', function (event) {
-            if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" || event.target.title == 'scroll' ) { return };
+            if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" || event.target.title == 'scroll' || event.target.title == 'CANVAS') { return };
             event.preventDefault();
         });
-        */
+        
 
 
         document.body.addEventListener('touchstart', function (event) {
@@ -183,7 +174,7 @@
             drag_area_max_y = window.innerHeight;
             //$('#body_div').css('width', (window.innerWidth-2) + 'px');
             //$('#body_div').css('height', (window.innerHeight-2) + 'px');
-            //scale_showall();
+            scale_showall();
 
 
             //loading畫面
