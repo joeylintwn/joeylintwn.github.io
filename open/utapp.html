@@ -36,8 +36,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="mb-4 mt-4">連結</h3>
-                            <input type="text" class="form-control" id="exampleInputName1" placeholder="填入網址">
-                            <button type="button" class="btn btn-info btn-icon-text">
+                            <input type="text" class="form-control" id="bt_getqrcode_val" placeholder="填入網址">
+                            <button type="button" class="btn btn-info" id="bt_getqrcode">
                                 產生QRCODE
                                 <i class="mdi mdi-printer btn-icon-append"></i>
                             </button>
@@ -194,6 +194,9 @@
 <!-- Custom js for this page-->
 <script src="utapp.js"></script> 
     <script type="text/javascript">
+        $('#bt_getqrcode').on('click', function (e) {
+            getqrcode($('#bt_getqrcode_val').val())
+        });
 
         function getqrcode(gourl) {
             let githubURL = new URL(location.href);
