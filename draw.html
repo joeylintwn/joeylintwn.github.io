@@ -301,6 +301,7 @@
         var scalestarty = 0;
         function scale_showall() {
             //以IPAD 1024*768計算，後來如果有做16:10的，用1280*800，16:9用1280*720
+            alert(window.innerWidth +'-'+window.innerHeight);
             var scw = window.innerWidth / 720;
             var sch = window.innerHeight / 1280;
             if (scw < sch) {
