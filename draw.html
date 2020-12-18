@@ -15,9 +15,9 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
-<body>
+<body style="overscroll-behavior: none ">
     
-    <div id="body_div" style="width:720px;height:1280px;position: absolute;left:0px;top:0;overflow:hidden;-webkit-transform-origin:0% 0%;transform-style: preserve-3d;perspective: 1000px;background-color:#ffffff;background-image:url('');background-repeat:no-repeat;background-size:100% 100%;">
+    <div id="body_div" style="width:720px;height:1280px;position: absolute;left:0px;top:0;overflow:hidden;-webkit-transform-origin:0% 0%;transform-style: preserve-3d;perspective: 1000px;background-color:#ffffff;background-image:url('');background-repeat:no-repeat;background-size:100% 100%;overscroll-behavior: none ">
     </div>
     
     <!-- container-scroller -->
@@ -79,7 +79,7 @@
 
 
         //觸控避免預設設定，如果是input跟textarea類型，還有title 設為scroll的不避免預設
-        alert(999)
+        alert(998)
         document.body.addEventListener('touchmove', function (event) {
             if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" || event.target.title == 'scroll' || event.target.tagName == 'CANVAS') { return };
             event.preventDefault();
