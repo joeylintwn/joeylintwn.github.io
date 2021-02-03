@@ -1,0 +1,121 @@
+﻿<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <!--
+  ArcGIS API for JavaScript, https://js.arcgis.com
+  For more information about the layers-wmts sample, read the original sample description at developers.arcgis.com.
+  https://developers.arcgis.com/javascript/latest/sample-code/layers-wmts/index.html
+  -->
+<title>WMTSLayer - 4.15</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .esri-layer-list {
+        width: 310px;
+      }
+    </style>
+
+    <script src="https://js.arcgis.com/4.15/"></script>
+
+    <script>
+      var map, view;
+      
+      require(["esri/geometry/Point"], function (Point) { /* code goes here */ });
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/WMTSLayer",
+        "esri/widgets/LayerList",
+        "esri/geometry/Point",
+        "esri/Graphic",
+      "esri/layers/GraphicsLayer"
+      ], function (Map, MapView, WMTSLayer, LayerList, Point, Graphic, GraphicsLayer) {
+        layer = new WMTSLayer({
+          url: "https://wmts.nlsc.gov.tw/97/wmts",
+          copyright:
+            "",
+          activeLayer: {
+            id: "EMAP3826"
+          }
+        });
+
+        map = new Map({
+          layers: [layer]
+        });
+
+        var pt = new Point({
+            x: 326724.245,
+            y: 2706112.743,
+            spatialReference: {
+                wkid: 3826 //座標系統
+            }
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          spatialReference: {
+              wkid: 3826 //座標系統
+          },
+          center: pt,
+          scale: 100000 //縮放比例，越小越近
+        });
+        view.when(function() {
+          view.extent = layer.fullExtent;
+          var layerList = new LayerList({
+            view: view
+          });
+          view.ui.add(layerList, "bottom-left");
+        });
+
+          //---顯示圖徵
+        var graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
+        var point = {
+            type: "point",
+            longitude: 326724.245,
+            latitude: 2706112.743
+        };
+
+        var simpleMarkerSymbol = {
+            type: "simple-marker",
+            color: [255, 0, 0],  // orange
+            outline: {
+                color: [255, 0, 0], // white
+                width: 1000
+            }
+        };
+
+        var pointGraphic = new Graphic({
+            geometry: pt,
+            symbol: simpleMarkerSymbol
+        });
+
+        graphicsLayer.add(pointGraphic);
+
+
+      });
+
+
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

@@ -1,0 +1,410 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>水利資訊智慧管理決策平台</title>
+
+
+    <!-- Bootstrap相關樣式 -->
+    <link href="../Content/bootstrap4.css" rel="stylesheet" />
+
+    <!-- Jquery -->
+    <script src="../Scripts/jquery-v3.4.1.js"></script>
+
+    <!-- Vue -->
+    <script src="../Scripts/vue.js"></script>
+
+    <!-- Bootstrap設定 -->
+    <script src="../Scripts/bootstrap4.js" type="text/javascript"></script>
+
+    <!-- DBAPI -->
+    <script src="../Scripts/DBApi.js"></script>
+
+    <!-- 地圖 -->
+    <link rel="stylesheet" href="../Content/esri2.css">
+    <script src="https://js.arcgis.com/3.22/"></script>
+    <script src="../Scripts/proj4js/lib/proj4js-combined.js"></script>
+    <script src="../Scripts/Jquery/Common.js" type="text/javascript"></script>
+    <script>
+        var PoxyUrl = 'https://wra.e-land.gov.tw/proxy2/proxy.ashx?';
+        var map;
+        var ServiceUrl2 = "https://wragis.e-land.gov.tw/arcgis/rest/services/HDST/HDST_m/MapServer/2003";
+
+        var db = new DBApi('../xApi/db/');
+
+        $(document).ready(function () {
+            Proj4js.defs["EPSG:3821"] = "+title=經緯度：TWD67 +proj=longlat  +towgs84=-752,-358,-179,-.0000011698,.0000018398,.0000009822,.00002329 +ellps=aust_SA +units=度 +no_defs";
+            Proj4js.defs["EPSG:3826"] = "+title=TWD97 TM2+proj=tmerc +lat_0=0 +lon_0=121 +k=0.9999 +x_0=250000 +y_0=0 +ellps=GRS80 +units=m +no_defs";
+            Proj4js.defs["EPSG:3857"] = "+title= Google Mercator EPSG:3857 +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +no_defs";
+
+            Map_init();
+        });
+
+
+        //取得字串程式 如果有丟URL可以擷取字串
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2]);
+        }
+
+        function ConvertXY(x, y) {
+            //WGS84轉TWD97
+            var EPSG3821 = new Proj4js.Proj('EPSG:3821');
+            var EPSG3857 = new Proj4js.Proj('EPSG:3857');
+            var EPSG3826 = new Proj4js.Proj('EPSG:3826');
+
+            var result;
+            if (Proj4js) {
+                var p = new Proj4js.Point(x, y);
+                var pt = Proj4js.transform(EPSG3821, EPSG3826, p);
+                //var pt = Proj4js.transform(EPSG3826,EPSG3857,  p);
+
+                result = { x: pt.x, y: pt.y };
+            }
+            return result;
+        }
+
+
+        function Map_init() {
+            require([
+                "esri/map", "esri/layers/ArcGISTiledMapServiceLayer",
+                "esri/graphic", "esri/symbols/SimpleLineSymbol", "esri/geometry/Polygon",
+                "esri/geometry/Point", "esri/SpatialReference", "esri/geometry/Multipoint",
+                "esri/symbols/SimpleMarkerSymbol", "esri/Color", "esri/toolbars/draw",
+                "dojo/dom", "dojo/on", "esri/InfoTemplate", "esri/symbols/SimpleFillSymbol",
+                "esri/layers/GraphicsLayer", "esri/geometry/Extent", "dojo/domReady!"],
+                function (
+                    Map, ArcGISTiledMapServiceLayer,
+                    Graphic, SimpleLineSymbol, Polygon,
+                    Point, SpatialReference, Multipoint,
+                    SimpleMarkerSymbol, Color, Draw,
+                    dom, on, InfoTemplate, SimpleFillSymbol,
+                    GraphicsLayer, Extent) {
+                    map = new Map("map");
+
+                    var tiled = new ArcGISTiledMapServiceLayer(PoxyUrl + "http://210.69.148.40/ArcGIS/rest/services/YiLanTerrain_3826_2013_20141231/MapServer/", {
+                        displayLevels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+                    });
+                    map.addLayer(tiled);
+
+                    map.on("load", function () {
+                        tb = new Draw(map);
+
+                        //清除現有的圖形
+
+                        map.disableMapNavigation();
+                        //tb.activate("point");
+                        //tb.deactivate();
+                        map.enableMapNavigation();
+
+                        var _index = parseFloat(getParameterByName("id"));
+
+                        if (opener == undefined || opener.Source == undefined || opener.Source.localdata == undefined) {
+                            alert('沒有資料來源');
+                            return
+                        }
+
+                        var _data = opener.Source.localdata;
+                        console.log(_data);
+
+
+                        var _GraphicsLayer = new GraphicsLayer();
+                        _GraphicsLayer.id = "案件圖層";
+                        console.log(_index);
+                        if (isNaN(_index)) {
+                            var filter = "1=1";
+                            var idstr = "";
+                            for (var j = 0; j < _data.length; j++) {
+                                if (idstr == "") {
+                                    idstr = _data[j].id;
+                                } else {
+                                    idstr += "," + _data[j].id;
+                                }
+                            }
+                            if (idstr != "") {
+                                filter += " and wbid in (" + idstr + ")";
+                            }
+                            console.log(filter);
+                            db.Select({
+                                TableName: "wb_Project_Position_View",
+                                Field: "*",
+                                Filter: filter,
+                                Token: ""
+                            }, function (d) {
+                                if (d.isSuccess == true) {
+                                    var MyExtent = null;
+                                    vm.multiPointData = d.Result;
+                                    for (var i = 0; i < d.Result.length; i++) {
+                                        var polygonJson = { "rings": [[[parseFloat(d.Result[i]["x"]), parseFloat(d.Result[i]["y"])]]], "spatialReference": { "wkid": 102443 } };
+                                        var _polygon = new Polygon(polygonJson);
+                                        if (MyExtent == null) {
+                                            MyExtent = _polygon.getExtent();
+                                        }
+                                        else {
+                                            MyExtent = MyExtent.union(_polygon.getExtent());
+                                        }
+                                        var infoTemplate = new InfoTemplate();
+                                        infoTemplate.setContent(SetInfoTemplate(_data[i], i));
+                                        var markerSymbol = new SimpleMarkerSymbol();
+                                        markerSymbol.setPath("M16,3.5c-4.142,0-7.5,3.358-7.5,7.5c0,4.143,7.5,18.121,7.5,18.121S23.5,15.143,23.5,11C23.5,6.858,20.143,3.5,16,3.5z M16,14.584c-1.979,0-3.584-1.604-3.584-3.584S14.021,7.416,16,7.416S19.584,9.021,19.584,11S17.979,14.584,16,14.584z");
+                                        markerSymbol.setColor(new Color([230, 0, 0, 0.77]));
+                                        markerSymbol.setStyle(SimpleMarkerSymbol.STYLE_PATH);
+                                        markerSymbol.setSize(26);
+                                        var graphic = new Graphic(_polygon, markerSymbol);
+                                        graphic.setInfoTemplate(infoTemplate);
+                                        _GraphicsLayer.add(graphic);
+                                    }
+                                    map.addLayer(_GraphicsLayer);
+                                    map.setExtent(MyExtent);
+                                } else {
+                                    console.log(d);
+                                }
+                                //console.log(d);
+                            });
+                            
+                        }
+                        else {
+                            //顯示單一案例
+                            _data = _data[_index];
+                            vm.pointData = _data
+                            var polygonDdata = null;
+                            if (_data.Position != null && _data.Position != '' && _data.Position != undefined) {
+                                //原本的資料是JSON陣列字串
+                                var _position = _data.Position.replace(/”rings”|＂rings＂/, '"rings"').replace(/，/g, ',');
+                                var _polygonJson = $.parseJSON(_position);
+                                polygonDdata = _polygonJson[0].rings;
+                            } else {
+                                //2020-10-20 chris add
+                                if (_data.LandTown != null && _data.LandSec_cns != null && _data.Land_no != null) {
+                                    var _where = "鄉鎮市區名='" + _data.LandTown + "' and 地段名稱='" + _data.LandSec_cns + "' and 地號='" + _data.Land_no + "'";
+                                    var data = { f: "pjson", where: _where, outFields: "地號", orderByFields: '地號 ASC', returnGeometry: true, returnDistinctValues: false };
+                                    var geo = AjaxGisGetGeo(ServiceUrl2, data, "");
+                                    polygonDdata = geo[0].rings;
+                                }
+                                var fn = function (d) {
+                                    if (d.length > 0) {
+                                        var _Multipoint = new Multipoint(new SpatialReference({ wkid: 102443 }));
+                                        for (var i = 0; i < d.length; i++) {
+                                            _Multipoint.addPoint(new Point(d[i].x, d[i].y));
+                                        }
+                                        //產生一個多點物件
+                                        var infoTemplate = new InfoTemplate();
+                                        infoTemplate.setContent(SetInfoTemplate(_data, _index));
+                                        //設定點的樣式
+                                        var markerSymbol = new SimpleMarkerSymbol();
+                                        markerSymbol.setPath("M16,3.5c-4.142,0-7.5,3.358-7.5,7.5c0,4.143,7.5,18.121,7.5,18.121S23.5,15.143,23.5,11C23.5,6.858,20.143,3.5,16,3.5z M16,14.584c-1.979,0-3.584-1.604-3.584-3.584S14.021,7.416,16,7.416S19.584,9.021,19.584,11S17.979,14.584,16,14.584z");
+                                        markerSymbol.setColor(new Color([230, 0, 0, 0.77]));
+                                        markerSymbol.setStyle(SimpleMarkerSymbol.STYLE_PATH);
+                                        markerSymbol.setSize(26);
+                                        //加入圖層
+                                        var graphic = new Graphic(_Multipoint, markerSymbol);
+                                        graphic.setInfoTemplate(infoTemplate);
+                                        _GraphicsLayer.add(graphic);
+                                        //把圖層加入地圖
+                                        map.addLayer(_GraphicsLayer);
+                                        map.setExtent(_Multipoint.getExtent());
+                                        if (d.length == 1) {
+                                            var point = new Point([parseFloat(d[0].x), parseFloat(d[0].y)], new SpatialReference({ wkid: 102443 }));
+                                            map.centerAndZoom(point, 10);
+                                        }
+                                    } else {
+                                        alert("沒有設定土地位置。");
+                                    }
+                                }
+                                AjaxJson("../EngMgn/WaterBuild/QueryPosition", { id: _data.id }, fn);
+                            }
+                            if (polygonDdata != null) {
+                                var _polygon = new Polygon(new SpatialReference({ wkid: 102443 }));
+                                _polygon.rings = polygonDdata;
+                                var infoTemplate = new InfoTemplate();
+                                infoTemplate.setContent(SetInfoTemplate(_data, _index));
+                                //設定多邊形外框框線
+                                var _SimpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color(new Color([230, 0, 0, 0.5])));
+                                //設定多邊形
+                                var _SimpleFillSymbol = new SimpleFillSymbol();
+                                //_SimpleFillSymbol.color = new Color("#ff0000");//設定顏色
+                                // _SimpleFillSymbol.color = new Color("#ff0000");//設定顏色
+                                _SimpleFillSymbol.color = new Color(new Color([230, 0, 0, 0.5]));//設定顏色
+                                _SimpleFillSymbol.outline = _SimpleLineSymbol;//塞入外框線
+                                var graphic = new Graphic(_polygon, _SimpleFillSymbol);
+                                graphic.setInfoTemplate(infoTemplate);
+                                _GraphicsLayer.add(graphic);
+                                map.setExtent(_polygon.getExtent());
+                                map.addLayer(_GraphicsLayer);
+                            } 
+                        }
+                    });
+                });
+        }
+
+        //標的資訊
+        function SetInfoTemplate(_data, index) {
+            var html =
+                "<b>申請人: </b>" + _data.UserName + "<br/>" +
+                "<b>申請年度: </b>" + _data.UseYear + "年<br/>" +
+                "<b>申請日期: </b>" + dateFormat(_data.UseDay) + "<br/>" +
+                "<b>鄉鎮: </b>" + _data.Town + "<br/>" +
+                "<b>申請類別: </b>" + _data.UseClass + "<br/>" +
+                "<b>使用內容: </b>" + _data.UseContent + "<br/>" +
+                "<b>使用行為名稱: </b>" + _data.Behavior_Name + "<br/>" +
+                "<b>通訊地址: </b>" + _data.LocalAddr + "<br/>" +
+                "<b>申請人土地: </b>" + _data.UseLand + "<br/>" +
+                "<b>水道名稱: </b>" + _data.WaterwayName + "<br/>" +
+                "<b>溝渠地號: </b>" + _data.LoadLandNum + "<br/>" +
+                "<div class='text-right'>";
+            if (vm.multiPointData) {
+                html += "<a style='margin-right:5px;' onclick='multiHrefClick(\"Img\",\"" + index + "\")'>照片</a>" + "<a style='margin-right:5px;' onclick='multiHrefClick(\"Apply\",\"" + index + "\")'>簽辦函文</a>" + "<a onclick='multiHrefClick(\"Check\",\"" + index + "\")'>核准函文</a>" +
+                    "</div>"
+            }
+            else {
+                html += "<a style='margin-right:5px;' onclick='hrefClick(\"Img\",\"" + index + "\")'>照片</a>" + "<a style='margin-right:5px;' onclick='hrefClick(\"Apply\",\"" + index + "\")'>簽辦函文</a>" + "<a onclick='hrefClick(\"Check\",\"" + index + "\")'>核准函文</a>" +
+                    "</div>"
+            }
+            return html;
+        }
+     
+        //取得隨機顏色色碼
+        function RandomColor() {
+            var color_code = "#";
+            for (var i = 0; i < 6; i++) {
+                color_code += Math.floor(Math.random() * 16).toString(16);
+            }
+            return color_code;
+        }
+
+
+        //日期格式化
+
+        function dateFormat(time) {
+            if (!time)
+                return "";
+            var d = new Date(parseInt(time.replace(/\/|Date|\(|\)/g, ""), 10));
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            var date = year + "/" + month + "/" + day;
+
+            return date;
+        }
+        function hrefClick(type, index) {
+            vm.pointData = opener.Source.localdata[index];
+            if (type === "Img") {
+                $("#" + type + "Modal").modal("show");
+            }
+            else if (type === "Apply") {
+                window.open(vm.filePath + vm.pointData.SignDocument)
+            }
+            else if (type === "Check") {
+                window.open(vm.filePath + vm.pointData.CheckDocument)
+            }
+        }
+        function multiHrefClick(type, index) {
+            vm.pointData = vm.multiPointData[index];
+            if (type === "Img") {
+                $("#" + type + "Modal").modal("show");
+            }
+            else if (type === "Apply") {
+                window.open(vm.filePath + vm.pointData.SignDocument)
+
+            }
+            else if (type === "Check") {
+                window.open(vm.filePath + vm.pointData.CheckDocument)
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div id="myApp">
+        <!-- 圖片Modal -->
+        <div class="modal fade" id="ImgModal" tabindex="-1" aria-labelledby="ImgModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ImgModalLabel">圖片</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" v-if="pointData">
+                        <div id="carouselExampleIndicators" class="carousel slide"  v-if="pointData.CurrentPhotos && pointData.CurrentPhotos!=null">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" :class="{active:index===0}" v-for="(img,index) in pointData.CurrentPhotos.split('/')" :data-slide-to="index"></li>
+                            </ol>
+                            <div class="carousel-inner h-100">
+                                <div class="carousel-item" :class="{'active':index===0}" v-for="(img,index) in pointData.CurrentPhotos.split('/')">
+                                    <img :src="filePath+img" class="d-block w-100" :alt="img">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div style="text-align:center;"><span v-if="!pointData.CurrentPhotos">沒有資料</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        var Workpath = window.location.pathname.split('/')[1];
+        Workpath = Workpath.toLocaleLowerCase().replace("engmgn", "");
+        var APIUrl = window.location.origin + "/" + Workpath + "/api/db/";
+        const vm = new Vue({
+            el: "#myApp",
+            data: {
+                pointData: null,
+                APIUrl: APIUrl,
+                multiPointData: null,
+            },
+            computed: {
+                filePath: function () {
+                    let path = this.APIUrl + "/DownloadFiles/wb_Project/" + this.pointData.id + "?FileName=";
+                    return path;
+                }
+            },
+            //methods: function () {
+            //    window.open()
+            //}
+        })
+    </script>
+</body>
+
+</html>

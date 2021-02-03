@@ -1,0 +1,960 @@
+﻿<html lang="zh-Hant" class="dj_webkit dj_chrome dj_contentbox">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>水利資訊智慧管理決策平台</title>
+    <!-- 自訂樣式 -->
+    <link href="../Content/style.css" rel="stylesheet">
+
+    <!-- Bootstrap相關樣式 -->
+    <link href="../Content/bootstrap4.css" rel="stylesheet">
+
+    <!-- Jquery -->
+
+    <script src="../Scripts/jquery-v3.4.1.js"></script>
+
+    <!-- Vue -->
+    <script src="../Scripts/vue.js"></script>
+    <script src="../Scripts/vue-cookies.js"></script>
+    <script src="../Scripts/httpVueLoader.js"></script>
+    <script src="../Scripts/vue-axios.js"></script>
+
+    <!-- Bootstrap設定 -->
+    <script src="../Scripts/bootstrap4.js" type="text/javascript"></script>
+
+    <!-- DBAPI -->
+    <script src="../Scripts/DBApi.js"></script>
+    <script src="../Scripts/custVue.js"></script>
+    <script src="../DB/Scripts/custJqxGrid.js"></script>
+
+    <!-- 地圖 -->
+    <link rel="stylesheet" href="../Content/esri2.css">
+    <script src="https://js.arcgis.com/3.22/"></script>
+    <script src="WaterBuild.js"></script>
+    <style>
+        * {
+            font-family: Arial, 微軟正黑體;
+        }
+
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+        }
+
+        .waterbuild_content {
+            margin-top: 60px;
+        }
+
+        .public_content_left {
+            width: 198px;
+        }
+
+        .public_content_right {
+            width: calc(100% - 198px);
+        }
+
+        .Orange_Border {
+            background-color: #f5f5f5;
+            border: 2px solid #e88432;
+            border-top: none;
+            border-bottom: none;
+            min-height: 100vh;
+        }
+
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+            .btn-default:hover {
+                color: #333;
+                background-color: #e6e6e6;
+                border-color: #adadad;
+            }
+
+        /* 地圖樣式 */
+        #map-block {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, .4);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        #map-close,
+        #map-cancel,
+        #CreatPosition {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, .6);
+            border-radius: 10px;
+            display: inline-block;
+            color: white;
+            font-family: 'Microsoft JhengHei';
+            cursor: pointer;
+            display: inline-block;
+        }
+
+            #map-close:hover,
+            #map-cancel:hover,
+            CrearPosition:hover {
+                background-color: rgba(0, 0, 0, .4);
+            }
+
+        #map {
+            width: auto;
+            height: 90%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="../Scripts/Widgets/styles/jqx.base.css">
+    <link type="text/css" rel="stylesheet" href="../Scripts/Widgets/styles/jqx.custom.css">
+    <script type="text/javascript" src="../Scripts/Widgets/jqxcore.js"></script>
+    <script type="text/javascript" src="../Scripts/Widgets/jqx-all2.js"></script>
+    <style>
+        .polygon {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+            .polygon::after {
+                width: 200px;
+                height: 200px;
+                content: "";
+                position: absolute;
+                cursor: pointer;
+            }
+
+            .polygon .polygon-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 999;
+                color: white;
+                width: 100%;
+                text-align: center;
+            }
+
+        .front-box::after {
+            background: #ed7d31;
+            clip-path: polygon(100% 50%, 80% 65%, 0 65%, 0 35%, 80% 35%);
+        }
+
+        .polygon.front-box .polygon-text {
+            left: 40%;
+        }
+
+        .middle-box::after {
+            background: #4472c4;
+            clip-path: polygon(100% 50%, 80% 65%, 0 65%, 20% 50%, 0 35%, 80% 35%);
+        }
+
+        .back-box::after {
+            background: #70ad47;
+            clip-path: polygon(100% 50%, 80% 65%, 0 65%, 20% 50%, 0 35%, 80% 35%);
+        }
+
+        .nopass-box {
+            margin-right: 30px;
+        }
+
+            .nopass-box::after {
+                background: #dc3545;
+                height: 60px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 5%;
+            }
+    </style>
+    <script type="text/javascript" src="../Scripts/Widgets/jqxgrid.edit.js"></script>
+    <script type="text/javascript" src="../Scripts/Widgets/jqxcheckbox.js"></script>
+</head>
+
+<body>
+    <!--設置陰影用div-->
+    <div class="top_layout top">
+        <!--top區塊-->
+        <div class="top_logo"></div>
+        <div class="top_SystemName top_SystemName_Water">水利資訊智慧管理決策平台</div>
+        <div class="top_loginBTN_layout top_loginBTN" onclick="btnLogout_onclick()">
+            <div class="top_loginBTN_icon"></div>
+            <div class="top_loginBTN_text">登出</div>
+        </div>
+        <div class="top_loginBTN_layout top_loginBTN" onclick="btnGoIndex_onclick()">
+            <div class="top_loginBTN_icon"></div>
+            <div class="top_loginBTN_text" style="margin-left:5px;">回首頁</div>
+        </div>
+        <div class="clear"></div>
+
+    </div>
+    <!--top區塊-->
+    <div class="clear"></div>
+    <div id="myApp" class="waterbuild_content">
+        <h1 style="display: none;"></h1> <div class="container-fluid">
+            <div class="d-flex Orange_Border">
+                <div class="public_content_left"><div class="content_left_Alloptions_layout"><div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text content_ledt_option_text_active">新增案件</div></div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="2" class="content_ledt_option_text">案件查詢</div></div> <div class="clear"></div></div></div> <div class="public_content_right">
+                    <div class="content_rihgt_breadcrumb_layout"><div>水利建造物 〉新增案件</div></div> <div>
+                        <div>
+                            <hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);"> <div class="clearfix"></div> <div>
+                                <div style="display: none;"><hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);"> <div class="clearfix"></div> <div style="width: 89%;"><div id="div_grid" style="margin: 5px 0px 10px 30px;"><div id="grid" style="height: 470px;"></div></div></div></div> <form name="myForm">
+                                    <div style="">
+                                        <div>
+                                            <div>
+                                                <div claass="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UserName" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>申請人
+                                                        </span>
+                                                    </div> <input type="text" name="editdata_UserName" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UseYear" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>申請年度
+                                                        </span>
+                                                    </div> <select name="editdata_UseYear" required="required" class="form-control col-2" style="height: auto;">
+                                                        <option value="">-- 請選擇 --</option>
+                                                        <option value="100">
+                                                            100
+                                                        </option>
+                                                        <option value="101">
+                                                            101
+                                                        </option>
+                                                        <option value="102">
+                                                            102
+                                                        </option>
+                                                        <option value="103">
+                                                            103
+                                                        </option>
+                                                        <option value="104">
+                                                            104
+                                                        </option>
+                                                        <option value="105">
+                                                            105
+                                                        </option>
+                                                        <option value="106">
+                                                            106
+                                                        </option>
+                                                        <option value="107">
+                                                            107
+                                                        </option>
+                                                        <option value="108">
+                                                            108
+                                                        </option>
+                                                        <option value="109">
+                                                            109
+                                                        </option>
+                                                        <option value="110">
+                                                            110
+                                                        </option>
+                                                        <option value="111">
+                                                            111
+                                                        </option>
+                                                    </select>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UseDay" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>申請日期
+                                                        </span>
+                                                    </div> <input name="editdata_UseDay" type="date" required="required" class="form-control col-2">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_Town" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>鄉鎮
+                                                        </span>
+                                                    </div> <select name="editdata_Town" required="required" class="form-control col-2" style="height: auto;"><option value="">-- 請選擇 --</option> <option value="三星鄉">三星鄉</option><option value="大同鄉">大同鄉</option><option value="五結鄉">五結鄉</option><option value="冬山鄉">冬山鄉</option><option value="壯圍鄉">壯圍鄉</option><option value="宜蘭市">宜蘭市</option><option value="南澳鄉">南澳鄉</option><option value="員山鄉">員山鄉</option><option value="頭城鎮">頭城鎮</option><option value="礁溪鄉">礁溪鄉</option><option value="羅東鎮">羅東鎮</option><option value="蘇澳鎮">蘇澳鎮</option></select>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UseClass" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>申請類別
+                                                        </span>
+                                                    </div> <select name="editdata_UseClass" required="required" class="form-control col-2" style="height: auto;">
+                                                        <option value="">-- 請選擇 --</option>
+                                                        <option value="破堤">
+                                                            破堤
+                                                        </option>
+                                                        <option value="搭排">
+                                                            搭排
+                                                        </option>
+                                                        <option value="版橋">
+                                                            版橋
+                                                        </option>
+                                                        <option value="綠美化">
+                                                            綠美化
+                                                        </option>
+                                                        <option value="其他">
+                                                            其他
+                                                        </option>
+                                                        <option value="土地使用">
+                                                            土地使用
+                                                        </option>
+                                                        <option value="公務(公法人)機關水利構造物">
+                                                            公務(公法人)機關水利構造物
+                                                        </option>
+                                                        <option value="水利建造物">
+                                                            水利建造物
+                                                        </option>
+                                                        <option value="海岸建造物">
+                                                            海岸建造物
+                                                        </option>
+                                                    </select>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>工程名稱
+                                                        </span>
+                                                    </div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_LocalAddr" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>通訊地址
+                                                        </span>
+                                                    </div> <input type="text" name="editdata_LocalAddr" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_HouseAddr" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>戶籍地址
+                                                        </span>
+                                                    </div> <input type="text" name="editdata_HouseAddr" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_PhoneNum" class="input-group-text w-100 justify-content-start">申請人聯絡方式</span></div> <input type="text" name="editdata_PhoneNum" placeholder="格式不拘，數字即可" class="form-control" style="height: auto;"></div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;"><span id="editdata_LandTown" class="input-group-text w-100 justify-content-start" style="white-space: pre-wrap;"><span class="text-danger">*</span>申請(工程)土地位置</span></div> <div class="form-control" style="height: auto;">
+                                                        <div class="form-row">
+                                                            <div class="col-4">
+                                                                <label for="editdata_LandTown">鄉鎮:</label> <select id="editdata_LandTown" required="required" class="form-control">
+                                                                    <option value="">-- 請選擇 --</option>
+                                                                    <option value="三星鄉">
+                                                                        三星鄉
+                                                                    </option>
+                                                                    <option value="大同鄉">
+                                                                        大同鄉
+                                                                    </option>
+                                                                    <option value="五結鄉">
+                                                                        五結鄉
+                                                                    </option>
+                                                                    <option value="冬山鄉">
+                                                                        冬山鄉
+                                                                    </option>
+                                                                    <option value="壯圍鄉">
+                                                                        壯圍鄉
+                                                                    </option>
+                                                                    <option value="宜蘭市">
+                                                                        宜蘭市
+                                                                    </option>
+                                                                    <option value="南澳鄉">
+                                                                        南澳鄉
+                                                                    </option>
+                                                                    <option value="員山鄉">
+                                                                        員山鄉
+                                                                    </option>
+                                                                    <option value="頭城鎮">
+                                                                        頭城鎮
+                                                                    </option>
+                                                                    <option value="礁溪鄉">
+                                                                        礁溪鄉
+                                                                    </option>
+                                                                    <option value="羅東鎮">
+                                                                        羅東鎮
+                                                                    </option>
+                                                                    <option value="蘇澳鎮">
+                                                                        蘇澳鎮
+                                                                    </option>
+                                                                </select>
+                                                            </div> <div class="col-4"><label for="editdata_LandSec_cns">地段:</label> <select id="editdata_LandSec_cns" required="required" class="form-control"><option value="">-- 請選擇 --</option> </select></div> <div class="col-4"><label for="editdata_Land_no">地號:</label> <select id="editdata_Land_no" required="required" class="form-control"><option value="">-- 請選擇 --</option> </select></div>
+                                                        </div>
+                                                    </div>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_WaterwayName" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>水道名稱
+                                                        </span>
+                                                    </div> <div class="form-control" style="height: auto;">
+                                                        <div class="form-row">
+                                                            <div class="col-4">
+                                                                <label for="editdata_WaterwayName">水道名稱:</label> <select id="editdata_WaterwayName" required="required" class="form-control" style="height: auto;">
+                                                                    <option value="">-- 請選擇 --</option>
+                                                                    <option value="大溪川">
+                                                                        大溪川
+                                                                    </option>
+                                                                    <option value="大灣溪">
+                                                                        大灣溪
+                                                                    </option>
+                                                                    <option value="北門溪">
+                                                                        北門溪
+                                                                    </option>
+                                                                    <option value="東澳北溪">
+                                                                        東澳北溪
+                                                                    </option>
+                                                                    <option value="東澳南溪">
+                                                                        東澳南溪
+                                                                    </option>
+                                                                    <option value="林美溪">
+                                                                        林美溪
+                                                                    </option>
+                                                                    <option value="武雲溪">
+                                                                        武雲溪
+                                                                    </option>
+                                                                    <option value="金面溪">
+                                                                        金面溪
+                                                                    </option>
+                                                                    <option value="南澳(北溪)">
+                                                                        南澳(北溪)
+                                                                    </option>
+                                                                    <option value="南澳溪(南溪)">
+                                                                        南澳溪(南溪)
+                                                                    </option>
+                                                                    <option value="得子口溪">
+                                                                        得子口溪
+                                                                    </option>
+                                                                    <option value="猴洞溪">
+                                                                        猴洞溪
+                                                                    </option>
+                                                                    <option value="新城溪">
+                                                                        新城溪
+                                                                    </option>
+                                                                    <option value="福德溪">
+                                                                        福德溪
+                                                                    </option>
+                                                                    <option value="蘇澳溪">
+                                                                        蘇澳溪
+                                                                    </option>
+                                                                </select>
+                                                            </div> <div class="col-4">
+                                                                <label for="editdata_RegionRiver">排水:</label> <select id="editdata_RegionRiver" required="required" class="form-control" style="height: auto;">
+                                                                    <option value="">-- 請選擇 --</option>
+                                                                    <option value="糖部一支排水">
+                                                                        糖部一支排水
+                                                                    </option>
+                                                                    <option value="舊寮溪">
+                                                                        舊寮溪
+                                                                    </option>
+                                                                    <option value="新寮溪">
+                                                                        新寮溪
+                                                                    </option>
+                                                                    <option value="羅莊排水">
+                                                                        羅莊排水
+                                                                    </option>
+                                                                    <option value="冬山河">
+                                                                        冬山河
+                                                                    </option>
+                                                                    <option value="五結排水">
+                                                                        五結排水
+                                                                    </option>
+                                                                    <option value="二結排水(礁溪)">
+                                                                        二結排水(礁溪)
+                                                                    </option>
+                                                                    <option value="大吉排水">
+                                                                        大吉排水
+                                                                    </option>
+                                                                    <option value="四結排水">
+                                                                        四結排水
+                                                                    </option>
+                                                                    <option value="廣興排水">
+                                                                        廣興排水
+                                                                    </option>
+                                                                    <option value="平行水路">
+                                                                        平行水路
+                                                                    </option>
+                                                                    <option value="大埔排水">
+                                                                        大埔排水
+                                                                    </option>
+                                                                    <option value="打那岸排水">
+                                                                        打那岸排水
+                                                                    </option>
+                                                                    <option value="中城排水">
+                                                                        中城排水
+                                                                    </option>
+                                                                    <option value="內城二排">
+                                                                        內城二排
+                                                                    </option>
+                                                                    <option value="安平坑排水">
+                                                                        安平坑排水
+                                                                    </option>
+                                                                    <option value="照安坑排水">
+                                                                        照安坑排水
+                                                                    </option>
+                                                                    <option value="梅花排水">
+                                                                        梅花排水
+                                                                    </option>
+                                                                    <option value="林和源排水">
+                                                                        林和源排水
+                                                                    </option>
+                                                                    <option value="五股排水">
+                                                                        五股排水
+                                                                    </option>
+                                                                    <option value="十三份坑排水">
+                                                                        十三份坑排水
+                                                                    </option>
+                                                                    <option value="竹安排水">
+                                                                        竹安排水
+                                                                    </option>
+                                                                    <option value="十三股大排">
+                                                                        十三股大排
+                                                                    </option>
+                                                                    <option value="壯西排水">
+                                                                        壯西排水
+                                                                    </option>
+                                                                    <option value="大富排水">
+                                                                        大富排水
+                                                                    </option>
+                                                                    <option value="武暖大排">
+                                                                        武暖大排
+                                                                    </option>
+                                                                    <option value="黃德記排水">
+                                                                        黃德記排水
+                                                                    </option>
+                                                                    <option value="美福大排">
+                                                                        美福大排
+                                                                    </option>
+                                                                    <option value="舊港排水">
+                                                                        舊港排水
+                                                                    </option>
+                                                                    <option value="李寶興排水">
+                                                                        李寶興排水
+                                                                    </option>
+                                                                    <option value="抵美簡排水">
+                                                                        抵美簡排水
+                                                                    </option>
+                                                                    <option value="小金面排水">
+                                                                        小金面排水
+                                                                    </option>
+                                                                    <option value="北門坑排水">
+                                                                        北門坑排水
+                                                                    </option>
+                                                                    <option value="砂仔港排水">
+                                                                        砂仔港排水
+                                                                    </option>
+                                                                    <option value="湯圍中排一">
+                                                                        湯圍中排一
+                                                                    </option>
+                                                                    <option value="下埔排水">
+                                                                        下埔排水
+                                                                    </option>
+                                                                    <option value="新興排水">
+                                                                        新興排水
+                                                                    </option>
+                                                                    <option value="廍後排水">
+                                                                        廍後排水
+                                                                    </option>
+                                                                    <option value="壯東一大排">
+                                                                        壯東一大排
+                                                                    </option>
+                                                                    <option value="梅洲大排">
+                                                                        梅洲大排
+                                                                    </option>
+                                                                    <option value="梅洲中排二">
+                                                                        梅洲中排二
+                                                                    </option>
+                                                                    <option value="頭份排水">
+                                                                        頭份排水
+                                                                    </option>
+                                                                    <option value="福德坑溪">
+                                                                        福德坑溪
+                                                                    </option>
+                                                                    <option value="宜榮一中排">
+                                                                        宜榮一中排
+                                                                    </option>
+                                                                    <option value="建業中排">
+                                                                        建業中排
+                                                                    </option>
+                                                                    <option value="振興A8中排">
+                                                                        振興A8中排
+                                                                    </option>
+                                                                    <option value="宜榮二中排">
+                                                                        宜榮二中排
+                                                                    </option>
+                                                                    <option value="三泰三中排">
+                                                                        三泰三中排
+                                                                    </option>
+                                                                    <option value="三泰一中排">
+                                                                        三泰一中排
+                                                                    </option>
+                                                                    <option value="金面溪">
+                                                                        金面溪
+                                                                    </option>
+                                                                    <option value="得子口溪">
+                                                                        得子口溪
+                                                                    </option>
+                                                                    <option value="林美溪">
+                                                                        林美溪
+                                                                    </option>
+                                                                    <option value="新城溪">
+                                                                        新城溪
+                                                                    </option>
+                                                                    <option value="蝌仔埤排水">
+                                                                        蝌仔埤排水
+                                                                    </option>
+                                                                    <option value="茄苳林二排">
+                                                                        茄苳林二排
+                                                                    </option>
+                                                                    <option value="大湖排水">
+                                                                        大湖排水
+                                                                    </option>
+                                                                    <option value="隘界排水">
+                                                                        隘界排水
+                                                                    </option>
+                                                                    <option value="頂五結排水">
+                                                                        頂五結排水
+                                                                    </option>
+                                                                    <option value="月眉排水">
+                                                                        月眉排水
+                                                                    </option>
+                                                                    <option value="十六份排水">
+                                                                        十六份排水
+                                                                    </option>
+                                                                    <option value="冬螺排水">
+                                                                        冬螺排水
+                                                                    </option>
+                                                                    <option value="北富八仙排水">
+                                                                        北富八仙排水
+                                                                    </option>
+                                                                    <option value="群英排水">
+                                                                        群英排水
+                                                                    </option>
+                                                                    <option value="冬山河北側溝排水">
+                                                                        冬山河北側溝排水
+                                                                    </option>
+                                                                    <option value="林寶春排水">
+                                                                        林寶春排水
+                                                                    </option>
+                                                                    <option value="玉石中排一">
+                                                                        玉石中排一
+                                                                    </option>
+                                                                    <option value="玉石小排一">
+                                                                        玉石小排一
+                                                                    </option>
+                                                                    <option value="三星排水">
+                                                                        三星排水
+                                                                    </option>
+                                                                    <option value="阿里史排水">
+                                                                        阿里史排水
+                                                                    </option>
+                                                                    <option value="張公圍排水">
+                                                                        張公圍排水
+                                                                    </option>
+                                                                    <option value="拱照排水">
+                                                                        拱照排水
+                                                                    </option>
+                                                                    <option value="隆恩排水">
+                                                                        隆恩排水
+                                                                    </option>
+                                                                    <option value="七結排水">
+                                                                        七結排水
+                                                                    </option>
+                                                                    <option value="壯西二中排">
+                                                                        壯西二中排
+                                                                    </option>
+                                                                    <option value="三民排水">
+                                                                        三民排水
+                                                                    </option>
+                                                                    <option value="金長源排水">
+                                                                        金長源排水
+                                                                    </option>
+                                                                    <option value="民生排水">
+                                                                        民生排水
+                                                                    </option>
+                                                                    <option value="光武舊排">
+                                                                        光武舊排
+                                                                    </option>
+                                                                    <option value="柴圍排水">
+                                                                        柴圍排水
+                                                                    </option>
+                                                                    <option value="二龍排水">
+                                                                        二龍排水
+                                                                    </option>
+                                                                    <option value="猴洞溪">
+                                                                        猴洞溪
+                                                                    </option>
+                                                                    <option value="珍珠排水">
+                                                                        珍珠排水
+                                                                    </option>
+                                                                    <option value="大溪川">
+                                                                        大溪川
+                                                                    </option>
+                                                                    <option value="冬山河舊河道">
+                                                                        冬山河舊河道
+                                                                    </option>
+                                                                    <option value="蘇澳溪">
+                                                                        蘇澳溪
+                                                                    </option>
+                                                                    <option value="東澳南溪">
+                                                                        東澳南溪
+                                                                    </option>
+                                                                    <option value="東澳北溪">
+                                                                        東澳北溪
+                                                                    </option>
+                                                                    <option value="南澳南溪">
+                                                                        南澳南溪
+                                                                    </option>
+                                                                    <option value="南澳北溪">
+                                                                        南澳北溪
+                                                                    </option>
+                                                                    <option value="大灣溪">
+                                                                        大灣溪
+                                                                    </option>
+                                                                    <option value="武雲溪">
+                                                                        武雲溪
+                                                                    </option>
+                                                                    <option value="糖部排水">
+                                                                        糖部排水
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;"><span id="editdata_ApplyTown" class="input-group-text w-100 justify-content-start" style="white-space: pre-wrap;"><span class="text-danger">*</span>申請人土地</span></div> <div class="form-control" style="height: auto;">
+                                                        <div class="form-row">
+                                                            <div class="col-4">
+                                                                <label for="editdata_ApplyTown">鄉鎮:</label> <select id="editdata_ApplyTown" required="required" class="form-control">
+                                                                    <option value="">-- 請選擇 --</option>
+                                                                    <option value="三星鄉">
+                                                                        三星鄉
+                                                                    </option>
+                                                                    <option value="大同鄉">
+                                                                        大同鄉
+                                                                    </option>
+                                                                    <option value="五結鄉">
+                                                                        五結鄉
+                                                                    </option>
+                                                                    <option value="冬山鄉">
+                                                                        冬山鄉
+                                                                    </option>
+                                                                    <option value="壯圍鄉">
+                                                                        壯圍鄉
+                                                                    </option>
+                                                                    <option value="宜蘭市">
+                                                                        宜蘭市
+                                                                    </option>
+                                                                    <option value="南澳鄉">
+                                                                        南澳鄉
+                                                                    </option>
+                                                                    <option value="員山鄉">
+                                                                        員山鄉
+                                                                    </option>
+                                                                    <option value="頭城鎮">
+                                                                        頭城鎮
+                                                                    </option>
+                                                                    <option value="礁溪鄉">
+                                                                        礁溪鄉
+                                                                    </option>
+                                                                    <option value="羅東鎮">
+                                                                        羅東鎮
+                                                                    </option>
+                                                                    <option value="蘇澳鎮">
+                                                                        蘇澳鎮
+                                                                    </option>
+                                                                </select>
+                                                            </div> <div class="col-4"><label for="editdata_ApplySec_cns">地段:</label> <select id="editdata_ApplySec_cns" required="required" class="form-control"><option value="">-- 請選擇 --</option> </select></div> <div class="col-4"><label for="editdata_ApplyLand_no">地號:</label> <select id="editdata_ApplyLand_no" required="required" class="form-control"><option value="">-- 請選擇 --</option> </select></div>
+                                                        </div>
+                                                    </div>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_WaterTown" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>設置地點
+                                                        </span>
+                                                    </div> <div class="form-control" style="height: auto;">
+                                                        <div class="form-row">
+                                                            <div class="col-4">
+                                                                <label for="editdata_WaterTown">鄉鎮:</label> <select id="editdata_WaterTown" required="required" class="form-control" style="height: auto;">
+                                                                    <option value="">-- 請選擇 --</option>
+                                                                    <option value="三星鄉">
+                                                                        三星鄉
+                                                                    </option>
+                                                                    <option value="大同鄉">
+                                                                        大同鄉
+                                                                    </option>
+                                                                    <option value="五結鄉">
+                                                                        五結鄉
+                                                                    </option>
+                                                                    <option value="冬山鄉">
+                                                                        冬山鄉
+                                                                    </option>
+                                                                    <option value="壯圍鄉">
+                                                                        壯圍鄉
+                                                                    </option>
+                                                                    <option value="宜蘭市">
+                                                                        宜蘭市
+                                                                    </option>
+                                                                    <option value="南澳鄉">
+                                                                        南澳鄉
+                                                                    </option>
+                                                                    <option value="員山鄉">
+                                                                        員山鄉
+                                                                    </option>
+                                                                    <option value="頭城鎮">
+                                                                        頭城鎮
+                                                                    </option>
+                                                                    <option value="礁溪鄉">
+                                                                        礁溪鄉
+                                                                    </option>
+                                                                    <option value="羅東鎮">
+                                                                        羅東鎮
+                                                                    </option>
+                                                                    <option value="蘇澳鎮">
+                                                                        蘇澳鎮
+                                                                    </option>
+                                                                </select>
+                                                            </div> <div class="col-4"><label for="editdata_WaterSec_cns">地段:</label> <select id="editdata_WaterSec_cns" required="required" class="form-control" style="height: auto;"><option value="">-- 請選擇 --</option> </select></div> <div class="col-4"><label for="editdata_WaterLand_no">地號:</label> <select id="editdata_WaterLand_no" required="required" class="form-control" style="height: auto;"><option value="">-- 請選擇 --</option> </select></div>
+                                                        </div>
+                                                    </div>
+                                                </div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_OriginalPrice" class="input-group-text w-100 justify-content-start" style="white-space: pre-wrap;">當年度土地公告現值</span></div> <input type="number" name="editdata_OriginalPrice" onkeyup="if(event.keyCode !=37 &amp;&amp; event.keyCode != 39)value=value.replace(/\D/g,'')" min="0" class="form-control" style="height: auto;"> <div class="input-group-append" style="width: 150px;"><span id="editdata_OriginalPrice" class="input-group-text w-100 justify-content-start">(元/平方公尺)</span></div></div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UserArea" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>使用面積
+                                                        </span>
+                                                    </div> <input type="number" name="editdata_UserArea" required="required" onkeyup="if(event.keyCode !=37 &amp;&amp; event.keyCode != 39)value=value.replace(/\D/g,'')" min="0" class="form-control" style="height: auto;"> <div class="input-group-append" style="width: 150px;">
+                                                        <span id="editdata_OriginalPrice" class="input-group-text w-100 justify-content-start">
+                                                            (m
+                                                            <sup>2</sup>)
+                                                        </span>
+                                                    </div>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_Memo" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>標案位置
+                                                        </span>
+                                                    </div> <div id="Position" class="form-control form-control-lg"></div> <div class="input-group-append"><input onclick="OpenMap()" type="button" value="點選點位" class="btn btn-outline-info"></div> <div class="input-group-append" style="display: none;"><input onclick="MapPosition(VueScopes[scope.id].dataIndex)" type="button" value="定位" class="btn btn-outline-info"></div>
+                                                </div> <h4 class="text-center">上傳文件</h4> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">地籍資料</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CadastralData"></span></a> <input name="CadastralData" scpid="majorTable" id="majorTable_CadastralData" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_CadastralData')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_PlaneLocation" class="input-group-text w-100 justify-content-start">平面位置圖</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_PlaneLocation"></span></a> <input name="PlaneLocation" scpid="majorTable" id="majorTable_PlaneLocation" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_PlaneLocation')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_DesignDiagram" class="input-group-text w-100 justify-content-start">設計圖</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_DesignDiagram"></span></a> <input name="DesignDiagram" scpid="majorTable" id="majorTable_DesignDiagram" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_DesignDiagram')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_Affidavit" class="input-group-text w-100 justify-content-start">切結書</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_Affidavit"></span></a> <input name="Affidavit" scpid="majorTable" id="majorTable_Affidavit" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_Affidavit')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_Consent" class="input-group-text w-100 justify-content-start">同意書</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_Consent"></span></a> <input name="Consent" scpid="majorTable" id="majorTable_Consent" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_Consent')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_CurrentPhotos" class="input-group-text w-100 justify-content-start">現況照片</span></div> <div class="form-control" style="height: auto;"><!----> <input name="CurrentPhotos" scpid="majorTable" id="majorTable_CurrentPhotos" type="file" accept=".jpg,.jpeg,.png" multiple="multiple" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_CurrentPhotos')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_CheckPrice" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>審查費
+                                                        </span>
+                                                    </div> <input type="number" name="editdata_CheckPrice" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_UsePrice" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>使用費
+                                                        </span>
+                                                    </div> <input type="number" name="editdata_UsePrice" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_SecurityPrice" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>保證金
+                                                        </span>
+                                                    </div> <input type="number" name="editdata_SecurityPrice" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_DeadlineS" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>使用期限
+                                                        </span>
+                                                    </div> <input name="editdata_DeadlineS" type="date" required="required" class="form-control col-8"> <div class="input-group-append"><span class="input-group-text w-100 justify-content-start">~</span></div> <input name="editdata_DeadlineE" type="date" required="required" class="form-control col-8">
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;"><span id="editdata_Completion" class="input-group-text w-100 justify-content-start">完工狀態</span></div> <select name="editdata_Completion" class="form-control">
+                                                        <option value="">-- 請選擇 --</option>
+                                                        <option value="1">
+                                                            是
+                                                        </option>
+                                                        <option value="2">
+                                                            否
+                                                        </option>
+                                                        <option value="3">
+                                                            其他
+                                                        </option>
+                                                    </select>
+                                                </div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;"><span id="editdata_ConsentYear" class="input-group-text w-100 justify-content-start">許可年度</span></div> <select name="editdata_ConsentYear" class="form-control">
+                                                        <option value="" selected="selected">-- 請選擇 --</option>
+                                                        <option value="100">
+                                                            100
+                                                        </option>
+                                                        <option value="101">
+                                                            101
+                                                        </option>
+                                                        <option value="102">
+                                                            102
+                                                        </option>
+                                                        <option value="103">
+                                                            103
+                                                        </option>
+                                                        <option value="104">
+                                                            104
+                                                        </option>
+                                                        <option value="105">
+                                                            105
+                                                        </option>
+                                                        <option value="106">
+                                                            106
+                                                        </option>
+                                                        <option value="107">
+                                                            107
+                                                        </option>
+                                                        <option value="108">
+                                                            108
+                                                        </option>
+                                                        <option value="109">
+                                                            109
+                                                        </option>
+                                                        <option value="110">
+                                                            110
+                                                        </option>
+                                                        <option value="111">
+                                                            111
+                                                        </option>
+                                                    </select>
+                                                </div> 
+                                                
+                                                <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;"><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">許可日期</span></div>
+                                                    <div style="padding-top:10px;padding-left:10px">
+                                                        <label>
+                                                            <input type="radio" name="editdata_T05" value="公所" >
+                                                            公所
+                                                        </label> <label>
+                                                            <input type="radio" name="editdata_T05" value="宜蘭縣政府">
+                                                            縣府
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">許可日期</span></div> 
+                                            <input type="date" name="editdata_ConsentDay" class="form-control" style="height: auto;"></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_ConsentNum" class="input-group-text w-100 justify-content-start">許可文號</span></div> <input type="text" name="editdata_ConsentNum" class="form-control" style="height: auto;"></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_AgreeNum" class="input-group-text w-100 justify-content-start">水利會同意文號</span></div> <input type="text" name="editdata_AgreeNum" class="form-control" style="height: auto;"></div> <div class="input-group form-group row">
+                                                    <div class="input-group-prepend" style="width: 150px;">
+                                                        <span id="editdata_ContrUser" class="input-group-text w-100 justify-content-start">
+                                                            <span class="text-danger">*</span>承辦人
+                                                        </span>
+                                                    </div> <input type="text" name="editdata_ContrUser" required="required" class="form-control" style="height: auto;">
+                                                </div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_Memo" class="input-group-text w-100 justify-content-start">案件備註</span></div> <input type="text" name="editdata_Memo" class="form-control" style="height: auto;"></div> <h4 class="text-center">上傳文件</h4> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_SignDocument" class="input-group-text w-100 justify-content-start">簽辦函文</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_SignDocument"></span></a> <input name="SignDocument" scpid="majorTable" id="majorTable_SignDocument" type="file" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_SignDocument')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_CheckDocument" class="input-group-text w-100 justify-content-start">核准函文</span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CheckDocument"></span></a> <input name="CheckDocument" scpid="majorTable" id="majorTable_CheckDocument" type="file" accept=".pdf" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile('majorTable_CheckDocument')" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div> <div class="d-flex justify-content-center"><label><div class="polygon nopass-box"><div class="polygon-text"><div class="form-check"><input type="radio" value="4"> <span style="cursor: pointer;">審核未通過</span></div></div></div></label> <label><div class="polygon front-box"><div class="polygon-text"><input type="radio" value="1"> <span style="cursor: pointer;">待審核</span></div></div></label> <label><div class="polygon middle-box"><div class="polygon-text"><input type="radio" value="2"> <span style="cursor: pointer;">審核中</span></div></div></label> <label><div class="polygon back-box"><div class="polygon-text"><input type="radio" disabled="disabled" value="3"> <span style="cursor: pointer;">核准使用</span></div></div></label></div> <div class="input-group form-group row"><div class="input-group-prepend" style="width: 150px;"><span id="editdata_UndertakeMemo" class="input-group-text w-100 justify-content-start">承辦備註</span></div> <input type="text" name="editdata_UndertakeMemo" class="form-control" style="height: auto;"></div>
+                                            </div>
+                                        </div> <div style="display: none;"><div></div></div> <div style="width: 100%; margin: 20px 0px; text-align: center;"><input type="submit" value="儲存" class="btn btn-primary"> <input type="button" value="清除" class="btn btn-warning"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 地圖 -->
+    <div id="map-block" style="display:none;">
+        <div class="text-center">
+            <button id="map-close" class="btn">關閉並儲存</button>
+            <button id="map-cancel" class="btn">取消</button>
+            <button id="CreatPosition" class="btn">新增座標</button>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script>
+
+    </script>
+
+
+</body>
+</html>

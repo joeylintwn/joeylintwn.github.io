@@ -44,8 +44,10 @@
         "esri/widgets/LayerList",
         "esri/geometry/Point",
         "esri/Graphic",
-      "esri/layers/GraphicsLayer"
-      ], function (Map, MapView, WMTSLayer, LayerList, Point, Graphic, GraphicsLayer) {
+      "esri/layers/GraphicsLayer",
+      "esri/views/draw/Draw",
+      "esri/geometry/geometryEngine"
+      ], function (Map, MapView, WMTSLayer, LayerList, Point, Graphic, GraphicsLayer,Draw) {
         layer = new WMTSLayer({
           url: "https://wmts.nlsc.gov.tw/97/wmts",
           copyright:
@@ -108,7 +110,11 @@
         });
 
         graphicsLayer.add(pointGraphic);
+
+
       });
+
+
     </script>
   </head>
   <body>

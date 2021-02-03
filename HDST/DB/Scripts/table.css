@@ -1,0 +1,204 @@
+﻿
+/**** Button ****/
+.btn {
+    width: 65px;
+    height: 28px;
+    margin: 2px 1px;
+    cursor: pointer;
+    outline: none;
+    color: #444444;
+}
+
+    .btn:hover {
+        /* 滑鼠移過時,字型顏色 */
+        color: #1B6EAF;
+    }
+
+    .btn:active {
+        /* 滑鼠點壓時,字型顏色 */
+        /*color: #FF0000;*/
+    }
+
+.btn-lg {
+    /* 按鈕-長型 */
+    width: 100px;
+}
+
+
+/**** TextBox ****/
+.text {
+    width: 120px;
+    height: 23px;
+    border-radius: 3px;
+    border: 1px solid #CCCCCC;
+    padding: 0 10px;
+}
+
+    .text:focus {
+        /* 焦點時的外框陰影 */
+        -webkit-box-shadow: 0 0 10px 3px #F5F5F5;
+        -moz-box-shadow: 0 0 10px 3px #F5F5F5;
+        box-shadow: 0 0 10px 3px #F5F5F5;
+    }
+
+.text-lg {
+    /* 文字方塊-長型 */
+    width: 200px;
+}
+
+
+/**** DropDown ****/
+.dropdownlist {
+    width: 120px;
+    height: 23px;
+    padding: 0 10px;
+    cursor: pointer;
+    /*圓角效果只支援chrome.firefox.safari*/
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+
+
+
+
+
+/**** Table ****/
+.table {
+    margin: 8px 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table tr {
+        /* 列高 */
+        height: 42px;
+    }
+
+        .table tr:nth-child(2n+1):not(:first-child):not(:last-child) {
+            /* :not(:first-child) 第一列-不要變色 */
+            /* :not(:last-child)  最後列-不要變色 */
+            /* 偶數列為淡藍色 */
+            background-color: #D6E2F3;
+        }
+
+        .table tr:last-child * {
+            /* 頁碼-置中(最後列) */
+            margin: auto;
+            /* 頁碼-無底線(最後列) */
+            text-decoration: none;
+        }
+
+        .table tr:last-child a {
+            /* 頁碼(別頁),字體粗細 */
+            font-weight: bold;
+        }
+
+            .table tr:last-child a:active {
+                /* 頁碼(別頁),點壓時顏色 */
+                color: #FF0000;
+            }
+
+        .table tr:last-child span {
+            /* 頁碼(當前頁面),頁碼字體粗細 */
+            color: #444444;
+
+        } 
+
+    .table th {
+        padding: 0 5px;
+        background-color: #1B6EAF;
+        color: #FFFFFF;
+        word-break: break-all;
+    }
+
+    .table td {
+        padding: 0 5px;
+        word-break: break-all;
+    }
+
+
+.table-box {
+    /* 此設定僅設定[統一底色] */
+    background-color: #D6E2F3;
+}
+
+    .table-box td, .table-box th {
+        border: 1px solid #EEEEEE;
+    }
+
+/**** FormView 裡面的 table(Edit、Insert template) ****/
+.form {
+    margin: 10px 0;
+    border-collapse: collapse;
+    border: 1px solid #DDDDDD;
+    background-color: #FAF7F5;
+}
+
+    .form tr {
+        /* 列高 */
+        height: 42px;
+        /* 列框 */
+        border: 1px solid #DDDDDD;
+    }
+
+    .form th {
+        padding: 0 5px;
+        background-color: #1B6EAF;
+        color: #FFFFFF;
+    }
+
+    .form td {
+        text-align: left;
+        padding: 0 5px;
+    }
+
+
+
+
+
+.checkbox * {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.checkbox * {
+    /*內容標籤顏色*/
+    color: #444444;
+    /*font-weight: bold;*/ /*移除註解即可使用*/
+    font-size: 16px;
+}
+
+    .checkbox *:hover {
+        /*標籤滑過時顏色*/
+        color: #1B6EAF;
+    }
+
+    .checkbox *:active {
+        /*標籤點選時顏色*/
+        color: #1967A5;
+    }
+
+
+
+.radio * {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.radio * {
+    /*內容標籤顏色*/
+    color: #444444;
+    /*font-weight: bold;*/ /*移除註解即可使用*/
+    font-size: 16px;
+}
+
+    .radio *:hover {
+        /*標籤滑過時顏色*/
+        color: #1B6EAF;
+    }
+
+    .radio *:active {
+        /*標籤點選時顏色*/
+        color: #1967A5;
+    }

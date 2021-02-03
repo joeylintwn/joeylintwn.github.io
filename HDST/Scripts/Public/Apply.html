@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>水利資訊智慧管理決策平台</title>
+    <!-- 自訂樣式 -->
+    <link href="../Content/style.css" rel="stylesheet" />
+
+    <!-- Bootstrap相關樣式 -->
+    <link href="../Content/bootstrap4.css" rel="stylesheet" />
+
+    <!-- Jquery -->
+    <script src="../Scripts/jquery-v3.4.1.js"></script>
+
+    <!-- Vue -->
+    <script src="../Scripts/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-cookies@1.7.0/vue-cookies.min.js"></script>
+    <script src="../Scripts/vue-axios.js"></script>
+    
+    <!-- Bootstrap設定 -->
+    <script src="../Scripts/bootstrap4.js" type="text/javascript"></script>
+
+    <!-- DBAPI -->
+    <script src="../Scripts/DBApi.js"></script>
+    <script src="../Scripts/custVue.js"></script>
+    <style>
+          * {
+            font-family: Arial, 微軟正黑體;
+        }
+
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <!--設置陰影用div-->
+    <div class="top_layout top">
+        <!--top區塊-->
+        <div class="top_logo"></div>
+        <div class="top_SystemName top_SystemName_Water">水利資訊智慧管理決策平台</div>
+
+        <div class="clear"></div>
+    </div>
+    <!--top區塊-->
+    <div class="clear"></div>
+    <div class="public-apply-content" style="margin-top:60px;" id="myApp">
+        <!--內容區塊-->
+        <div class="container">
+            <h1 class="text-primary text-center pt-3">民眾帳號申請</h1>
+            <form name="myForm" @submit="SaveData">
+                <div class="form-group row">
+                    <label for="text-account" class="col-sm-3 col-form-label text-sm-right ">*帳號：</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="text-account" v-model="editdata.AccountID">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-pwd" class="col-sm-3 col-form-label text-sm-right">*密碼：</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="text-pwd" v-model="editdata.Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-chkpwd" class="col-sm-3 col-form-label text-sm-right">*確認密碼：</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="text-chkpwd" v-model="editdata.ChkPassword">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-name" class="col-sm-3 col-form-label text-sm-right">*姓名：</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="text-name" v-model="editdata.Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-email" class="col-sm-3 col-form-label text-sm-right">*電子信箱：</label>
+                    <div class="col-sm-5">
+                        <input type="email" class="form-control" id="text-email" v-model="editdata.EMail">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-phone" class="col-sm-3 col-form-label text-sm-right">*連絡電話：</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="text-phone" v-model="editdata.Phone">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-sex" class="col-sm-3 col-form-label text-sm-right">性別：</label>
+                    <div class="col-sm-5 ">
+                        <div class="form-control">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="text-sex-man" name="text-sex" class="custom-control-input"
+                                    value="1" v-model="editdata.Gender">
+                                <label class="custom-control-label" for="text-sex-man">男</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="text-sex-woman" name="text-sex" class="custom-control-input"
+                                    value="0" v-model="editdata.Gender">
+                                <label class="custom-control-label" for="text-sex-woman">女
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="text-validkey" class="col-sm-3 col-form-label text-sm-right">驗證碼：</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="text-validkey" v-model="editdata.VaildKey">
+                    </div>
+                    <div class="col-sm-4">
+                        <img id='imgKey' alt="驗證碼" style='height: 38px;' :src="imgKeySrc" />
+                        <!-- <input @click="GetVaildKeyBtn" type="button" value="取得" /> -->
+                        <!-- <input @click="CheckVaildKey" type="button" value="測試" /> -->
+                    </div>
+
+                </div>
+                <div class="form-group row justify-content-center">
+                    <input type="submit" class="btn btn-primary px-5 mx-1" value="確認" />
+                    <input type="button" class="btn btn-warning px-5 mx-1" value="取消" @click="CancelBtn" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: "#myApp",
+            data: {
+                db: null,
+                errors: [],
+                editdata: {
+                    AccountID: "",
+                    Password: "",
+                    Status: "0",
+                    UserID: "0",
+                    DeptID: "-1",
+                    TitID: "-1",
+                    Gender: "0",
+                    isPublic:true,
+                },
+                Workpath: null,
+                APIUrl: null,
+                VaildKey: null,
+                imgKeySrc: null
+            },
+            mounted: function () {
+                let self = this;
+                this.Workpath= window.location.pathname.split('/')[1];
+                this.Workpath=this.Workpath.toLocaleLowerCase().replace("public", "");
+                this.APIUrl=window.location.origin + "/" + this.Workpath + "/api/db/";
+                this.db = new DBApi(this.APIUrl)
+                this.GetVaildKeyBtn();
+
+            },
+            methods: {
+                SaveData: function (myForm) {
+                    let self = this;
+                    myForm.preventDefault();
+                    let isValid = this.validForm();
+                    if (isValid) {
+                        axios({
+                                method: "post",
+                                url: "../SysMgn/User/SaveUser",
+                                params: this.editdata
+                            })
+                            .then(function (response) {
+                                if (response.data != "") {
+                                    alert(response.data);
+                                    self.GetVaildKeyBtn();
+                                    return;
+                                }
+                                alert("帳號申請成功，即將返回登入畫面。請至您的Email，進行帳號啟用");
+                                axios({
+                                        method: "get",
+                                        url: "../api/my/SendEmail",
+                                        params: {
+                                            receive: self.editdata.EMail,
+                                            account: self.editdata.AccountID
+                                        }
+                                    })
+                                    .then(function (response) {
+                                        window.location = window.location.origin + "/" + self
+                                            .Workpath;
+                                    })
+                                    .catch(function (error) {
+                                        // 请求失败处理
+                                        console.log(error);
+                                    });
+                            })
+                            .catch(function (error) {
+                                // 请求失败处理
+                                console.log(error);
+                            });
+
+                    }
+                },
+                CancelBtn: function () {
+                    window.location = window.location.origin + "/" + this.Workpath;
+                },
+                validForm: function () {
+                    try {
+                        if (!this.editdata.AccountID) {
+                            alert("請填入帳號")
+                            return false;
+                        } else {
+                            let Regex = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/;
+                            if (this.editdata.AccountID.length < 8 || this.editdata.AccountID.length > 16 ||
+                                !Regex.test(this.editdata.AccountID)) {
+                                alert("帳號需為英數組合至少8碼，最多16碼")
+                                return false;
+                            }
+                        }
+                        if (!this.editdata.Password) {
+                            alert("請填入密碼")
+                            return false;
+                        } else {
+                            let Regex = /^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/;
+                            if (this.editdata.Password.length < 6 ||
+                                !Regex.test(this.editdata.Password)) {
+                                alert("密碼需為英數組合至少6碼")
+                                return false;
+                            }
+                        }
+                        if (this.editdata.Password != this.editdata.ChkPassword) {
+                            alert("兩次輸入的密碼不一致")
+                            return false;
+                        }
+                        if (!this.editdata.Name) {
+                            alert("請填入姓名")
+                            return false;
+                        }
+                        if (!this.editdata.EMail) {
+                            alert("請填入電子信箱")
+                            return false;
+                        }
+                        if (!this.editdata.Phone) {
+                            alert("請填入連絡電話")
+                            return false;
+                        }
+                        if (!this.editdata.VaildKey) {
+                            alert("請填入驗證碼")
+                            return false;
+                        }
+                    } catch (error) {
+                        alert(error);
+                        return false;
+                    }
+
+                    return true;
+                },
+                GetVaildKeyBtn: function () {
+                    let self = this;
+                    axios({
+                            method: "get",
+                            url: "../SysMgn/User/GetSaveImgCode",
+                        })
+                        .then(function (response) {
+                            self.imgKeySrc = response.data;
+                        })
+                        .catch(function (error) {
+                            // 请求失败处理
+                            console.log(error);
+                        });
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
