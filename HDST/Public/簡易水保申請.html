@@ -263,21 +263,62 @@
             w: 150,//0整個消失
             type: "",//tx文字
             op: '',
+            must: false,
             wrap: false,
             append: function (e) {
                 switch (e.type) {
-                    case "tx":
 
+                    case "tx":
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
-                        ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
-                        ss += '</span>'
-                        ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
-                        ss += '</div>'
+                        var idar = e.id.split('|');
+                        var opar = e.op.split('|');
+                        var mdcnt = 4;//越小同一行放越多格
+                        if (idar.length > 5) {
+                            mdcnt = 1;
+                        } else if (idar.length == 2) {
+                            mdcnt = 6;
+                        } else if (idar.length == 3) {
+                            mdcnt = 4;
+                        } else if (idar.length == 4) {
+                            mdcnt = 3;
+                        } else if (idar.length == 5) {
+                            mdcnt = 2;
+                        }
+                        console.log(mdcnt);
+
+                        if (idar.length == 1) {
+                            ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                            ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
+                            ss += (e.must ? '<span class="text-danger">*</span>' : '') + e.id
+                            ss += '</span>'
+                            ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
+
+                        } else {
+                            $.each(idar, function (i, idarval) {
+                                ss += '<div class="input-group col-md-' + mdcnt + ' col-12 row no-gutters" > ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                                ss += '<span  class="input-group-text w-100">'
+                                ss += '<span class="text-danger">*</span>' + idarval
+                                if (opar[i] == 'tx') {
+                                    ss += '<input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;"></span>'
+                                } else if (opar[i] == 'dp') {
+                                    ss += '<select name="editdata_UseYear" required="required" class="form-control" style="height: auto;">'
+                                    ss += '<option value="">-- 請選擇 --</option></select>'
+                                } else if (opar[i] == 'dt') {
+
+                                    ss += '<input name="editdata_UseDay" type="date" required="required" class="form-control" >'
+                                }
+
+                                ss += '</div> '
+                            });
+                        }
+
+
+                        ss += '</div> '
                         $('#content_body').append(ss);
                         break;
+
+
 
                     case "dp":
 
@@ -285,7 +326,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
                         ss += '<span id="editdata_UseYear" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += (e.must ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '</span></div> <select name="editdata_UseYear" required="required" class="form-control col-2" style="height: auto;">'
                         ss += '<option value="">-- 請選擇 --</option></select></div>'
                         $('#content_body').append(ss);
@@ -297,7 +338,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
                         ss += '<span id="editdata_UseDay" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += (e.must ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '</span></div> <input name="editdata_UseDay" type="date" required="required" class="form-control col-2"></div>'
 
                         $('#content_body').append(ss);
@@ -310,7 +351,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '                       <div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
                         ss += '                           <span id="editdata_Memo" class="input-group-text w-100 justify-content-start">'
-                        ss += '                               <span class="text-danger">*</span>' + e.id
+                        ss += (e.must ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '                           </span>'
                         ss += '                       </div> <div id="Position" class="form-control form-control-lg"></div> <div class="input-group-append"><input onclick="OpenMap()" type="button" value="點選點位" class="btn btn-outline-info"></div> <div class="input-group-append" style="display: none;"><input onclick="MapPosition(VueScopes[scope.id].dataIndex)" type="button" value="定位" class="btn btn-outline-info"></div>'
                         ss += '                   </div>'
@@ -324,7 +365,7 @@
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
-                        ss += '                       <span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + e.id
+                        ss += '<span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + (e.must ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '                       </span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CadastralData"></span></a> <input name="CadastralData" scpid="majorTable" id="majorTable_CadastralData" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile()" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div>'
                         $('#content_body').append(ss);
                         break;
@@ -357,7 +398,7 @@
                     case "rd":
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
                         ss += '<div style="padding-top:10px;padding-left:10px">'
                         var opar = e.op.split('|');
                         $.each(opar, function (i, oparval) {
@@ -374,7 +415,7 @@
                     case "ck":
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
                         ss += '<div style="padding-top:10px;padding-left:10px">'
                         var opar = e.op.split('|');
                         $.each(opar, function (i, oparval) {
@@ -390,7 +431,7 @@
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
                         ss += '<hr class="col-md-11 float-left" style="border: ' + e.w + 'px solid ' + e.id + ';">'
-                        //0.25// rgb(255, 106, 0)
+                        //0.25// rgb(255, 106, 0)                
                         ss += '</div>'
                         $('#content_body').append(ss);
                         break;

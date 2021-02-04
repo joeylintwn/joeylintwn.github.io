@@ -99,14 +99,23 @@
                             <td style="width:15%;vertical-align:top">
                                 <div class="content_left" id="menu_list" style="min-height: 568px;">
                                     <!--左邊欄-->
-                                    <div class="public_content_left"><div class="content_left_Alloptions_layout"><div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text content_ledt_option_text_active">新增案件</div></div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="2" class="content_ledt_option_text">案件查詢</div></div> <div class="clear"></div></div></div>
+                                    <div class="public_content_left">
+                                        <div class="content_left_Alloptions_layout">
+                                            <div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option">
+                                                <div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text ">新增案件</div>
+                                            </div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option">
+                                                <div class="content_left_option_icon System_content_left_record_icon"></div>
+                                                <div value="2" class="content_ledt_option_text content_ledt_option_text_active">案件查詢</div>
+                                            </div> <div class="clear"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                             <td style="vertical-align:top">
                                 <div class="content_right" style="min-height: 568px; width: 100%;">
                                     <div class="content_rihgt_breadcrumb_layout" id="Bread_Crumbs">
                                         <!--上方橫幅-->
-                                        <div class="content_rihgt_breadcrumb_layout"><div>簡易水保申請 〉新增案件</div></div>
+                                      簡易水保申請 〉新增案件
                                     </div>
                                     <hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);">
                                     <br>
@@ -158,26 +167,23 @@
             //thousandsseparator: ","
         };
 
+        //列表動作欄
+        var actionstr = ['檢視', '編輯', '刪除'];
+        var actionlen = [70, 70, 70];
+        var actionstr1 = "";
+        $.each(actionstr, function (i, val) {
+            actionstr1 += "<span class=\"System_content_right_table_BTN\" style=\"width:" + actionlen[i] + "px\" onclick=\"alert('" + val + "')\">" + val + "</span>"
+        });
 
+        //列表資料
         var dlist = [
           {
-              Action: "<span class=\"System_content_right_table_BTN\" onclick=\"ViewCase('49')\">檢視</span><span class=\"System_content_right_table_BTN\" style=\"width:120px\" onclick=\"InsertFileToServer('49')\">文件上傳</span><span class=\"System_content_right_table_BTN\" style=\"width:120px\" onclick=\"DrawObjToMap('49')\">施工項目繪製</span><span class=\"System_content_right_table_BTN\"  onclick=\"EndThisCase('49,1')\">報驗</span>",
+              Action: actionstr1,
               ArchitectLicenseno: "001",
-              CaseName: "測試1",
-              CaseSubNo: "測試1",
-              Complete: 1,
-              DesignComp: null,
-              DoorNo: "宜蘭大學",
-              ID: 49,
-              Manger: "UJ測試業務主辦",
-              ReCallDate: "2019/07/05",
-              ScheduleComp: "briantest規劃廠商",
-              ScheduleCompleteDate: "",
-              ScheduleEndDate: "2019/06/06",
-              ScheduleStartDate: "2019/02/06",
-              Town: "壯圍鄉",
-              Type: "規劃",
-              note: ""
+              name: "受理機關",
+              dt1: "申報日期",
+              pjname: "案件名稱",
+              pjnano: "NO-1100204001",
           }
 
         ]
@@ -186,9 +192,6 @@
     
 
         //動作項目
-
-
-
 
         var urSource = null;
         function createJqXGridUI(datalist, domID) {
@@ -239,14 +242,11 @@
                     ready: function () {
                         $('#' + domID).jqxGrid('autoresizecolumns');
                     },
-                    columns: [
-                        { text: '名稱', datafield: 'name', align: 'center', width: 150, minwidth: 150 },
-                        { text: '地址', datafield: 'address', align: 'center', width: 200, minwidth: 100 },
-                        { text: '日期', datafield: 'dt', align: 'center', width: 200, minwidth: 100 },
-                        { text: '狀態', datafield: 'st', align: 'center', width: 110, minwidth: 110 },
-                        { text: '備註', datafield: 'note', align: 'center', width: 150, minwidth: 150 },
-                        { text: '類別', datafield: 'stype', align: 'center', width: 100, minwidth: 100 },
-
+                    columns: [//欄位，串到列表資料
+                        { text: '受理機關', datafield: 'name', align: 'center', width: 150, minwidth: 150 },
+                        { text: '申報日期', datafield: 'dt1', align: 'center', width: 200, minwidth: 100 },
+                        { text: '計畫名稱', datafield: 'pjname', align: 'center', width: 200, minwidth: 100 },
+                        { text: '案件編號', datafield: 'pjnano', align: 'center', width: 110, minwidth: 110 },
                         { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 1000, minwidth: 1000 }
                     ]
                 });
@@ -258,25 +258,67 @@
 
         //-----------畫面-------------------
         const hobj = {
-            id: "",
+            id: "",//欄位標題，加|多欄變rwd
             w: 150,//0整個消失
             type: "",//tx文字
             op: '',
+            must:'0',//是1否0必填
             wrap: false,
             append: function (e) {
                 switch (e.type) {
+                    
                     case "tx":
-
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
-                        ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
-                        ss += '</span>'
-                        ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
-                        ss += '</div>'
+                        var idar = e.id.split('|');
+                        var opar = e.op.split('|');
+                        var mustar = e.must.split('|');
+                        var mdcnt = 4;//越小同一行放越多格
+                        if (idar.length > 5) {
+                            mdcnt = 1;
+                        } else if (idar.length ==2 ) {
+                            mdcnt = 6;
+                        } else if (idar.length == 3) {
+                            mdcnt = 4;
+                        } else if (idar.length == 4) {
+                            mdcnt = 3;
+                        } else if (idar.length == 5) {
+                            mdcnt = 2;
+                        }
+                        console.log(mdcnt);
+
+                        if (idar.length == 1) {
+                            ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                            ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
+                            ss += (e.must=='1'?'<span class="text-danger">*</span>':'') + e.id
+                            ss += '</span>'
+                            ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
+                            
+                        } else {
+                            $.each(idar, function (i, idarval) {
+                                ss += '<div class="input-group col-lg-' + mdcnt + '" > ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                                ss += '<span  class="input-group-text w-100">'
+                                ss += (mustar[i]==1 ? '<span class="text-danger">*</span>' : '') + idarval
+                                if (opar[i] == 'tx') {
+                                    ss += '<input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;"></span>'
+                                } else if (opar[i] == 'dp') {
+                                    ss += '<select name="editdata_UseYear" required="required" class="form-control" style="height: auto;">'
+                                    ss += '<option value="">-- 請選擇 --</option></select>'
+                                } else if (opar[i] == 'dt') {
+                             
+                                    ss += '<input name="editdata_UseDay" type="date" required="required" class="form-control ' + (idar.length == 4 ? 'col-md-7' : '') + '" >'
+                                }
+                                
+                                ss += '</div> '
+                            });
+                        }
+                       
+
+                        ss += '</div> '
                         $('#content_body').append(ss);
                         break;
+
+
 
                     case "dp":
 
@@ -284,7 +326,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
                         ss += '<span id="editdata_UseYear" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '</span></div> <select name="editdata_UseYear" required="required" class="form-control col-2" style="height: auto;">'
                         ss += '<option value="">-- 請選擇 --</option></select></div>'
                         $('#content_body').append(ss);
@@ -296,7 +338,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
                         ss += '<span id="editdata_UseDay" class="input-group-text w-100 justify-content-start">'
-                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '</span></div> <input name="editdata_UseDay" type="date" required="required" class="form-control col-2"></div>'
 
                         $('#content_body').append(ss);
@@ -309,7 +351,7 @@
                         ss += '<div class="input-group form-group row">'
                         ss += '                       <div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
                         ss += '                           <span id="editdata_Memo" class="input-group-text w-100 justify-content-start">'
-                        ss += '                               <span class="text-danger">*</span>' + e.id
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '                           </span>'
                         ss += '                       </div> <div id="Position" class="form-control form-control-lg"></div> <div class="input-group-append"><input onclick="OpenMap()" type="button" value="點選點位" class="btn btn-outline-info"></div> <div class="input-group-append" style="display: none;"><input onclick="MapPosition(VueScopes[scope.id].dataIndex)" type="button" value="定位" class="btn btn-outline-info"></div>'
                         ss += '                   </div>'
@@ -323,7 +365,7 @@
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
                         ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
-                        ss += '                       <span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + e.id
+                        ss += '<span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
                         ss += '                       </span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CadastralData"></span></a> <input name="CadastralData" scpid="majorTable" id="majorTable_CadastralData" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile()" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div>'
                         $('#content_body').append(ss);
                         break;
@@ -356,7 +398,7 @@
                     case "rd":
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
                         ss += '<div style="padding-top:10px;padding-left:10px">'
                         var opar = e.op.split('|');
                         $.each(opar, function (i, oparval) {
@@ -373,7 +415,7 @@
                     case "ck":
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
                         ss += '<div style="padding-top:10px;padding-left:10px">'
                         var opar = e.op.split('|');
                         $.each(opar, function (i, oparval) {
@@ -394,7 +436,26 @@
                         $('#content_body').append(ss);
                         break;
 
+                        break;
 
+                    case "bt":
+                        var idar = e.id.split('|');
+                        var opar = e.op.split('|');
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
+
+                        $.each(idar, function (i, idarval) {
+                            ss += '<input type="submit" value="' + idarval + '" class="btn btn-primary">'
+
+
+                            //0.25// rgb(255, 106, 0)           
+                        });
+                        ss += '</div>'
+
+                        $('#content_body').append(ss);
+                        break;
                 }
             }
         }
@@ -402,274 +463,15 @@
             $('#content_body').html('');
 
             var cc = hobj;
-            cc.id = "受理機關"
+            cc.id = "案件編號：|計畫名稱：|申報日期(起)：|申報日期(迄)："//最多支援單行4個
             cc.type = "tx";
+            cc.op = "tx|dp|dt|dt";
             cc.append(cc);
             cc.id = "申報日期"
-            cc.type = "dt";
-            cc.append(cc);
-            cc.id = "計畫名稱"
-            cc.type = "tx";
-            cc.append(cc);
-            cc.id = "案件編號"
-            cc.type = "tx";
+            cc.type = "bt";
             cc.append(cc);
 
-            cc.id = "開發種類"
-            cc.type = "tt";
-            cc.append(cc);
-
-            cc.id = "<span style='font-size:14px'>於山坡地或森林區內從事本法第十二條第一項各款行為，且挖方及填方加計總和或堆積土石方分別未滿二千立方公尺，適用水土保持計畫審核監督辦法第三條規定之種類及規模（備註二）： </span>"
-            cc.type = "tt8";
-            cc.append(cc);
-
-            cc.id = ""
-            cc.type = "ck";
-            cc.op += "一、從事農、林、漁、牧地之開發利用所需之修築農路：路基寬度未滿四公尺，且長度未滿五百公尺者。"
-            cc.op += "|二、從事農、林、漁、牧地之開發利用所需之整坡作業：未滿二公頃者。"
-            cc.op += "|三、修建鐵路、公路、農路以外之其他道路：路基寬度未滿四公尺，且路基總面積未滿二千平方公尺。"
-            cc.op += "|四、改善或維護既有道路者：拓寬路基或改變路線之路基總面積未滿二千平方公尺。"
-            cc.op += "|五、開發建築用地：建築面積及其他開挖整地面積未滿五百平方公尺者。"
-            cc.op += "|六、農作產銷設施之農業生產設施、林業設施之林業經營設施或畜牧設施之養畜設施、養禽設施、孵化場(室)設施、青貯設施：建築面積及其他開挖整地面積合計未滿一公頃；免申請建築執照者，前開建築面積以其興建設施面積核計。"
-            cc.op += "|七、堆積土石。"
-            cc.op += "|八、採取土石：土石方未滿三十立方公尺者。"
-            cc.op += "|九、設置公園、墳墓、運動場地、原住民在原住民族地區依原住民族基本法第十九條規定採取礦物或其他開挖整地：開挖整地面積未滿一千平方公尺。"
-            cc.op += "|十、其他法令規定，得以簡易水土保持申報書代替者。"
-            cc.wrap = true;
-            cc.w = 0;
-            cc.append(cc);
-
-            cc.id = "水土保持義務人"
-            cc.type = "tt";
-            cc.append(cc);
-
-
-
-
-            cc.id = "姓名或名稱"
-            cc.type = "tx";
-            cc.w = 150;
-            cc.append(cc);
-
-            cc.id = "國民身分證統一編號或營利事業統一編號"
-            cc.w = 320;
-            cc.type = "tx";
-            cc.append(cc);
-
-            cc.id = "電話"
-            cc.type = "tx";
-            cc.w = 150;
-            cc.append(cc);
-
-            cc.id = "住居所或營業所"
-            cc.type = "tx";
-            cc.append(cc);
-
-            cc.id = "實施地點"
-            cc.type = "tt";
-            cc.append(cc);
-
-
-            cc.id = "計畫面積(公頃)"
-            cc.type = "tx";
-            cc.append(cc);
-
-            cc.id = "使用編定別"
-            cc.type = "tx";
-            cc.append(cc);
-
-            cc.id = "土地座落"
-            cc.type = "lc";
-            cc.append(cc);
-
-            cc.id = "土地權屬"
-            cc.type = "tx";
-            cc.append(cc);
-
-            cc.id = "檢核事項"
-            cc.type = "tt";
-            cc.append(cc);
-
-            cc.id = "申請開發基地內土地無違規開發情形？"
-            cc.w = 380;
-            cc.type = "rd";
-            cc.op = "是|否  水土保持計畫審核監督辦法第十條第一項第六款及第七款";
-            cc.wrap = false;
-            cc.append(cc);
-
-            cc.id = "申請開發基地內土地無座落於特定水土保持區？"
-            cc.w = 380;
-            cc.type = "rd";
-            cc.op = "是|否  水土保持法第十九條第二項及水土保持計畫審核監督辦法第十一條第四款";
-            cc.wrap = false;
-            cc.append(cc);
-
-            cc.id = "申請開發基地內土地無座落於國家公園範圍內？"
-            cc.w = 380;
-            cc.type = "rd";
-            cc.op = "是|否  水土保持法第十四條";
-            cc.wrap = false;
-            cc.append(cc);
-
-            cc.id = "申請開發基地內土地無座落於水庫集水區範圍內？"
-            cc.w = 380;
-            cc.type = "rd";
-            cc.op = "是|否  山坡地保育利用條例第三十二條之一";
-            cc.wrap = false;
-            cc.append(cc);
-
-            cc.id = "開發規模"
-            cc.type = "tt";
-            cc.append(cc);
-
-
-            cc.id = "農業整坡作業(公頃)"
-            cc.type = "tx";
-            cc.w = 280;
-            cc.append(cc);
-
-
-
-
-
-
-            cc.id = "<span style='font-size:14px'>修築農路</font>"
-            cc.type = "tt";
-            cc.w = 280;
-            cc.append(cc);
-
-
-            cc.id = "長度(公尺)"
-            cc.type = "tx";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "路基寬度(公尺)"
-            cc.type = "tx";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-            cc.id = "<span style='font-size:14px'>修建其他道路</font>"
-            cc.type = "tt";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "路基寬度(公尺)"
-            cc.type = "tx";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "路基總面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-            cc.id = "改善或維護既有道路路基總面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "<span style='font-size:14px'>開發建築用地</font>"
-            cc.type = "tt";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "建築面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "其他開挖整地面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "合計(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-
-            cc.id = "堆積土石(立方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "採取土石(立方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "<span style='font-size:14px'>設置公園、墳墓、運動場地、原住民在原住民族地區依原住民族基本法第十九條規定採取礦物或其他開挖整地</font>"
-            cc.type = "tt";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "開挖整地面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-
-
-
-            cc.id = "<span style='font-size:14px'>農作產銷設施之農業生產設施、林業設施之林業經營設施或畜牧設施之養畜設施、養禽設施、孵化場(室)設施、青貯設施</font>"
-            cc.type = "tt";
-            cc.w = 280;
-            cc.append(cc);
-
-            cc.id = "建築面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "其他開挖整地面積(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-
-            cc.id = "合計(平方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-            cc.id = "挖、填方總和(立方公尺)"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-            cc.id = "付款或注意事項"
-            cc.type = "tx";
-            cc.w = 340;
-            cc.append(cc);
-
-
-            cc.id = "附件上傳"
-            cc.type = "up";
-            cc.w = 340;
-            cc.append(cc);
-
+            
 
 
         })
