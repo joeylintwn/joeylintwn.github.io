@@ -1,0 +1,318 @@
+﻿<html>
+<head>
+    <style type="text/css">
+        @charset "UTF-8";
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+
+        ng\:form {
+            display: block;
+        }
+
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+
+        .ng-anchor {
+            position: absolute;
+        }
+    </style>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <link href="..//Content/style.css" rel="stylesheet">
+
+    <link href="..//Content/DB/bootstrap.css" rel="stylesheet">
+    <link href="..//Scripts/Widgets/styles/jqx.base.css" rel="stylesheet" type="text/css">
+    <link href="..//Scripts/Widgets/styles/jqx.custom.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        html, body {
+            font-family: 'Microsoft JhengHei';
+        }
+    </style>
+
+
+    <script src="..//Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+    <script src="..//Scripts/Widgets/jqxcore.js" type="text/javascript"></script>
+    <script src="..//Scripts/Widgets/jqx-all2.js" type="text/javascript"></script>
+    <script src="..//Scripts/angular-1.4.6/angular.min.js"></script>
+    <script src="..//Scripts/angular-1.4.6/angular-cookies.js"></script>
+    <script src="..//Scripts/custAngular.js" type="text/javascript"></script>
+    <script src="..//Content/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link href="..//Content/My97DatePicker/skin/WdatePicker.css" rel="stylesheet" type="text/css">
+    
+    <script src="..//Scripts/DBApi.js"></script>
+    <script src="..//Scripts/jquery.cookie.js"></script>
+    <link href="..//Content/Style1.css" rel="stylesheet">
+    <link href="..//Scripts/Widgets/styles/jqx.base.css" rel="stylesheet" type="text/css">
+    <link href="..//Scripts/Widgets/styles/jqx.custom.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsreorder.js"></script>
+    <script type="text/javascript" src="..//Scripts/Jtest.js"></script>
+    <style type="text/css">
+        html, body {
+            font-family: 'Microsoft JhengHei';
+        }
+
+        input.button_Style.select-item, div.select-item {
+            background-color: orange;
+        }
+    </style>
+    <script type="text/javascript">
+        
+    </script>
+
+</head>
+<body>
+    <div>
+        <!--設置陰影用div-->
+        <div class="top_layout top">
+            <!--top區塊-->
+            <div class="top_logo"></div>
+            <div class="top_SystemName top_SystemName_Water">下水道營運管理系統</div>
+            <div class="top_loginBTN_layout top_loginBTN" onclick="btnLogout_onclick()">
+                <div class="top_loginBTN_icon"></div>
+                <div class="top_loginBTN_text">登出</div>
+            </div>
+            <div class="top_loginBTN_layout top_loginBTN" style="width:125px" onclick="btnShared_onclick()">
+                <div class="top_loginBTN_icon"></div>
+                <div class="top_loginBTN_text" style="margin-left:5px;">意見回饋</div>
+            </div>
+            <div class="top_loginBTN_layout top_loginBTN" style="width:125px">
+                <div class="top_loginBTN_icon"></div>
+                <div id="username" class="top_loginBTN_text" style="margin-left:5px;"></div>
+            </div>
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="clear"></div>
+        <div class="clear"></div>
+        <div class="contentMap" style="min-height: 716px;">
+            <!--內容區塊-->
+            <div class="OrangeBorder" style="min-height: 688px;">
+                <!--橘色框-->
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td style="width:198px;vertical-align:top">
+                                <div class="content_left" id="menu_list" style="min-height: 568px;">
+                                    <!--左邊欄-->
+                                </div>
+                            </td>
+                            <td style="vertical-align:top">
+                                <div class="content_right" style="min-height: 568px; width: 100%;">
+                                    <div class="content_rihgt_breadcrumb_layout" id="Bread_Crumbs">
+                                        <!--上方橫幅-->
+                                    </div>
+                                    <br>
+                                    <div class="content_right_breadcrumb_text" id="Title_Menu">
+                                        <!--動作欄-->
+                                    </div>
+
+
+                                    <div id="content_body" class="table">
+                                        <!--資料table-->
+                                        <div id="gv_main"></div>
+                                    </div>
+
+
+                                </div><!--右邊欄-->
+                                <div id="jqxLoader" class="jqx-widget jqx-loader jqx-rc-all jqx-fill-state-normal jqx-rc-t jqx-rc-b jqx-popup" style="width: 100px; height: 60px; left: -50px; top: -30px; display: none;"><div class="jqx-loader-icon" style="background-position-y: 0%;"></div><div class="jqx-loader-text jqx-loader-text-bottom">Loading...</div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clear"></div>
+            </div><!--橘色框-->
+            <div class="clear"></div>
+        </div><!--內容區塊-->
+    </div><!--設置陰影用div-->
+
+
+
+    <script type="text/javascript">
+        //#region 頁面初始
+        function _Layout_init() {
+            //GetUserAuth();//取得權限清單
+            //GetUserData();//取得使用者資料
+
+
+            var intBrowserW = 0; //瀏覽器內容寬度
+
+
+            var intBrowserH = 0; //瀏覽器內容高度
+
+
+            if (document.documentElement) {  //取得瀏覽器內容寬度/高度
+                intBrowserW = document.documentElement.clientWidth;
+                intBrowserH = document.documentElement.clientHeight;
+            } else {
+                intBrowserW = document.body.clientWidth;
+                intBrowserH = document.body.clientHeight;
+            }
+            //content灰底高度設置
+            $(".contentMap").css("min-height", intBrowserH);
+            //橘色框高度設置
+
+
+            var OrangeBorderHeight = intBrowserH - 28;
+            $(".OrangeBorder").css("min-height", OrangeBorderHeight);
+            //左邊欄高度設置
+
+
+            var ContentLeftHeight = intBrowserH - 148;
+            $(".content_left").css("min-height", ContentLeftHeight);
+            //右邊欄高度、寬度設置
+
+
+            var ContentRightHeight = intBrowserH - 148;
+            var OrangeborderWidth = $(".OrangeBorder").width();
+            var ContentRightWidth = OrangeborderWidth - 220;
+            $(".content_right").css("min-height", ContentRightHeight);
+            $(".content_right").css("width", ContentRightWidth);
+            //分隔線高度設置
+
+
+            var ContentSeparateLineHeight = $(".OrangeBorder").height() - 130;
+            $(".content_separateline_layout").css("min-height", ContentSeparateLineHeight);
+            $(".content_separateline1").css("min-height", ContentSeparateLineHeight);
+            $(".content_separateline2").css("min-height", ContentSeparateLineHeight);
+
+            //表格底圖高度設置
+            var ContentRightTableHeight = $(".System_content_right_table").height();
+            $(".System_content_right_table_layout").css("height", ContentRightTableHeight);
+
+        }
+
+        //=======JqGrid 的語言設定==============================
+        var localizationobj = {
+            pagergotopagestring: "頁數移至:",
+            pagershowrowsstring: "頁&emsp;&emsp;分頁筆數:",
+            pagerrangestring: "&emsp;總筆數:",
+            pagernextbuttonstring: "下一頁",
+            pagerpreviousbuttonstring: "上一頁",
+            sortascendingstring: "升冪",
+            sortdescendingstring: "降冪",
+            sortremovestring: "取消排序",
+            emptydatastring: "無資料",
+            pagerfirstbuttonstring: "第一頁",
+            pagerlastbuttonstring: "最後頁"
+            //firstDay: 1,
+            //percentsymbol: "%",
+            //currencysymbol: "€",
+            //currencysymbolposition: "before",
+            //decimalseparator: ".",
+            //thousandsseparator: ","
+        };
+
+
+        var dlist = [
+          {
+              Action: "<span class=\"System_content_right_table_BTN\" onclick=\"ViewCase('49')\">檢視</span><span class=\"System_content_right_table_BTN\" style=\"width:120px\" onclick=\"InsertFileToServer('49')\">文件上傳</span><span class=\"System_content_right_table_BTN\" style=\"width:120px\" onclick=\"DrawObjToMap('49')\">施工項目繪製</span><span class=\"System_content_right_table_BTN\"  onclick=\"EndThisCase('49,1')\">報驗</span>",
+              ArchitectLicenseno: "001",
+              CaseName: "測試1",
+              CaseSubNo: "測試1",
+              Complete: 1,
+              DesignComp: null,
+              DoorNo: "宜蘭大學",
+              ID: 49,
+              Manger: "UJ測試業務主辦",
+              ReCallDate: "2019/07/05",
+              ScheduleComp: "briantest規劃廠商",
+              ScheduleCompleteDate: "",
+              ScheduleEndDate: "2019/06/06",
+              ScheduleStartDate: "2019/02/06",
+              Town: "壯圍鄉",
+              Type: "規劃",
+              note: ""
+          }
+
+        ]
+        createJqXGridUI(dlist, "gv_main");
+
+    
+
+        //動作項目
+
+
+
+
+        var urSource = null;
+        function createJqXGridUI(datalist, domID) {
+
+            urSource = {
+                localdata: datalist,
+                dataType: 'array',
+                datafield: []
+            };
+            var dataAdapter = new $.jqx.dataAdapter(urSource, {
+                loadComplete: function () {
+                    $('#jqxLoader').jqxLoader('close');
+                    var time1 = setInterval(function () {
+                        clearInterval(time1);
+                        $('#' + domID).jqxGrid('autoresizecolumns');
+                    }, 1000);
+                }
+            });
+            $("#" + domID).jqxGrid(
+                {
+                    //width: '90%',
+                    //columnsheight: 30,
+                    //rowsheight: 35,
+                    //theme: 'custom',
+                    //autoheight: true,
+                    //enabletooltips: true,
+                    //pageable: true,
+                    //localization: localizationobj,
+                    //source: dataAdapter,
+                    //sortable: true,
+                    //selectionmode: 'singlerow',
+                    width: '99%',
+                    source: dataAdapter,
+                    // pageable: true,
+                    rowsheight: 35,
+                    autoheight: true,
+                    enabletooltips: true,
+                    pageable: true,
+                    theme: 'custom',
+                    sortable: true,
+                    altrows: false,
+                    enabletooltips: true,
+                    columnsresize: true,
+                    columnsreorder: true,
+                    localization: localizationobj,
+                    selectionmode: 'singlerow',
+                    editable: false,
+                    ready: function () {
+                        $('#' + domID).jqxGrid('autoresizecolumns');
+                    },
+                    columns: [
+                        { text: '名稱', datafield: 'name', align: 'center', width: 150, minwidth: 150 },
+                        { text: '地址', datafield: 'address', align: 'center', width: 200, minwidth: 100 },
+                        { text: '日期', datafield: 'dt', align: 'center', width: 200, minwidth: 100 },
+                        { text: '狀態', datafield: 'st', align: 'center', width: 110, minwidth: 110 },
+                        { text: '備註', datafield: 'note', align: 'center', width: 150, minwidth: 150 },
+                        { text: '類別', datafield: 'stype', align: 'center', width: 100, minwidth: 100 },
+
+                        { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 1000, minwidth: 1000 }
+                    ]
+                });
+            $("#" + domID).on("pagechanged", function (event) {
+                $('#' + domID).jqxGrid('autoresizecolumns');
+            });
+
+        }
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

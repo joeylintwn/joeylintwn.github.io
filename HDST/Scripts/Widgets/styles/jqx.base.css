@@ -1,4 +1,4 @@
-﻿/*Rounded Corners*/
+/*Rounded Corners*/
 /*top-left rounded Corners*/
 .jqx-rc-tl
 {
@@ -116,6 +116,7 @@
 .jqx-max-size {
     width: 100% !important;
     height: 100% !important;
+    z-index:1;
 }
 .jqx-background-reset {
     background: transparent !important;

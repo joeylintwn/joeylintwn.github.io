@@ -1,0 +1,14 @@
+SCC = This is a Source Code Control file.
+
+[YilanSewearNew.sln]
+SCC_Aux_Path = xgis.com.tw:8877:webvss
+SCC_Project_Name = $/宜蘭縣下水道營運管理系統/YilanSewearNew
+
+[YilanMap.sln]
+SCC_Aux_Path = xgis.com.tw:8877:webvss
+SCC_Project_Name = $/宜蘭縣下水道營運管理系統/YilanMap
+
+[YilanSewearNew.csproj]
+SCC_Aux_Path = xgis.com.tw:8877:webvss
+SCC_Project_Name = $/宜蘭縣下水道營運管理系統/YilanSewearNew
+

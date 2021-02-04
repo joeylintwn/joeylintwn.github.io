@@ -1,50 +1,42 @@
-﻿//Version  2020.5.11  增加同步呼叫async
+//Version 1.1
 function DBApi(APIUrl, Token, DBKey) {
-    this.async = true;//開啟同步呼叫
-    this.format = 'json';
     //如果要用檢視表當做顯示表格，注意所有輸入表格欄位的欄名需一致，否則輸入介面時無法對應到
     this.DBKey = DBKey;
     if (Token == undefined) {
         Token = '';
     }
-    this.getToken = function (UserID, UserPWD, fn) {
-        return this.AjaxQuery(APIUrl + 'GetToken', {
+    this.getToken = function (UserID, UserPWD, ip, isAD, fn) {
+        AjaxQuery(APIUrl + 'getToken', {
             UserId: UserID,
-            PassWord: UserPWD
+            PassWord: UserPWD,
+            userip: ip,
+            isAD: isAD
         }, function (data) {
-
+            //debugger;
             if (data.isSuccess) {
                 Token = data.Result;
+            } else {
+                alert("帳號密碼錯誤，登入失敗!!");
             }
             fn(data);
         });
     }
     this.GetVaildKey = function (fn) {
-        this.AjaxQuery(APIUrl + 'GetVaildKey', null, fn);
+        AjaxQuery(APIUrl + 'GetVaildKey', null, fn);
 
     }
     this.GetDBKeys = function (fn) {
-        return this.AjaxQuery(APIUrl + 'GetDBKeys', null, fn);
+        AjaxQuery(APIUrl + 'GetDBKeys', null, fn);
     }
     this.GetColumn = function (TableName, fn, DBKey) {
         if (DBKey == undefined) DBKey = this.DBKey;
 
-        return this.AjaxQuery(APIUrl + 'GetJQGridColumns', {
+        AjaxQuery(APIUrl + 'GetJQGridColumns', {
             Token: Token,
             TableName: TableName,
             DBKey: DBKey
         },
             function (data) {
-                if (data.isSuccess) {
-                    //針對sortindex 進行欄位的排序
-                    if (data.Result.length > 0) {
-                        if (data.Result[0].SortIndex != undefined) {
-                            data.Result.sort(function (a, b) {
-                                return (a["SortIndex"] > b["SortIndex"]) ? 1 : ((a["SortIndex"] < b["SortIndex"]) ? -1 : 0);
-                            });
-                        }
-                    }
-                }
                 fn(data);
 
             });
@@ -52,7 +44,7 @@ function DBApi(APIUrl, Token, DBKey) {
     }
     this.GetTableList = function (fn, DBKey) {
         if (DBKey == undefined) DBKey = this.DBKey;
-        return this.AjaxQuery(APIUrl + 'GetTableList', {
+        AjaxQuery(APIUrl + 'GetTableList', {
             Token: Token,
             DBKey: DBKey
         },
@@ -69,7 +61,7 @@ function DBApi(APIUrl, Token, DBKey) {
             QueryObj: JSON.stringify(QueryObj),
             DBKey: this.DBKey
         };
-        this.AjaxQuery(APIUrl + 'GetDataList', qdata, function (data) {
+        AjaxQuery(APIUrl + 'GetDataList', qdata, function (data) {
             fn(data);
         });
     }
@@ -83,32 +75,30 @@ function DBApi(APIUrl, Token, DBKey) {
         if (QueryObj.DBKey == undefined)
             QueryObj.DBKey = this.DBKey;
         var Url = APIUrl + "SelectTable";
-        this.AjaxQuery(Url, QueryObj, fn);
+        AjaxQuery(Url, QueryObj, fn);
     }
-    this.SelectTable = function (TableName, Filter, fn, MaxRows) {
+    this.SelectTable = function (TableName, Filter, fn) {
         if (TableName == undefined || TableName == null) {
             fn(null);
             return;
         }
-        if (MaxRows == undefined)
-            MaxRows=500
         var Url = APIUrl + "SelectTable";
-        return this.AjaxQuery(Url, {
+        AjaxQuery(Url, {
             Token: Token,
             TableName: TableName,
             Filter: Filter,
             Field: "*",
-            DBKey: this.DBKey,
-            MaxRows: MaxRows
+            DBKey: this.DBKey
         }, fn);
     }
+
     this.SelectTableField = function (TableName, Filter, Field, isDistinct, fn) {
         if (TableName == undefined || TableName == null) {
             fn(null);
             return;
         }
         var Url = APIUrl + "SelectTable";
-        this.AjaxQuery(Url, {
+        AjaxQuery(Url, {
             Token: Token,
             TableName: TableName,
             Filter: Filter,
@@ -119,7 +109,7 @@ function DBApi(APIUrl, Token, DBKey) {
     }
     this.GetDistinctValues = function (TableName, Filter, Field, fn) {
         var Url = APIUrl + "SelectTable";
-        this.AjaxQuery(Url, {
+        AjaxQuery(Url, {
             Token: Token,
             TableName: TableName,
             Filter: Filter,
@@ -134,11 +124,10 @@ function DBApi(APIUrl, Token, DBKey) {
         var data = {
             VaildKey: VaildKey,
             inputKey: inputKey,
-            Json: JSON.stringify(editData),
-            DBKey: this.DBKey
+            Json: JSON.stringify(editData)
         };
         var saveUserUrl = APIUrl + 'RegistUser';
-        this.AjaxQuery(saveUserUrl, data, fn);
+        AjaxQuery(saveUserUrl, data, fn);
     }
     this.UpdateTable = function (TableName, editData, PrimKey, fn) {
         if (PrimKey == undefined) PrimKey = "id";
@@ -146,12 +135,12 @@ function DBApi(APIUrl, Token, DBKey) {
             Token: Token,
             Json: JSON.stringify(editData),
             TableName: TableName,
-            PrimKey: PrimKey, //決定是要編輯或新增
+            PrimKey: PrimKey, //決定是要編輯或新增
             DBKey: this.DBKey
 
         };
         var saveUserUrl = APIUrl + 'UpdateTable';
-        return this.AjaxPost(saveUserUrl, data, fn);
+        AjaxPost(saveUserUrl, data, fn);
     }
     this.InsertTable = function (TableName, editData, fn) {
         var data = {
@@ -161,7 +150,7 @@ function DBApi(APIUrl, Token, DBKey) {
             DBKey: this.DBKey  // 新增
         };
         var saveUserUrl = APIUrl + 'UpdateTable';
-        return this.AjaxPost(saveUserUrl, data, fn);
+        AjaxPost(saveUserUrl, data, fn);
     }
     this.DeleteRows = function (TableName, PrimKey, Values, fn) {
         if (PrimKey == undefined) PrimKey = "id";
@@ -174,7 +163,7 @@ function DBApi(APIUrl, Token, DBKey) {
             DBKey: this.DBKey
         };
 
-        return this.AjaxPost(url, data, fn);
+        AjaxPost(url, data, fn);
 
     }
 
@@ -189,37 +178,29 @@ function DBApi(APIUrl, Token, DBKey) {
             DBKey: this.DBKey
         };
 
-        this.AjaxQuery(url, data, fn);
+        AjaxQuery(url, data, fn);
 
     }
     this.CustAPI = function (FuncName, ParameterJson, fn) {
 
         var Url = APIUrl + "CustAPI";
-        this.AjaxQuery(Url, {
+        AjaxQuery(Url, {
             Token: Token,
             FuncName: FuncName,
             ParameterJson: JSON.stringify(ParameterJson),
             DBKey: this.DBKey
         }, fn);
     }
-    this.CheckVaildKey = function (VaildKey, inputKey, fn) {
 
-        var Url = APIUrl + "CheckVaildKey";
-        this.AjaxQuery(Url, {
-            VaildKey: VaildKey,
-            inputKey: inputKey
-
-        }, fn);
-    }
     this.getPhotoListByGID = function (TableName, cameraid, fn) {
         var purl = APIUrl + "getPhotoListByGID?Token=" + Token + "&TableName=" + TableName + "&GID=" + cameraid;
-        this.AjaxQuery(purl, {}, fn);
+        AjaxQuery(purl, {}, fn);
 
     }
 
     this.GetUserInfo = function (fn) {
         var purl = APIUrl + "GetUserInfo?Token=" + Token;
-        this.AjaxQuery(purl, {}, fn);
+        AjaxQuery(purl, {}, fn);
 
     }
     this.UploadFiles = function (files, SubPath, id, retFunc) {
@@ -261,7 +242,7 @@ function DBApi(APIUrl, Token, DBKey) {
 
     this.GetPlanDetail = function (TableName, fn) {
 
-        this.AjaxQuery('../api/land/' + 'GetPlanDetail', {
+        AjaxQuery('../api/land/' + 'GetPlanDetail', {
             Token: Token,
             TableName: TableName,
         },
@@ -272,7 +253,7 @@ function DBApi(APIUrl, Token, DBKey) {
     }
     this.AskJoinPlan = function (PlaneID, fn) {
 
-        this.AjaxQuery('../api/land/' + 'AskJoinPlan', {
+        AjaxQuery('../api/land/' + 'AskJoinPlan', {
             Token: Token,
             PlaneID: PlaneID,
         },
@@ -285,21 +266,22 @@ function DBApi(APIUrl, Token, DBKey) {
         var qdata = {
             GIDs: gids
         };
-        this.AjaxQuery(APIUrl + 'CombinGID', qdata, function (data) {
+        AjaxQuery(APIUrl + 'CombinGID', qdata, function (data) {
             fn(data);
         });
     }
-    this.AjaxPost = function (url, QueryData, retFunc) {
-        return $.ajax({
+    function AjaxPost(url, QueryData, retFunc) {
+
+        $.ajax({
             type: 'Post',
             url: url,
             data: QueryData,
-            dataType: this.format,
+            dataType: "json",
             success: function (data) {
                 if (QueryData != null) {
-                    retFunc(data, QueryData)
+                    retFunc(data, QueryData);
                 } else {
-                    retFunc(data)
+                    retFunc(data);
                 };
             },
             error: function (e, r, h) {
@@ -308,13 +290,12 @@ function DBApi(APIUrl, Token, DBKey) {
             }
         });
     }
-    this.AjaxQuery = function (url, QueryData, retFunc) {
-        return $.ajax({
+    function AjaxQuery(url, QueryData, retFunc) {
+        $.ajax({
             type: 'GET',
             url: url,
             data: QueryData,
-            dataType: this.format,
-            async: this.async,
+            dataType: "json",
             success: function (data) {
                 if (QueryData !== null) {
                     retFunc(data, QueryData)
@@ -328,6 +309,5 @@ function DBApi(APIUrl, Token, DBKey) {
             }
         });
     }
+
 }
-
-
