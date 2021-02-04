@@ -20,6 +20,7 @@
         }
     </style>
 
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width">
     <title></title>
@@ -28,6 +29,7 @@
     <link href="..//Content/DB/bootstrap.css" rel="stylesheet">
     <link href="..//Scripts/Widgets/styles/jqx.base.css" rel="stylesheet" type="text/css">
     <link href="..//Scripts/Widgets/styles/jqx.custom.css" rel="stylesheet" type="text/css">
+
     <style type="text/css">
         html, body {
             font-family: 'Microsoft JhengHei';
@@ -52,6 +54,7 @@
     <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsresize.js"></script>
     <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsreorder.js"></script>
     <script type="text/javascript" src="..//Scripts/Jtest.js"></script>
+
     <style type="text/css">
         html, body {
             font-family: 'Microsoft JhengHei';
@@ -72,25 +75,20 @@
         <div class="top_layout top">
             <!--top區塊-->
             <div class="top_logo"></div>
-            <div class="top_SystemName top_SystemName_Water">下水道營運管理系統</div>
+            <div class="top_SystemName top_SystemName_Water">水利資訊智慧管理決策平台</div>
             <div class="top_loginBTN_layout top_loginBTN" onclick="btnLogout_onclick()">
                 <div class="top_loginBTN_icon"></div>
                 <div class="top_loginBTN_text">登出</div>
             </div>
-            <div class="top_loginBTN_layout top_loginBTN" style="width:125px" onclick="btnShared_onclick()">
+            <div class="top_loginBTN_layout top_loginBTN" onclick="btnGoIndex_onclick()">
                 <div class="top_loginBTN_icon"></div>
-                <div class="top_loginBTN_text" style="margin-left:5px;">意見回饋</div>
-            </div>
-            <div class="top_loginBTN_layout top_loginBTN" style="width:125px">
-                <div class="top_loginBTN_icon"></div>
-                <div id="username" class="top_loginBTN_text" style="margin-left:5px;"></div>
+                <div class="top_loginBTN_text" style="margin-left:5px;">回首頁</div>
             </div>
             <div class="clear"></div>
 
         </div>
 
-        <div class="clear"></div>
-        <div class="clear"></div>
+   
         <div class="contentMap" style="min-height: 716px;">
             <!--內容區塊-->
             <div class="OrangeBorder" style="min-height: 688px;">
@@ -98,27 +96,29 @@
                 <table style="width:100%">
                     <tbody>
                         <tr>
-                            <td style="width:198px;vertical-align:top">
+                            <td style="width:15%;vertical-align:top">
                                 <div class="content_left" id="menu_list" style="min-height: 568px;">
                                     <!--左邊欄-->
+                                    <div class="public_content_left"><div class="content_left_Alloptions_layout"><div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text content_ledt_option_text_active">新增案件</div></div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option"><div class="content_left_option_icon System_content_left_record_icon"></div> <div value="2" class="content_ledt_option_text">案件查詢</div></div> <div class="clear"></div></div></div>
                                 </div>
                             </td>
                             <td style="vertical-align:top">
                                 <div class="content_right" style="min-height: 568px; width: 100%;">
                                     <div class="content_rihgt_breadcrumb_layout" id="Bread_Crumbs">
                                         <!--上方橫幅-->
+                                        <div class="content_rihgt_breadcrumb_layout"><div>簡易水保申請 〉新增案件</div></div>
                                     </div>
+                                    <hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);">
                                     <br>
-                                    <div class="content_right_breadcrumb_text" id="Title_Menu">
-                                        <!--動作欄-->
-                                    </div>
+                                    <br>
+                                  
 
 
                                     <div id="content_body" class="table">
                                         <!--資料table-->
-                                        <div id="gv_main"></div>
+                                        
                                     </div>
-
+                                    <div id="gv_main"></div>
 
                                 </div><!--右邊欄-->
                                 <div id="jqxLoader" class="jqx-widget jqx-loader jqx-rc-all jqx-fill-state-normal jqx-rc-t jqx-rc-b jqx-popup" style="width: 100px; height: 60px; left: -50px; top: -30px; display: none;"><div class="jqx-loader-icon" style="background-position-y: 0%;"></div><div class="jqx-loader-text jqx-loader-text-bottom">Loading...</div></div>
@@ -135,58 +135,7 @@
 
 
     <script type="text/javascript">
-        //#region 頁面初始
-        function _Layout_init() {
-            //GetUserAuth();//取得權限清單
-            //GetUserData();//取得使用者資料
-
-
-            var intBrowserW = 0; //瀏覽器內容寬度
-
-
-            var intBrowserH = 0; //瀏覽器內容高度
-
-
-            if (document.documentElement) {  //取得瀏覽器內容寬度/高度
-                intBrowserW = document.documentElement.clientWidth;
-                intBrowserH = document.documentElement.clientHeight;
-            } else {
-                intBrowserW = document.body.clientWidth;
-                intBrowserH = document.body.clientHeight;
-            }
-            //content灰底高度設置
-            $(".contentMap").css("min-height", intBrowserH);
-            //橘色框高度設置
-
-
-            var OrangeBorderHeight = intBrowserH - 28;
-            $(".OrangeBorder").css("min-height", OrangeBorderHeight);
-            //左邊欄高度設置
-
-
-            var ContentLeftHeight = intBrowserH - 148;
-            $(".content_left").css("min-height", ContentLeftHeight);
-            //右邊欄高度、寬度設置
-
-
-            var ContentRightHeight = intBrowserH - 148;
-            var OrangeborderWidth = $(".OrangeBorder").width();
-            var ContentRightWidth = OrangeborderWidth - 220;
-            $(".content_right").css("min-height", ContentRightHeight);
-            $(".content_right").css("width", ContentRightWidth);
-            //分隔線高度設置
-
-
-            var ContentSeparateLineHeight = $(".OrangeBorder").height() - 130;
-            $(".content_separateline_layout").css("min-height", ContentSeparateLineHeight);
-            $(".content_separateline1").css("min-height", ContentSeparateLineHeight);
-            $(".content_separateline2").css("min-height", ContentSeparateLineHeight);
-
-            //表格底圖高度設置
-            var ContentRightTableHeight = $(".System_content_right_table").height();
-            $(".System_content_right_table_layout").css("height", ContentRightTableHeight);
-
-        }
+    
 
         //=======JqGrid 的語言設定==============================
         var localizationobj = {
@@ -307,7 +256,423 @@
 
         }
 
+        //-----------畫面-------------------
+        const hobj = {
+            id: "",
+            w: 150,//0整個消失
+            type: "",//tx文字
+            op: '',
+            wrap: false,
+            append: function (e) {
+                switch (e.type) {
+                    case "tx":
 
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                        ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
+                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += '</span>'
+                        ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
+                        ss += '</div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "dp":
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                        ss += '<span id="editdata_UseYear" class="input-group-text w-100 justify-content-start">'
+                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += '</span></div> <select name="editdata_UseYear" required="required" class="form-control col-2" style="height: auto;">'
+                        ss += '<option value="">-- 請選擇 --</option></select></div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "dt":
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '<span id="editdata_UseDay" class="input-group-text w-100 justify-content-start">'
+                        ss += '<span class="text-danger">*</span>' + e.id
+                        ss += '</span></div> <input name="editdata_UseDay" type="date" required="required" class="form-control col-2"></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "lc":
+
+                        var ss = '';
+
+                        ss += '<div class="input-group form-group row">'
+                        ss += '                       <div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '                           <span id="editdata_Memo" class="input-group-text w-100 justify-content-start">'
+                        ss += '                               <span class="text-danger">*</span>' + e.id
+                        ss += '                           </span>'
+                        ss += '                       </div> <div id="Position" class="form-control form-control-lg"></div> <div class="input-group-append"><input onclick="OpenMap()" type="button" value="點選點位" class="btn btn-outline-info"></div> <div class="input-group-append" style="display: none;"><input onclick="MapPosition(VueScopes[scope.id].dataIndex)" type="button" value="定位" class="btn btn-outline-info"></div>'
+                        ss += '                   </div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "up":
+
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '                       <span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + e.id
+                        ss += '                       </span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CadastralData"></span></a> <input name="CadastralData" scpid="majorTable" id="majorTable_CadastralData" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile()" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt":
+                        var ss = '';
+                        ss += '<h4 class="text-center">' + e.id + '</h4>'
+                        $('#content_body').append(ss);
+                        break;
+
+
+                    case "tt2":
+                        var ss = '';
+                        ss += '<h2 class="text-center">' + e.id + '</h2>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt8":
+                        var ss = '';
+                        ss += '<h8 class="text-center">' + e.id + '</h8>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt6":
+                        var ss = '';
+                        ss += '<h6 class="text-center">' + e.id + '</h6>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "rd":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div style="padding-top:10px;padding-left:10px">'
+                        var opar = e.op.split('|');
+                        $.each(opar, function (i, oparval) {
+                            ss += '<label><input type="radio" name="editdata_T05" value="' + oparval + '" >' + oparval + '</label> <label>';
+                            (e.wrap ? ss += '<br/>' : '');
+                        });
+
+
+                        ss += '</div></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "ck":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + e.id + '</span></div>'
+                        ss += '<div style="padding-top:10px;padding-left:10px">'
+                        var opar = e.op.split('|');
+                        $.each(opar, function (i, oparval) {
+                            ss += '<label><input type="checkbox" name="editdata_T05" value="' + oparval + '" >' + oparval + '</label>';
+                            (e.wrap ? ss += '<br/>' : '');
+                        });
+                        ss += '</div></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "hr":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<hr class="col-md-11 float-left" style="border: ' + e.w + 'px solid ' + e.id + ';">'
+                        //0.25// rgb(255, 106, 0)                
+                        ss += '</div>'
+                        $('#content_body').append(ss);
+                        break;
+
+
+                }
+            }
+        }
+        $(function () {
+            $('#content_body').html('');
+
+            var cc = hobj;
+            cc.id = "受理機關"
+            cc.type = "tx";
+            cc.append(cc);
+            cc.id = "申報日期"
+            cc.type = "dt";
+            cc.append(cc);
+            cc.id = "計畫名稱"
+            cc.type = "tx";
+            cc.append(cc);
+            cc.id = "案件編號"
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "開發種類"
+            cc.type = "tt";
+            cc.append(cc);
+
+            cc.id = "<span style='font-size:14px'>於山坡地或森林區內從事本法第十二條第一項各款行為，且挖方及填方加計總和或堆積土石方分別未滿二千立方公尺，適用水土保持計畫審核監督辦法第三條規定之種類及規模（備註二）： </span>"
+            cc.type = "tt8";
+            cc.append(cc);
+
+            cc.id = ""
+            cc.type = "ck";
+            cc.op += "一、從事農、林、漁、牧地之開發利用所需之修築農路：路基寬度未滿四公尺，且長度未滿五百公尺者。"
+            cc.op += "|二、從事農、林、漁、牧地之開發利用所需之整坡作業：未滿二公頃者。"
+            cc.op += "|三、修建鐵路、公路、農路以外之其他道路：路基寬度未滿四公尺，且路基總面積未滿二千平方公尺。"
+            cc.op += "|四、改善或維護既有道路者：拓寬路基或改變路線之路基總面積未滿二千平方公尺。"
+            cc.op += "|五、開發建築用地：建築面積及其他開挖整地面積未滿五百平方公尺者。"
+            cc.op += "|六、農作產銷設施之農業生產設施、林業設施之林業經營設施或畜牧設施之養畜設施、養禽設施、孵化場(室)設施、青貯設施：建築面積及其他開挖整地面積合計未滿一公頃；免申請建築執照者，前開建築面積以其興建設施面積核計。"
+            cc.op += "|七、堆積土石。"
+            cc.op += "|八、採取土石：土石方未滿三十立方公尺者。"
+            cc.op += "|九、設置公園、墳墓、運動場地、原住民在原住民族地區依原住民族基本法第十九條規定採取礦物或其他開挖整地：開挖整地面積未滿一千平方公尺。"
+            cc.op += "|十、其他法令規定，得以簡易水土保持申報書代替者。"
+            cc.wrap = true;
+            cc.w = 0;
+            cc.append(cc);
+
+            cc.id = "水土保持義務人"
+            cc.type = "tt";
+            cc.append(cc);
+
+
+
+
+            cc.id = "姓名或名稱"
+            cc.type = "tx";
+            cc.w = 150;
+            cc.append(cc);
+
+            cc.id = "國民身分證統一編號或營利事業統一編號"
+            cc.w = 320;
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "電話"
+            cc.type = "tx";
+            cc.w = 150;
+            cc.append(cc);
+
+            cc.id = "住居所或營業所"
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "實施地點"
+            cc.type = "tt";
+            cc.append(cc);
+
+
+            cc.id = "計畫面積(公頃)"
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "使用編定別"
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "土地座落"
+            cc.type = "lc";
+            cc.append(cc);
+
+            cc.id = "土地權屬"
+            cc.type = "tx";
+            cc.append(cc);
+
+            cc.id = "檢核事項"
+            cc.type = "tt";
+            cc.append(cc);
+
+            cc.id = "申請開發基地內土地無違規開發情形？"
+            cc.w = 380;
+            cc.type = "rd";
+            cc.op = "是|否  水土保持計畫審核監督辦法第十條第一項第六款及第七款";
+            cc.wrap = false;
+            cc.append(cc);
+
+            cc.id = "申請開發基地內土地無座落於特定水土保持區？"
+            cc.w = 380;
+            cc.type = "rd";
+            cc.op = "是|否  水土保持法第十九條第二項及水土保持計畫審核監督辦法第十一條第四款";
+            cc.wrap = false;
+            cc.append(cc);
+
+            cc.id = "申請開發基地內土地無座落於國家公園範圍內？"
+            cc.w = 380;
+            cc.type = "rd";
+            cc.op = "是|否  水土保持法第十四條";
+            cc.wrap = false;
+            cc.append(cc);
+
+            cc.id = "申請開發基地內土地無座落於水庫集水區範圍內？"
+            cc.w = 380;
+            cc.type = "rd";
+            cc.op = "是|否  山坡地保育利用條例第三十二條之一";
+            cc.wrap = false;
+            cc.append(cc);
+
+            cc.id = "開發規模"
+            cc.type = "tt";
+            cc.append(cc);
+
+
+            cc.id = "農業整坡作業(公頃)"
+            cc.type = "tx";
+            cc.w = 280;
+            cc.append(cc);
+
+
+
+
+
+
+            cc.id = "<span style='font-size:14px'>修築農路</font>"
+            cc.type = "tt";
+            cc.w = 280;
+            cc.append(cc);
+
+
+            cc.id = "長度(公尺)"
+            cc.type = "tx";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "路基寬度(公尺)"
+            cc.type = "tx";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+
+            cc.id = "<span style='font-size:14px'>修建其他道路</font>"
+            cc.type = "tt";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "路基寬度(公尺)"
+            cc.type = "tx";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "路基總面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+
+            cc.id = "改善或維護既有道路路基總面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "<span style='font-size:14px'>開發建築用地</font>"
+            cc.type = "tt";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "建築面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "其他開挖整地面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "合計(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+
+
+            cc.id = "堆積土石(立方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "採取土石(立方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "<span style='font-size:14px'>設置公園、墳墓、運動場地、原住民在原住民族地區依原住民族基本法第十九條規定採取礦物或其他開挖整地</font>"
+            cc.type = "tt";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "開挖整地面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+
+
+
+            cc.id = "<span style='font-size:14px'>農作產銷設施之農業生產設施、林業設施之林業經營設施或畜牧設施之養畜設施、養禽設施、孵化場(室)設施、青貯設施</font>"
+            cc.type = "tt";
+            cc.w = 280;
+            cc.append(cc);
+
+            cc.id = "建築面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "其他開挖整地面積(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+
+            cc.id = "合計(平方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+
+            cc.id = "挖、填方總和(立方公尺)"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+            cc.id = "付款或注意事項"
+            cc.type = "tx";
+            cc.w = 340;
+            cc.append(cc);
+
+
+            cc.id = "附件上傳"
+            cc.type = "up";
+            cc.w = 340;
+            cc.append(cc);
+
+
+
+        })
 
 
     </script>
