@@ -1,0 +1,485 @@
+﻿<html>
+<head>
+    <style type="text/css">
+        @charset "UTF-8";
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+
+        ng\:form {
+            display: block;
+        }
+
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+
+        .ng-anchor {
+            position: absolute;
+        }
+    </style>
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <link href="..//Content/style.css" rel="stylesheet">
+
+    <link href="..//Content/DB/bootstrap.css" rel="stylesheet">
+    <link href="..//Scripts/Widgets/styles/jqx.base.css" rel="stylesheet" type="text/css">
+    <link href="..//Scripts/Widgets/styles/jqx.custom.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+        html, body {
+            font-family: 'Microsoft JhengHei';
+        }
+    </style>
+
+
+    <script src="..//Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+    <script src="..//Scripts/Widgets/jqxcore.js" type="text/javascript"></script>
+    <script src="..//Scripts/Widgets/jqx-all2.js" type="text/javascript"></script>
+    <script src="..//Scripts/angular-1.4.6/angular.min.js"></script>
+    <script src="..//Scripts/angular-1.4.6/angular-cookies.js"></script>
+    <script src="..//Scripts/custAngular.js" type="text/javascript"></script>
+    <script src="..//Content/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <link href="..//Content/My97DatePicker/skin/WdatePicker.css" rel="stylesheet" type="text/css">
+    
+    <script src="..//Scripts/DBApi.js"></script>
+    <script src="..//Scripts/jquery.cookie.js"></script>
+    <link href="..//Content/Style1.css" rel="stylesheet">
+    <link href="..//Scripts/Widgets/styles/jqx.base.css" rel="stylesheet" type="text/css">
+    <link href="..//Scripts/Widgets/styles/jqx.custom.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="..//Scripts/Widgets/jqxgrid.columnsreorder.js"></script>
+    <script type="text/javascript" src="..//Scripts/Jtest.js"></script>
+
+    <style type="text/css">
+        html, body {
+            font-family: 'Microsoft JhengHei';
+        }
+
+        input.button_Style.select-item, div.select-item {
+            background-color: orange;
+        }
+    </style>
+    <script type="text/javascript">
+        
+    </script>
+
+</head>
+<body>
+    <div>
+        <!--設置陰影用div-->
+        <div class="top_layout top">
+            <!--top區塊-->
+            <div class="top_logo"></div>
+            <div class="top_SystemName top_SystemName_Water">水利資訊智慧管理決策平台</div>
+            <div class="top_loginBTN_layout top_loginBTN" onclick="btnLogout_onclick()">
+                <div class="top_loginBTN_icon"></div>
+                <div class="top_loginBTN_text">登出</div>
+            </div>
+            <div class="top_loginBTN_layout top_loginBTN" onclick="btnGoIndex_onclick()">
+                <div class="top_loginBTN_icon"></div>
+                <div class="top_loginBTN_text" style="margin-left:5px;">回首頁</div>
+            </div>
+            <div class="clear"></div>
+
+        </div>
+
+   
+        <div class="contentMap" style="min-height: 716px;">
+            <!--內容區塊-->
+            <div class="OrangeBorder" style="min-height: 688px;">
+                <!--橘色框-->
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td style="width:15%;vertical-align:top">
+                                <div class="content_left" id="menu_list" style="min-height: 568px;">
+                                    <!--左邊欄-->
+                                    <div class="public_content_left">
+                                        <div class="content_left_Alloptions_layout">
+                                            <div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option">
+                                                <div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text ">新增案件</div>
+                                            </div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option">
+                                                <div class="content_left_option_icon System_content_left_record_icon"></div>
+                                                <div value="2" class="content_ledt_option_text content_ledt_option_text_active">案件查詢</div>
+                                            </div> <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="vertical-align:top">
+                                <div class="content_right" style="min-height: 568px; width: 100%;">
+                                    <div class="content_rihgt_breadcrumb_layout" id="Bread_Crumbs">
+                                        <!--上方橫幅-->
+                                      簡易水保申請 〉新增案件
+                                    </div>
+                                    <hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);">
+                                    <br>
+                                    <br>
+                                  
+
+
+                                    <div id="content_body" class="table">
+                                        <!--資料table-->
+                                        
+                                    </div>
+                                    <div id="gv_main"></div>
+
+                                </div><!--右邊欄-->
+                                <div id="jqxLoader" class="jqx-widget jqx-loader jqx-rc-all jqx-fill-state-normal jqx-rc-t jqx-rc-b jqx-popup" style="width: 100px; height: 60px; left: -50px; top: -30px; display: none;"><div class="jqx-loader-icon" style="background-position-y: 0%;"></div><div class="jqx-loader-text jqx-loader-text-bottom">Loading...</div></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clear"></div>
+            </div><!--橘色框-->
+            <div class="clear"></div>
+        </div><!--內容區塊-->
+    </div><!--設置陰影用div-->
+
+
+
+    <script type="text/javascript">
+    
+
+        //=======JqGrid 的語言設定==============================
+        var localizationobj = {
+            pagergotopagestring: "頁數移至:",
+            pagershowrowsstring: "頁&emsp;&emsp;分頁筆數:",
+            pagerrangestring: "&emsp;總筆數:",
+            pagernextbuttonstring: "下一頁",
+            pagerpreviousbuttonstring: "上一頁",
+            sortascendingstring: "升冪",
+            sortdescendingstring: "降冪",
+            sortremovestring: "取消排序",
+            emptydatastring: "無資料",
+            pagerfirstbuttonstring: "第一頁",
+            pagerlastbuttonstring: "最後頁"
+            //firstDay: 1,
+            //percentsymbol: "%",
+            //currencysymbol: "€",
+            //currencysymbolposition: "before",
+            //decimalseparator: ".",
+            //thousandsseparator: ","
+        };
+
+        //列表動作欄
+        var actionstr = ['檢視', '編輯', '刪除'];
+        var actionlen = [70, 70, 70];
+        var actionstr1 = "";
+        $.each(actionstr, function (i, val) {
+            actionstr1 += "<span class=\"System_content_right_table_BTN\" style=\"width:" + actionlen[i] + "px\" onclick=\"alert('" + val + "')\">" + val + "</span>"
+        });
+
+        //列表資料
+        var dlist = [
+          {
+              Action: actionstr1,
+              ArchitectLicenseno: "001",
+              name: "",
+              dt1: "",
+              pjname: "",
+              pjnano: "",
+          }
+
+        ]
+        createJqXGridUI(dlist, "gv_main");
+
+    
+
+        //動作項目
+
+        var urSource = null;
+        function createJqXGridUI(datalist, domID) {
+
+            urSource = {
+                localdata: datalist,
+                dataType: 'array',
+                datafield: []
+            };
+            var dataAdapter = new $.jqx.dataAdapter(urSource, {
+                loadComplete: function () {
+                    $('#jqxLoader').jqxLoader('close');
+                    var time1 = setInterval(function () {
+                        clearInterval(time1);
+                        $('#' + domID).jqxGrid('autoresizecolumns');
+                    }, 1000);
+                }
+            });
+            $("#" + domID).jqxGrid(
+                {
+                    //width: '90%',
+                    //columnsheight: 30,
+                    //rowsheight: 35,
+                    //theme: 'custom',
+                    //autoheight: true,
+                    //enabletooltips: true,
+                    //pageable: true,
+                    //localization: localizationobj,
+                    //source: dataAdapter,
+                    //sortable: true,
+                    //selectionmode: 'singlerow',
+                    width: '99%',
+                    source: dataAdapter,
+                    // pageable: true,
+                    rowsheight: 35,
+                    autoheight: true,
+                    enabletooltips: true,
+                    pageable: true,
+                    theme: 'custom',
+                    sortable: true,
+                    altrows: false,
+                    enabletooltips: true,
+                    columnsresize: true,
+                    columnsreorder: true,
+                    localization: localizationobj,
+                    selectionmode: 'singlerow',
+                    editable: false,
+                    ready: function () {
+                        $('#' + domID).jqxGrid('autoresizecolumns');
+                    },
+                    columns: [//欄位，串到列表資料
+                        { text: '鄉鎮市', datafield: 'name', align: 'center', width: 150, minwidth: 150 },
+                        { text: '巡查區域', datafield: 'dt1', align: 'center', width: 200, minwidth: 100 },
+                        { text: '巡查日期', datafield: 'pjname', align: 'center', width: 200, minwidth: 100 },
+                        { text: '巡查員姓名', datafield: 'pjnano', align: 'center', width: 110, minwidth: 110 },
+                        { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 1000, minwidth: 1000 }
+                    ]
+                });
+            $("#" + domID).on("pagechanged", function (event) {
+                $('#' + domID).jqxGrid('autoresizecolumns');
+            });
+
+        }
+
+        //-----------畫面-------------------
+        const hobj = {
+            id: "",//欄位標題，加|多欄變rwd
+            w: 150,//0整個消失
+            type: "",//tx文字
+            op: '',
+            must:'0',//是1否0必填
+            wrap: false,
+            append: function (e) {
+                switch (e.type) {
+                    
+                    case "tx":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        var idar = e.id.split('|');
+                        var opar = e.op.split('|');
+                        var mustar = e.must.split('|');
+                        var mdcnt = 4;//越小同一行放越多格
+                        if (idar.length > 5) {
+                            mdcnt = 1;
+                        } else if (idar.length ==2 ) {
+                            mdcnt = 6;
+                        } else if (idar.length == 3) {
+                            mdcnt = 4;
+                        } else if (idar.length == 4) {
+                            mdcnt = 3;
+                        } else if (idar.length == 5) {
+                            mdcnt = 2;
+                        }
+                        console.log(mdcnt);
+
+                        if (idar.length == 1) {
+                            ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                            ss += '<span id="editdata_UseContent" class="input-group-text w-100 justify-content-start">'
+                            ss += (e.must=='1'?'<span class="text-danger">*</span>':'') + e.id
+                            ss += '</span>'
+                            ss += '</div> <input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;">'
+                            
+                        } else {
+                            $.each(idar, function (i, idarval) {
+                                ss += '<div class="input-group col-lg-' + mdcnt + '" > ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                                ss += '<span  class="input-group-text w-100">'
+                                ss += (mustar[i]==1 ? '<span class="text-danger">*</span>' : '') + idarval
+                                if (opar[i] == 'tx') {
+                                    ss += '<input type="text" name="editdata_UseContent" required="required" class="form-control" style="height: auto;"></span>'
+                                } else if (opar[i] == 'dp') {
+                                    ss += '<select name="editdata_UseYear" required="required" class="form-control" style="height: auto;">'
+                                    ss += '<option value="">-- 請選擇 --</option></select>'
+                                } else if (opar[i] == 'dt') {
+                             
+                                    ss += '<input name="editdata_UseDay" type="date" required="required" class="form-control ' + (idar.length == 4 ? 'col-md-7' : '') + '" >'
+                                }
+                                
+                                ss += '</div> '
+                            });
+                        }
+                       
+
+                        ss += '</div> '
+                        $('#content_body').append(ss);
+                        break;
+
+
+
+                    case "dp":
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;"> ' + (e.w == 0 ? 'hidden=hidden' : '') + ''
+                        ss += '<span id="editdata_UseYear" class="input-group-text w-100 justify-content-start">'
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
+                        ss += '</span></div> <select name="editdata_UseYear" required="required" class="form-control col-2" style="height: auto;">'
+                        ss += '<option value="">-- 請選擇 --</option></select></div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "dt":
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '<span id="editdata_UseDay" class="input-group-text w-100 justify-content-start">'
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
+                        ss += '</span></div> <input name="editdata_UseDay" type="date" required="required" class="form-control col-2"></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "lc":
+
+                        var ss = '';
+
+                        ss += '<div class="input-group form-group row">'
+                        ss += '                       <div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '                           <span id="editdata_Memo" class="input-group-text w-100 justify-content-start">'
+                        ss += (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
+                        ss += '                           </span>'
+                        ss += '                       </div> <div id="Position" class="form-control form-control-lg"></div> <div class="input-group-append"><input onclick="OpenMap()" type="button" value="點選點位" class="btn btn-outline-info"></div> <div class="input-group-append" style="display: none;"><input onclick="MapPosition(VueScopes[scope.id].dataIndex)" type="button" value="定位" class="btn btn-outline-info"></div>'
+                        ss += '                   </div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "up":
+
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '>'
+                        ss += '<span id="editdata_CadastralData" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id
+                        ss += '                       </span></div> <div class="form-control" style="height: auto;"><a target="_blank" href="../api/my/DownloadFiles/wb_Project/undefined?FileName="><span name="editdata_CadastralData"></span></a> <input name="CadastralData" scpid="majorTable" id="majorTable_CadastralData" type="file" accept=".doc,.docx,.pdf,.png,.jpeg,.jpg" class="form-control file-upload" style="display: none;"></div> <div class="input-group-append"><input onclick="openfile()" type="button" value="+" class="btn btn-success font-weight-bold" style="font-size: 24px;"></div></div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt":
+                        var ss = '';
+                        ss += '<h4 class="text-center">' + e.id + '</h4>'
+                        $('#content_body').append(ss);
+                        break;
+
+
+                    case "tt2":
+                        var ss = '';
+                        ss += '<h2 class="text-center">' + e.id + '</h2>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt8":
+                        var ss = '';
+                        ss += '<h8 class="text-center">' + e.id + '</h8>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "tt6":
+                        var ss = '';
+                        ss += '<h6 class="text-center">' + e.id + '</h6>'
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "rd":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
+                        ss += '<div style="padding-top:10px;padding-left:10px">'
+                        var opar = e.op.split('|');
+                        $.each(opar, function (i, oparval) {
+                            ss += '<label><input type="radio" name="editdata_T05" value="' + oparval + '" >' + oparval + '</label> <label>';
+                            (e.wrap ? ss += '<br/>' : '');
+                        });
+
+
+                        ss += '</div></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "ck":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div class="input-group-prepend" style="width: ' + e.w + 'px;" ' + (e.w == 0 ? 'hidden=hidden' : '') + '><span id="editdata_ConsentDay" class="input-group-text w-100 justify-content-start">' + (e.must == '1' ? '<span class="text-danger">*</span>' : '') + e.id + '</span></div>'
+                        ss += '<div style="padding-top:10px;padding-left:10px">'
+                        var opar = e.op.split('|');
+                        $.each(opar, function (i, oparval) {
+                            ss += '<label><input type="checkbox" name="editdata_T05" value="' + oparval + '" >' + oparval + '</label>';
+                            (e.wrap ? ss += '<br/>' : '');
+                        });
+                        ss += '</div></div>'
+
+                        $('#content_body').append(ss);
+                        break;
+
+                    case "hr":
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<hr class="col-md-11 float-left" style="border: ' + e.w + 'px solid ' + e.id + ';">'
+                        //0.25// rgb(255, 106, 0)                
+                        ss += '</div>'
+                        $('#content_body').append(ss);
+                        break;
+
+                        break;
+
+                    case "bt":
+                        var idar = e.id.split('|');
+                        var opar = e.op.split('|');
+
+                        var ss = '';
+                        ss += '<div class="input-group form-group row">'
+                        ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
+
+                        $.each(idar, function (i, idarval) {
+                            ss += '<input type="submit" value="' + idarval + '" class="btn btn-primary">'
+
+
+                            //0.25// rgb(255, 106, 0)           
+                        });
+                        ss += '</div>'
+
+                        $('#content_body').append(ss);
+                        break;
+                }
+            }
+        }
+        $(function () {
+            $('#content_body').html('');
+
+            var cc = hobj;
+            cc.id = "鄉鎮市：|年份："//最多支援單行4個
+            cc.type = "tx";
+            cc.op = "tx|dp|dt|dt";
+            cc.append(cc);
+            cc.id = "查詢"
+            cc.type = "bt";
+            cc.append(cc);
+
+            
+
+
+        })
+
+
+    </script>
+
+
+
+</body>
+</html>
