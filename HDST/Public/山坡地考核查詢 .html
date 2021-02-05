@@ -63,14 +63,7 @@
         input.button_Style.select-item, div.select-item {
             background-color: orange;
         }
-.jqx-widget {
-            font-size: 16px;
-        }
-
-
     </style>
-
-
     <script type="text/javascript">
         
     </script>
@@ -109,10 +102,10 @@
                                     <div class="public_content_left">
                                         <div class="content_left_Alloptions_layout">
                                             <div url="/HDST/EngMgn/WaterBuild/Case_Control" class="contnet_left_option">
-                                                <div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text content_ledt_option_text_active">新增案件</div>
+                                                <div class="content_left_option_icon System_content_left_record_icon"></div> <div value="1" class="content_ledt_option_text ">新增案件</div>
                                             </div> <div class="clear"></div> <div url="/HDST/EngMgn/WaterBuild/Case_Query" class="contnet_left_option">
                                                 <div class="content_left_option_icon System_content_left_record_icon"></div>
-                                                <div value="2" class="content_ledt_option_text ">案件查詢</div>
+                                                <div value="2" class="content_ledt_option_text content_ledt_option_text_active">案件查詢</div>
                                             </div> <div class="clear"></div>
                                         </div>
                                     </div>
@@ -122,7 +115,7 @@
                                 <div class="content_right" style="min-height: 568px; width: 100%;">
                                     <div class="content_rihgt_breadcrumb_layout" id="Bread_Crumbs">
                                         <!--上方橫幅-->
-                                      山坡地考核報告 〉新增案件
+                                        山坡地考核報告 〉案件查詢
                                     </div>
                                     <hr class="col-md-11 float-left" style="border: 0.25px solid rgb(255, 106, 0);">
                                     <br>
@@ -134,17 +127,17 @@
                                         <!--資料table-->
                                         
                                     </div>
-                                    
-                                    
+                                    <div id="gv_main"></div>
+
                                 </div><!--右邊欄-->
                                 <div id="jqxLoader" class="jqx-widget jqx-loader jqx-rc-all jqx-fill-state-normal jqx-rc-t jqx-rc-b jqx-popup" style="width: 100px; height: 60px; left: -50px; top: -30px; display: none;"><div class="jqx-loader-icon" style="background-position-y: 0%;"></div><div class="jqx-loader-text jqx-loader-text-bottom">Loading...</div></div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="clear" ></div>
+                <div class="clear"></div>
             </div><!--橘色框-->
-            <div class="clear" ></div>
+            <div class="clear"></div>
         </div><!--內容區塊-->
     </div><!--設置陰影用div-->
 
@@ -174,20 +167,37 @@
             //thousandsseparator: ","
         };
 
-       
+        //列表動作欄
+        var actionstr = ['檢視', '編輯', '刪除'];
+        var actionlen = [70, 70, 70];
+        var actionstr1 = "";
+        $.each(actionstr, function (i, val) {
+            actionstr1 += "<span class=\"System_content_right_table_BTN\" style=\"width:" + actionlen[i] + "px\" onclick=\"alert('" + val + "')\">" + val + "</span>"
+        });
 
-      
+        //列表資料
+        var dlist = [
+          {
+              Action: actionstr1,
+              ArchitectLicenseno: "001",
+              name: "",
+              dt1: "",
+              pjname: "",
+              pjnano: "",
+          }
 
+        ]
+        createJqXGridUI(dlist, "gv_main");
 
+    
 
         //動作項目
 
         var urSource = null;
         function createJqXGridUI(datalist, domID) {
-            $('#content_body').append('<div id="' + domID + '"></div>');
-     
+
             urSource = {
-                localdata: datalist.dlist,
+                localdata: datalist,
                 dataType: 'array',
                 datafield: []
             };
@@ -216,26 +226,29 @@
                     width: '99%',
                     source: dataAdapter,
                     // pageable: true,
-                    autowidth: true,
-                        rowsheight: 50,
+                    rowsheight: 35,
                     autoheight: true,
                     enabletooltips: true,
-                    pageable: false,
+                    pageable: true,
                     theme: 'custom',
-                    //sortable: true,
+                    sortable: true,
                     altrows: false,
                     enabletooltips: true,
-                  //  columnsresize: true,
-                    columnsheight: 40,
+                    columnsresize: true,
                     columnsreorder: true,
                     localization: localizationobj,
-                    //selectionmode: 'singlerow',
-                    selectionmode: 'none',
+                    selectionmode: 'singlerow',
                     editable: false,
                     ready: function () {
                         $('#' + domID).jqxGrid('autoresizecolumns');
                     },
-                    columns: datalist.columns
+                    columns: [//欄位，串到列表資料
+                        { text: '鄉鎮市', datafield: 'name', align: 'center', width: 150, minwidth: 150 },
+                        { text: '巡查區域', datafield: 'dt1', align: 'center', width: 200, minwidth: 100 },
+                        { text: '巡查日期', datafield: 'pjname', align: 'center', width: 200, minwidth: 100 },
+                        { text: '巡查員姓名', datafield: 'pjnano', align: 'center', width: 110, minwidth: 110 },
+                        { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 1000, minwidth: 1000 }
+                    ]
                 });
             $("#" + domID).on("pagechanged", function (event) {
                 $('#' + domID).jqxGrid('autoresizecolumns');
@@ -416,7 +429,7 @@
 
                     case "hr":
                         var ss = '';
-                        ss += '<div class="input-group form-group row" style="margin:0px">'
+                        ss += '<div class="input-group form-group row">'
                         ss += '<hr class="col-md-11 float-left" style="border: ' + e.w + 'px solid ' + e.id + ';">'
                         //0.25// rgb(255, 106, 0)                
                         ss += '</div>'
@@ -427,20 +440,14 @@
 
                     case "bt":
                         var idar = e.id.split('|');
-                        var opar = e.op.split('|');//primary,success
+                        var opar = e.op.split('|');
 
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        if (e.must == '1') {
-                            ss += '<div style="width: 100%; margin: 15px; text-align: center;">'
-                        } else if (e.must == '2') {
-                            ss += '<div style="width: 100%; margin: 15px; text-align: right;">'
-                        } else {
-                            ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
-                        }
+                        ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
 
                         $.each(idar, function (i, idarval) {
-                            ss += '<input type="submit" value="' + idarval + '" class="btn btn-' + opar[i] + '">'
+                            ss += '<input type="submit" value="' + idarval + '" class="btn btn-primary">'
 
 
                             //0.25// rgb(255, 106, 0)           
@@ -455,291 +462,18 @@
         $(function () {
             $('#content_body').html('');
 
-            
             var cc = hobj;
-            cc.id = "<b>一、山坡地巡查旬報表：(10分)</b>"
-            cc.type = "tt";
+            cc.id = "鄉鎮市：|年份："//最多支援單行4個
+            cc.type = "tx";
+            cc.op = "tx|dp|dt|dt";
+            cc.append(cc);
+            cc.id = "查詢"
+            cc.type = "bt";
             cc.append(cc);
 
-            cc.id = "(一)轄區內巡查人員巡邏分配表"
-            cc.type = "tt";
-            cc.append(cc);
             
-            //列表資料
-            //列表動作欄
-            var actionstr = ['+'];
-            var actionlen = [40];
-            var actionstr1 = "";
-            $.each(actionstr, function (i, val) {
-                //actionstr1 += "<span class=\"System_content_right_table_BTN\" style=\"width:" + actionlen[i] + "px\" onclick=\"alert('" + val + "')\">" + val + "</span>"
-                actionstr1 += '<input type="submit" value="' + actionstr[i] + '" class="btn btn-success" style="width:' + actionlen[i] + 'px;position:absolute;top:7px"">'
-            });
-
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '<input type="text" style="width:200px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c2: '<input type="text" style="width:200px" >',
-                    c3: '<input type="text" style="width:200px" >',
-                    c4: '<input type="text" style="width:200px" >',
-                    c5: '<input type="text" style="width:200px" >',
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '巡查區域', datafield: 'c1', align: 'center' },
-                            { text: '巡查路線', datafield: 'c2', align: 'center', width: 200, minwidth: 200 },
-                            { text: '巡查員姓名', datafield: 'c3', align: 'center', width: 200, minwidth: 200 },
-                            { text: '職稱', datafield: 'c4', align: 'center', width: 200, minwidth: 200 },
-                               { text: '巡查頻率', datafield: 'c5', align: 'center', width: 200, minwidth: 200 },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main");
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-            cc.id = "(二)巡報表填報情形一覽表"
-            cc.type = "tt";
-            cc.append(cc);
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '<input type="text" style="width:90px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c2: '<input type="text" style="width:30px" >',
-                    c3: '<input type="text" style="width:30px" >',
-                    c4: '<input type="text" style="width:30px" >',
-                    c5: '<input type="text" style="width:30px" >',
-                    c6: '<input type="text" style="width:30px" >',
-                    c7: '<input type="text" style="width:30px" >',
-                    c8: '<input type="text" style="width:30px" >',
-                    c9: '<input type="text" style="width:30px" >',
-                    c10: '<input type="text" style="width:30px" >',
-                    c11: '<input type="text" style="width:30px" >',
-                    c12: '<input type="text" style="width:30px" >',
-                    c13: '<input type="text" style="width:30px" >',
-                    c14: '<input type="text" style="width:130px" >',
-                    c15: '<input type="text" style="width:130px" >',
-                    c16: '<input type="text" style="width:130px" >',
-                    c17: '<input type="text" style="width:130px" >',
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '巡查區域', datafield: 'c1', align: 'center' },
-                            { text: '1月', datafield: 'c2', align: 'center' },
-                            { text: '2月', datafield: 'c3', align: 'center' },
-                            { text: '3月', datafield: 'c4', align: 'center' },
-                            { text: '4月', datafield: 'c5', align: 'center' },
-                            { text: '5月', datafield: 'c6', align: 'center' },
-                            { text: '6月', datafield: 'c7', align: 'center' },
-                            { text: '7月', datafield: 'c8', align: 'center' },
-                            { text: '8月', datafield: 'c9', align: 'center' },
-                            { text: '9月', datafield: 'c10', align: 'center' },
-                            { text: '10月', datafield: 'c11', align: 'center' },
-                            { text: '11月', datafield: 'c12', align: 'center' },
-                            { text: '12月', datafield: 'c13', align: 'center' },
-                            { text: '逾期天數(天)', datafield: 'c14', align: 'center' },
-                            { text: '<span style="font-size:10px">查報新違規案件次數(次)</span>', datafield: 'c15', align: 'center' },
-                            { text: '<span style="font-size:10px">巡查簡易核准案件數(次)</span>', datafield: 'c16', align: 'center' },
-                            { text: '<span style="font-size:10px">巡查違規案件限期改正次數(次)</span>', datafield: 'c17', align: 'center' },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main1");
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-
-            cc.id = "<b>二、違規使用山坡地查報表：(10分)</b>"
-            cc.type = "tt";
-            cc.append(cc);
-
-            cc.id = "(一)<input type=\"text\" style=\"width:70px\" >年度違規案件列表"
-            cc.type = "tt";
-            cc.append(cc);
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '1',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c2: '<input type="text" style="width:180px" >',
-                    c3: '<input type="text" style="width:130px" >',
-                    c4: '<input type="text" style="width:130px" >',
-                    c5: '<input type="checkbox" style="width:10px" name="c5">是 <input type="checkbox" style="width:10px" name="c5" >否',
-                    c6: '<input type="checkbox" style="width:10px" name="c6">是 <input type="checkbox" style="width:10px" name="c6" >否',
-                    c7: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-                    
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '序號', datafield: 'c1', align: 'center' },
-                            { text: '函送查報表之日期、文號', datafield: 'c2', align: 'center' },
-                            { text: '違規人', datafield: 'c3', align: 'center' },
-                            { text: '地段地號', datafield: 'c4', align: 'center' },
-                            { text: '<span style="font-size:10px">各欄位資料是否填列完整</span>', datafield: 'c5', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px">是否檢具清晰之照片</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px">是否查報屬實經縣府開立處分書</span>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main2");
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-            cc.id = "<b>三、上級交查山坡地資訊案件：(20分)</b>"
-            cc.type = "tt";
-            cc.append(cc);
-
-            cc.id = "(一)衛星變異點案件：(10分)"
-            cc.type = "tt";
-            cc.append(cc);
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '<input type="text" style="width:100px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c2: '<input type="date" style="width:130px" >',
-                    c3: '<input type="date" style="width:130px" >',
-                    c4: '<input type="date" style="width:130px" >',
-                    c5: '<input type="text" style="width:100px" >',
-                    c6: '<input type="checkbox" style="width:10px" name="c6">是 <input type="checkbox" style="width:10px" name="c6" >否',
-                    c7: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '項目', datafield: 'c1', align: 'center' },
-                            { text: '縣府函送日期', datafield: 'c2', align: 'center' },
-                            { text: '規定填復日期', datafield: 'c3', align: 'center' },
-                            { text: '本所填復日期', datafield: 'c4', align: 'center' },
-                            { text: '<span style="font-size:10px">查復逾期天數(天)</span>', datafield: 'c5', align: 'center', width: 110, minwidth: 110 },
-                            { text: '<span style="font-size:10px">經查為違規案件者，<br>是否主動填送查報單</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<div style="font-size:10px;height:100px">經查為縣府核准案件者，<br>是否查填核准日期、文號</div>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main3");
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
 
 
-            cc.id = "(二)電話檢舉案件：(10分)"
-            cc.type = "tt";
-            cc.append(cc);
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '<input type="text" style="width:100px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c2: '<input type="text" style="width:130px" >',
-                    c3: '<input type="date" style="width:130px" >',
-                    c4: '<input type="date" style="width:130px" >',
-                    c5: '<input type="text" style="width:100px" >',
-                    c6: '<input type="checkbox" style="width:10px" name="c6">是 <input type="checkbox" style="width:10px" name="c6" >否',
-                    c7: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-                    c8: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '行為人', datafield: 'c1', align: 'center' },
-                            { text: '<span style="font-size:10px">土地資料(地段地號)</span>', datafield: 'c2', align: 'center' },
-                            { text: '<span style="font-size:10px">縣府傳真紀錄回報單日期</span>', datafield: 'c3', align: 'center' },
-                            { text: '本所回傳日期', datafield: 'c4', align: 'center' },
-                            { text: '<span style="font-size:10px">查復天數</span>', datafield: 'c5', align: 'center', width: 110, minwidth: 110 },
-                            { text: '<span style="font-size:10px">查證結果(是否違規)</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<div style="font-size:10px;height:100px">查證為違規者<br>是否主動填送查報單</div>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<div style="font-size:10px;height:100px">查證為違規案件者，<br>是否經縣府開立處分書</div>', datafield: 'c8', align: 'center', width: 150, minwidth: 150 },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main4");
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-            cc.id = "<b>四、主動查報率：(10分)</b>"
-            cc.type = "tt";
-            cc.append(cc);
-
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '1',
-                    c2: '<input type="text" style="width:140px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c6: '<input type="checkbox" style="width:10px" name="c6">是 <input type="checkbox" style="width:10px" name="c6" >否',
-                    c7: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '序號', datafield: 'c1', align: 'center' },
-                             { text: '<span style="font-size:10px">經縣府開立處分書<br>之被處分人</span>', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px">是否填送查報單</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px;height:100px">是否為主動查報</span>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main5");
-
-
-            cc.id = "rgb(221, 221, 221)"
-            cc.type = "hr";
-            cc.w = 0.1;
-            cc.append(cc);
-            cc.id = "<b>五、違規使用山坡地案件之制止作業：(10分)</b>"
-            cc.type = "tt";
-            cc.append(cc);
-
-            //資料列表
-            var griddata = {
-                dlist: [{
-                    Action: actionstr1,
-                    ArchitectLicenseno: "001",
-                    c1: '1',
-                    c2: '<input type="text" style="width:140px" >',
-                    c3: '<input type="text" style="width:140px" >',
-                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
-                    c6: '<input type="checkbox" style="width:10px" name="c6">是 <input type="checkbox" style="width:10px" name="c6" >否',
-                    c7: '<input type="checkbox" style="width:10px" name="c7">是 <input type="checkbox" style="width:10px" name="c7" >否',
-                    c8: '<input type="text" style="width:140px" >',
-
-                }],
-                columns: [//欄位，串到列表資料
-                            { text: '序號', datafield: 'c1', align: 'center' },
-                             { text: '<span style="font-size:10px">違規案件<br>被處分人</span>', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
-                             { text: '<span style="font-size:10px">土地資料<br>(地段地號)</span>', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px">是否於基地張<br>貼制止告示單</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px;height:100px">是否開立制止<br>通智書予行為人</span>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
-                            { text: '其他制止措施', datafield: 'c8', align: 'center' },
-                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
-                ]
-            }
-
-            createJqXGridUI(griddata, "gv_main6");
         })
 
 
