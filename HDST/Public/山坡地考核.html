@@ -431,7 +431,13 @@
 
                         var ss = '';
                         ss += '<div class="input-group form-group row">'
-                        ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
+                        if (e.must == '1') {
+                            ss += '<div style="width: 100%; margin: 15px; text-align: center;">'
+                        } else if (e.must == '2') {
+                            ss += '<div style="width: 100%; margin: 15px; text-align: right;">'
+                        } else {
+                            ss += '<div style="width: 100%; margin: 15px; text-align: left;">'
+                        }
 
                         $.each(idar, function (i, idarval) {
                             ss += '<input type="submit" value="' + idarval + '" class="btn btn-' + opar[i] + '">'
