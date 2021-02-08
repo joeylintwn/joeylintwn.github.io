@@ -733,13 +733,190 @@
                              { text: '<span style="font-size:10px">違規案件<br>被處分人</span>', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
                              { text: '<span style="font-size:10px">土地資料<br>(地段地號)</span>', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
                             { text: '<span style="font-size:10px">是否於基地張<br>貼制止告示單</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
-                            { text: '<span style="font-size:10px;height:100px">是否開立制止<br>通智書予行為人</span>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
+                            { text: '<span style="font-size:10px;height:100px">是否開立制止<br>通知書予行為人</span>', datafield: 'c7', align: 'center', width: 150, minwidth: 150 },
                             { text: '其他制止措施', datafield: 'c8', align: 'center' },
                           { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
                 ]
             }
 
             createJqXGridUI(griddata, "gv_main6");
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+            cc.id = "<b>六、本所對工作之配合度及前年度考核缺失改進情形：(10分)</b>"
+            cc.type = "tt";
+            cc.append(cc);
+
+            //資料列表
+            var griddata = {
+                dlist: [{
+                    Action: actionstr1,
+                    ArchitectLicenseno: "001",
+                    c1: '<input type="text" style="width:140px" >',
+                    c2: '<input type="text" style="width:140px" >',
+                    c3: '<input type="date" style="width:140px" >',
+                    c4: '<input type="text" style="width:140px" >',
+                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
+             
+
+                }],
+                columns: [//欄位，串到列表資料
+                            { text: '<span style="font-size:10px">108年度考核所<br>列應改進事項</span>', datafield: 'c1', align: 'center', width: 150, minwidth: 150 },
+                             { text: '<span style="font-size:10px">109年度本歐具體<br>改善對策與結果</span>', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
+                             { text: '完成日期', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
+                            { text: '<span style="font-size:10px">備註<br>未完成者請說明</span>', datafield: 'c4', align: 'center', width: 150, minwidth: 150 },
+  
+                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
+                ]
+            }
+
+            createJqXGridUI(griddata, "gv_main7");
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+            cc.id = "<b>七、防災業務：(10分)</b>"
+            cc.type = "tt";
+            cc.append(cc);
+            cc.id = "(一)配合自主防災社區計畫執行情形："
+            cc.type = "tt";
+            cc.append(cc);
+
+            //資料列表
+            var griddata = {
+                dlist: [{
+                    Action: actionstr1,
+                    ArchitectLicenseno: "001",
+                    c1: '<input type="text" style="width:140px" >',
+                    c2: '<input type="date" style="width:140px" >',
+                    c3: '<input type="text" style="width:140px" >',
+                    c4: '<input type="text" style="width:140px" >',
+                    c5: '<input type="text" style="width:140px" >',
+                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
+
+
+                }],
+                columns: [//欄位，串到列表資料
+                            { text: '辦理地點', datafield: 'c1', align: 'center', width: 150, minwidth: 150 },
+                             { text: '辦理時間', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
+                             { text: '<span style="font-size:10px">自主防災社區宣導<br>或兵棋推演</span>', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
+                            { text: '配合辦理情形', datafield: 'c4', align: 'center', width: 150, minwidth: 150 },
+                            { text: '備註', datafield: 'c5', align: 'center', width: 150, minwidth: 150 },
+
+                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
+                ]
+            }
+
+            createJqXGridUI(griddata, "gv_main8");
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+      
+            cc.id = "(二)本所對於108年度土石流防災疏散避難計畫檢計更新辦理情形："
+            cc.type = "tt";
+            cc.append(cc);
+
+            //資料列表
+            var griddata = {
+                dlist: [{
+                    Action: actionstr1,
+                    ArchitectLicenseno: "001",
+                    c1: '<input type="text" style="width:140px" >',
+                    c2: '<input type="text" style="width:140px" >',
+                    c3: '<input type="test" style="width:140px" >',
+                    c4: '<input type="date" style="width:140px" >',
+                    c5: '<input type="text" style="width:140px" >',
+                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
+
+
+                }],
+                columns: [//欄位，串到列表資料
+                            { text: '鄉鎮/村里', datafield: 'c1', align: 'center', width: 150, minwidth: 150 },
+                             { text: '保全對象資料', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
+                             { text: '避難處所', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
+                            { text: '<span style="font-size:10px">疏散避難計畫<br>填寫完成日期</span>', datafield: 'c4', align: 'center', width: 150, minwidth: 150 },
+                            { text: '備註', datafield: 'c5', align: 'center', width: 150, minwidth: 150 },
+
+                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
+                ]
+            }
+
+            createJqXGridUI(griddata, "gv_main9");
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+            cc.id = "<b>八、創新作為：(10分)</b>"
+            cc.type = "tt";
+            cc.append(cc);
+
+            //資料列表
+            var griddata = {
+                dlist: [{
+                    Action: actionstr1,
+                    ArchitectLicenseno: "001",
+                    c1: '<input type="text" style="width:140px" >',
+                    c2: '<input type="text" style="width:140px" >',
+                    c3: '<input type="date" style="width:140px" >',
+                    c4: '<input type="text" style="width:140px" >',
+                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
+
+
+                }],
+                columns: [//欄位，串到列表資料
+                            { text: '創新作為', datafield: 'c1', align: 'center', width: 150, minwidth: 150 },
+                             { text: '具體對策與做法', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
+                             { text: '執行成效', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
+                            { text: '<span style="font-size:10px">備註<br>未完成者請說明</span>', datafield: 'c4', align: 'center', width: 150, minwidth: 150 },
+
+                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
+                ]
+            }
+
+            createJqXGridUI(griddata, "gv_main10");
+
+            cc.id = "rgb(221, 221, 221)"
+            cc.type = "hr";
+            cc.w = 0.1;
+            cc.append(cc);
+            cc.id = "<b>九、教育宣導作為：(10分)</b>"
+            cc.type = "tt";
+            cc.append(cc);
+         
+
+            //資料列表
+            var griddata = {
+                dlist: [{
+                    Action: actionstr1,
+                    ArchitectLicenseno: "001",
+                    c1: '<input type="text" style="width:140px" >',
+                    c2: '<input type="date" style="width:140px" >',
+                    c3: '<input type="text" style="width:140px" >',
+                    c4: '<input type="text" style="width:140px" >',
+                    c5: '<input type="text" style="width:140px" >',
+                    c6: '<input type="text" style="width:140px" >',
+                    //c2: '<input name="editdata_UseDay" type="date"  style="width:100%" >',//日期框
+
+
+                }],
+                columns: [//欄位，串到列表資料
+                            { text: '宣導名稱', datafield: 'c1', align: 'center', width: 150, minwidth: 150 },
+                             { text: '宣導日期', datafield: 'c2', align: 'center', width: 150, minwidth: 150 },
+                             { text: '宣導地點', datafield: 'c3', align: 'center', width: 150, minwidth: 150 },
+                            { text: '宣導人數', datafield: 'c4', align: 'center', width: 150, minwidth: 150 },
+                            { text: '效益說明', datafield: 'c5', align: 'center', width: 150, minwidth: 150 },
+                            { text: '<span style="font-size:10px">備註<br>未完成者請說明</span>', datafield: 'c6', align: 'center', width: 150, minwidth: 150 },
+                          { text: '動作', enabletooltips: false, datafield: 'Action', align: 'center', width: 50, minwidth: 50 }
+                ]
+            }
+
+            createJqXGridUI(griddata, "gv_main11");
         })
 
 
