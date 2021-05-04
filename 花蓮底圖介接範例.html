@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>花蓮底圖介接範例</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/themes/light/main.css">
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/dojo/nls/dojo_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/MapView.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/layers/TileLayer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/widgets/Legend.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/widgets/nls/Legend_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/nls/MapView_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/webgl.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/mapViewDeps.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/layers/TileLayerView2D.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/Container.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/BitmapTileContainer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/webgl/definitions.js"></script>
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <!-- <script src="tokne.js"></script> -->
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #info-div {
+            background-color: white;
+            border-radius: 8px;
+            padding: 8px;
+            opacity: 0.92;
+        }
+    </style>
+
+    <script>
+        require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/layers/TileLayer",
+          "esri/geometry/Point",
+          "esri/widgets/Legend"
+        ], function (Map, MapView, TileLayer, Point, Legend) {
+
+            var basemaplayer = new TileLayer({
+                url: "https://map.hl.gov.tw/arcgis/rest/services/HuBaseMap/MapServer",
+                title: "base map"
+            });
+            /*****************************************************************
+             * Add the layer to a map
+             *****************************************************************/
+
+            var map = new Map({
+                layers: [basemaplayer]
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 3,
+                center: [121.2705163, 23.5627111]
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv" class="esri-view esri-view-height-small esri-view-height-greater-than-xsmall esri-view-height-less-than-medium esri-view-height-less-than-large esri-view-height-less-than-xlarge esri-view-orientation-landscape esri-view-width-medium esri-view-width-greater-than-xsmall esri-view-width-greater-than-small esri-view-width-less-than-large esri-view-width-less-than-xlarge"><div class="esri-view-root"><div class="esri-view-surface esri-view-surface--inset-outline" role="application" tabindex="0" data-interacting="false" style="touch-action: none;"><canvas style="width: 835px; height: 682px; display: block;" width="1044" height="853"></canvas></div><div class="esri-overlay-surface"><div style="visibility: hidden;"></div></div><div class="esri-ui" style="inset: 0px;"><div class="esri-ui-inner-container esri-ui-corner-container" style="inset: 15px 15px 30px;"><div class="esri-ui-top-left esri-ui-corner"><div class="esri-component esri-zoom esri-widget"><div class="esri-widget--button esri-widget esri-interactive" role="button" tabindex="0" title="放大(Z)"><span aria-hidden="true" role="presentation" class="esri-icon esri-icon-plus"></span><span class="esri-icon-font-fallback-text">放大(Z)</span></div><div class="esri-widget--button esri-widget esri-interactive" role="button" tabindex="0" title="縮小(O)"><span aria-hidden="true" role="presentation" class="esri-icon esri-icon-minus"></span><span class="esri-icon-font-fallback-text">縮小(O)</span></div></div></div><div class="esri-ui-top-right esri-ui-corner"></div><div class="esri-ui-bottom-left esri-ui-corner"></div><div class="esri-ui-bottom-right esri-ui-corner"></div></div><div class="esri-ui-inner-container esri-ui-manual-container"><div class="esri-component esri-attribution esri-widget"><div class="esri-attribution__sources esri-interactive" tabindex="0" role="button"></div><div class="esri-attribution__powered-by">Powered by <a class="esri-attribution__link esri-widget__anchor" href="http://www.esri.com/" target="_blank" rel="noreferrer">Esri</a></div></div><div class="esri-component esri-popup" role="presentation"></div><div class="esri-component esri-spinner"></div></div></div></div><div class="esri-view-user-storage"></div></div>
+
+
+</body>
+</html>

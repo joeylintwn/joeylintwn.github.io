@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Za\u0142\u0105czniki",attachmentDetails:"Szczeg\u00f3\u0142y za\u0142\u0105cznika",add:"Dodaj",update:"Zmie\u0144",cancel:"Anuluj",noTitle:"Brak tytu\u0142u","delete":"Usuwanie",selectFile:"Wybierz plik",changeFile:"Zmie\u0144 plik",noAttachments:"Brak za\u0142\u0105cznik\u00f3w",addErrorMessage:"Wyst\u0105pi\u0142 b\u0142\u0105d podczas dodawania za\u0142\u0105cznika. Spr\u00f3buj ponownie.",deleteErrorMessage:"Wyst\u0105pi\u0142 b\u0142\u0105d podczas usuwania za\u0142\u0105cznika. Spr\u00f3buj ponownie.",
+updateErrorMessage:"Wyst\u0105pi\u0142 b\u0142\u0105d podczas aktualizowania za\u0142\u0105cznika. Spr\u00f3buj ponownie."});

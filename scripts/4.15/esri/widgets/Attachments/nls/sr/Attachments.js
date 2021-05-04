@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Prilozi",attachmentDetails:"Informacije o prilogu",add:"Dodaj",update:"A\u017euriraj",cancel:"Otka\u017ei",noTitle:"Bez naslova","delete":"Obri\u0161i",selectFile:"Izaberite datoteku",changeFile:"Promena datoteke",noAttachments:"Nema priloga",addErrorMessage:"Gre\u0161ka prilikom dodavanja priloga. Poku\u0161ajte ponovo.",deleteErrorMessage:"Gre\u0161ka prilikom brisanja priloga. Poku\u0161ajte ponovo.",updateErrorMessage:"Gre\u0161ka prilikom otpremanja priloga. Poku\u0161ajte ponovo."});

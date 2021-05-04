@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"T\u1ec7p \u0111\u00ednh k\u00e8m",attachmentDetails:"Th\u00f4ng tin chi ti\u1ebft v\u1ec1 t\u1ec7p \u0111\u00ednh k\u00e8m",add:"Th\u00eam",update:"C\u1eadp nh\u1eadt",cancel:"H\u1ee7y",noTitle:"Ch\u01b0a c\u00f3 ti\u00eau \u0111\u1ec1","delete":"X\u00f3a",selectFile:"Ch\u1ecdn t\u1ec7p",changeFile:"Thay \u0111\u1ed5i t\u1ec7p",noAttachments:"Kh\u00f4ng c\u00f3 t\u1ec7p \u0111\u00ednh k\u00e8m",addErrorMessage:"\u0110\u00e3 x\u1ea3y ra l\u1ed7i khi th\u00eam t\u1ec7p \u0111\u00ednh k\u00e8m. Vui l\u00f2ng th\u1eed l\u1ea1i.",
+deleteErrorMessage:"\u0110\u00e3 x\u1ea3y ra l\u1ed7i khi x\u00f3a t\u1ec7p \u0111\u00ednh k\u00e8m. Vui l\u00f2ng th\u1eed l\u1ea1i.",updateErrorMessage:"\u0110\u00e3 x\u1ea3y ra l\u1ed7i khi c\u1eadp nh\u1eadt t\u1ec7p \u0111\u00ednh k\u00e8m. Vui l\u00f2ng th\u1eed l\u1ea1i."});

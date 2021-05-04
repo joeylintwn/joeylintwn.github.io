@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Priloge",attachmentDetails:"Podrobnosti priloge",add:"Dodaj",update:"Posodobi",cancel:"Prekli\u010di",noTitle:"Neimenovano","delete":"Izbri\u0161i",selectFile:"Izberi datoteko",changeFile:"Spremeni datoteko",noAttachments:"Ni prilog",addErrorMessage:"Napaka pri dodajanju priloge. Poskusite znova.",deleteErrorMessage:"Napaka pri brisanju priloge. Poskusite znova.",updateErrorMessage:"Napaka pri posodabljanju priloge. Poskusite znova."});

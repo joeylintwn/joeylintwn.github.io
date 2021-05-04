@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>下載PDF</title>
+    <script src="scripts/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+<iframe id="box" width="800" height="600"></iframe>
+
+    <script type="text/javascript">
+        var urlar = [
+
+['冬山河_6K300_109/12/10_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25779'],
+['冬山河_6K100_109/12/10_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25781'],
+['二結排水_3K100_109/12/08_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25563'],
+['二結排水_3K500_109/12/08_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25567'],
+['二結排水_3K600_109/12/08_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25568'],
+['二結排水_3K700_109/12/02_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25569'],
+['二結排水_3K800_109/12/08_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25570'],
+['二結排水_3K900_109/12/08_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=25571'],
+['冬山河_6K400_109/12/10_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26029'],
+['隆恩排水_0K200_109/12/15_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26330'],
+['隆恩排水_0K300_109/12/15_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26331'],
+['抵美簡排水_0K400_109/12/11_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26863'],
+['小金面排水_0K600_109/12/10_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26764'],
+['小金面排水_1K600_109/12/10_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26814'],
+['小金面排水_1K800_109/12/10_注意_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=26823'],
+['群英排水_0K200_109/12/10_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27034'],
+['十三股大排_5K700_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27095'],
+['十三股大排_5K600_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27099'],
+['十三股大排_5K500_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27100'],
+['十三股大排_5K800_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27090'],
+['十三股大排_5K400_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27101'],
+['十三股大排_5K300_109/12/14_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=27102'],
+['美福排水_1K50_109/12/09_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=28829'],
+['美福排水_1K200_109/12/09_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=28830'],
+['美福排水_1K300_109/12/09_計畫_雨', 'https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=28831'],
+
+
+
+
+        ]
+
+        $('body').append('<iframe id="box" width="1920px" height="2480px"></iframe>');
+        var loadcnt = 0;
+        $(document).ready(function (e) {
+            var iframe = document.getElementById("box");
+            if (iframe.attachEvent) {
+                iframe.attachEvent("onload", function () {
+                    alert('onload')
+                    //iframe載入完成後你需要進行的操作
+                });
+            } else {
+                iframe.onload = function () {
+                    //iframe載入完成後你需要進行的操作
+                    console.log('讀取到第' + loadcnt + '筆');
+                    var $iframe = $(this),
+        $contents = $iframe.contents();
+                    $iframe.get(0).contentWindow.btnExportODF_onclick('pdf');
+                   
+                    var data = $iframe.contents().find("#div_form").html();
+                    console.log(data);
+                    var blob = new Blob([data], { "type": "text/html" });
+                    console.log(blob);
+
+                    //對於Blob物件，我們可以創建出一個URL來訪問它。使用URL物件的createObjectURL方法。
+                    var a = document.createElement('a');
+                    a.download = urlar[loadcnt][0]+'.html';
+                    a.href = window.URL.createObjectURL(blob);
+                    a.click()
+
+                    loadcnt += 1;
+                    if (loadcnt == urlar.length) {
+                        alert('done');
+                        return;
+                    } else {
+                        console.log('開始下載pdf，15秒後開啟下一筆')
+                        setTimeout(function () {
+                            $('#box').attr('src', urlar[loadcnt][1]);
+                        }, 15000);
+                    }
+                };
+            }
+        });
+
+        $('#box').attr('src', urlar[loadcnt][1]);
+        //if...else...是一種相容ie的寫法
+
+      
+    </script>
+    
+</body>
+</html>

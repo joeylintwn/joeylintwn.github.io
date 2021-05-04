@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Anexos",attachmentDetails:"Detalhes dos anexos",add:"Adicionar",update:"Atualizar",cancel:"Cancelar",noTitle:"Sem t\u00edtulo","delete":"Eliminar",selectFile:"Selecionar ficheiro",changeFile:"Alterar ficheiro",noAttachments:"Sem Anexos",addErrorMessage:"Erro ao adicionar o anexo. Tente novamente.",deleteErrorMessage:"Erro ao eliminar o anexo. Tente novamente.",updateErrorMessage:"Erro ao atualizar o anexo. Tente novamente."});

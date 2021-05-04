@@ -13,7 +13,7 @@
 <title>WMTSLayer - 4.15</title>
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+      href="scripts/4.15/esri/themes/light/main.css"
     />
 
     <style>
@@ -31,7 +31,7 @@
       }
     </style>
 
-    <script src="https://js.arcgis.com/4.15/"></script>
+    <script src="scripts/4.15/dojo/dojo.js"></script>
 
     <script>
       var map, view;
@@ -49,11 +49,11 @@
       "esri/geometry/geometryEngine"
       ], function (Map, MapView, WMTSLayer, LayerList, Point, Graphic, GraphicsLayer,Draw) {
         layer = new WMTSLayer({
-          url: "https://wmts.nlsc.gov.tw/97/wmts",
+            url: "https://210.69.148.40/arcgis/rest/services/ylmap/%E5%AE%9C%E8%98%AD%E7%B8%A3%E9%80%9A%E9%9B%BB%E5%AD%90%E5%9C%B0%E5%9C%96_2016/MapServer/WMTS",
           copyright:
             "",
           activeLayer: {
-            id: "EMAP3826"
+              id: "ylmap_宜蘭縣通電子地圖_2016"
           }
         });
 
@@ -63,7 +63,7 @@
 
         var pt = new Point({
             x: 326724.245,
-            y: 2706112.743,
+            y: 2736112.743,
             spatialReference: {
                 wkid: 3826 //座標系統
             }
@@ -83,7 +83,8 @@
           var layerList = new LayerList({
             view: view
           });
-          view.ui.add(layerList, "bottom-left");
+            //圖層清單
+          //view.ui.add(layerList, "bottom-left");
         });
 
           //---顯示圖徵
@@ -108,8 +109,8 @@
             geometry: pt,
             symbol: simpleMarkerSymbol
         });
-
-        graphicsLayer.add(pointGraphic);
+          //點位圖層
+       // graphicsLayer.add(pointGraphic);
 
 
       });

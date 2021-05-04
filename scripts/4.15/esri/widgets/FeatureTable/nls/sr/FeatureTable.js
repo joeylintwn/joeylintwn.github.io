@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Tabela geoobjekata",header:"{title} (Geoobjekat: {count}, Izabrano: {selected})",untitled:"Bez naslova",relatedRecords:"Povezani zapisi",attachments:"Prilozi",loading:"U\u010ditavanje...",syncing:"Sinhronizacija...",errorData:"Gre\u0161ka podatka.",errorLayer:"Gre\u0161ka sloja.",errorUpdateFailed:"A\u017euriranje nije uspelo.",errorDomainType:"Tip domena nije podr\u017ean.",show:"Prika\u017ei",hide:"Sakrij",options:"Opcije",allColums:"Sve kolone",sortAsc:"Sortiraj po rastu\u0107em redosledu",
+sortDesc:"Sortiraj po opadaju\u0107em redosledu",toggleColumns:"Prika\u017ei/sakrij kolone",clearSelection:"Izbri\u0161i izbor",centerOnSelection:"Centriraj na selekciju",showSelected:"Prika\u017ei selektovane zapise",filter:"Filter",addField:"Dodaj polje",refreshData:"Osve\u017ei podatke",date:"Datum",number:"Broj",string:"String"});

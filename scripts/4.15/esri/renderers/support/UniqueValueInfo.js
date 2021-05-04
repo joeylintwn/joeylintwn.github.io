@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../symbols ../../core/JSONSupport ../../core/accessorSupport/decorators ../../symbols/support/jsonUtils".split(" "),function(l,m,h,c,f,k,b,d){return function(g){function a(a){a=g.call(this,a)||this;a.description=null;a.label=null;a.symbol=null;a.value=null;return a}h(a,g);e=a;a.prototype.clone=function(){return new e({value:this.value,description:this.description,label:this.label,symbol:this.symbol?
+this.symbol.clone():null})};a.prototype.getMeshHash=function(){var a=JSON.stringify(this.symbol&&this.symbol.toJSON());return this.value+"."+a};var e;c([b.property({type:String,json:{write:!0}})],a.prototype,"description",void 0);c([b.property({type:String,json:{write:!0}})],a.prototype,"label",void 0);c([b.property({types:f.symbolTypesRenderer,json:{origins:{"web-scene":{types:f.symbolTypesRenderer3D,read:d.read,write:d.writeTarget}},read:d.read,write:d.writeTarget}})],a.prototype,"symbol",void 0);
+c([b.property({type:String,json:{write:!0}})],a.prototype,"value",void 0);return a=e=c([b.subclass("esri.renderers.support.UniqueValueInfo")],a)}(b.declared(k.JSONSupport))});

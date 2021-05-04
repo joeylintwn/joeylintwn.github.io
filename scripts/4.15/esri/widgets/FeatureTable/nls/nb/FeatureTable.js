@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Geoobjekttabell",header:"{title} (geoobjekt: {count}, valgt: {selected})",untitled:"Uten tittel",relatedRecords:"Relaterte poster",attachments:"Vedlegg",loading:"Laster inn...",syncing:"Synkroniserer...",errorData:"Datafeil.",errorLayer:"Lagfeil.",errorUpdateFailed:"Oppdateringen mislyktes.",errorDomainType:"Domenetypen st\u00f8ttes ikke.",show:"Vis",hide:"Skjul",options:"Alternativer",allColums:"Alle kolonner",sortAsc:"Sorter stigende",sortDesc:"Sorter synkende",toggleColumns:"Vis/skjul kolonner",
+clearSelection:"T\u00f8m utvalg",centerOnSelection:"Sentrer p\u00e5 utvalg",showSelected:"Vis valgte poster",filter:"Filter",addField:"Legg til felt",refreshData:"Oppdater data",date:"Dato",number:"Tall",string:"Streng"});

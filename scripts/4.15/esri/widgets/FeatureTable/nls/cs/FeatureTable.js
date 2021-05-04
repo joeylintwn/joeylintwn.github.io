@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Tabulka prvk\u016f",header:"{title} (Prvky: {count}, Vybr\u00e1no: {selected})",untitled:"Bez n\u00e1zvu",relatedRecords:"Rela\u010dn\u011b p\u0159ipojen\u00e9 z\u00e1znamy",attachments:"P\u0159\u00edlohy",loading:"Nahr\u00e1v\u00e1n\u00ed\u2026",syncing:"Prob\u00edh\u00e1 synchronizace\u2026",errorData:"Chyba dat.",errorLayer:"Chyba vrstvy.",errorUpdateFailed:"Aktualizace se nezda\u0159ila.",errorDomainType:"Typ dom\u00e9ny nen\u00ed podporov\u00e1n.",show:"Zobrazit",hide:"Skr\u00fdt",
+options:"Mo\u017enosti",allColums:"V\u0161echny sloupce",sortAsc:"Se\u0159adit vzestupn\u011b",sortDesc:"Se\u0159adit sestupn\u011b",toggleColumns:"Zobrazit/skr\u00fdt sloupce",clearSelection:"Vymazat v\u00fdb\u011br",centerOnSelection:"Vycentrovat na v\u00fdb\u011br",showSelected:"Zobrazit vybran\u00e9 z\u00e1znamy",filter:"Filtr",addField:"P\u0159idat pole",refreshData:"Aktualizovat data",date:"Datum",number:"\u010c\u00edslo",string:"\u0158et\u011bzec"});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Geoobjekttabell",header:"{title} (Geoobjekt: {count}, Valda: {selected})",untitled:"Namnl\u00f6s",relatedRecords:"Relaterade poster",attachments:"Bilagor",loading:"L\u00e4ser in...",syncing:"Synkroniserar...",errorData:"Datafel.",errorLayer:"Lagerfel.",errorUpdateFailed:"Uppdateringen misslyckades.",errorDomainType:"Typen av dom\u00e4n st\u00f6ds inte.",show:"Visa",hide:"D\u00f6lj",options:"Alternativ",allColums:"Alla kolumner",sortAsc:"Sortera stigande",sortDesc:"Sortera fallande",
+toggleColumns:"Visa/d\u00f6lj kolumner",clearSelection:"Rensa markering",centerOnSelection:"Centrera p\u00e5 markering",showSelected:"Visa valda poster",filter:"Filter",addField:"L\u00e4gg till f\u00e4lt",refreshData:"Uppdatera data",date:"Datum",number:"Nummer",string:"Str\u00e4ng"});

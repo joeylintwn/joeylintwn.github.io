@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/decorateHelper ../../../core/tsSupport/declareExtendsHelper ../../../core/accessorSupport/decorators ../engine/BitmapTileContainer ../engine/Container".split(" "),function(h,a,d,e,c,f,g){Object.defineProperty(a,"__esModule",{value:!0});a.BitmapTileLayerView2D=function(a){return function(a){function b(){var b=null!==a&&a.apply(this,arguments)||this;b.container=new g.Container;return b}e(b,a);b.prototype.attach=function(){var a=this;this.view.timeline.record(this.layer.title+
+" (BitmapTileLayer) Attach");this._bitmapView=new f.BitmapTileContainer(this._tileInfoView,this.clips);this.handles.add(this.clips.on("change",function(){return a._bitmapView.setClips(a.clips)}),"watchClips");this.container.addChild(this._bitmapView)};b.prototype.detach=function(){this.container.removeChild(this._bitmapView);this._bitmapView.removeAllChildren();this.handles.remove("watchClips")};return b=d([c.subclass("esri.views.2d.layers.BitmapTileLayerView2D")],b)}(c.declared(a))}});

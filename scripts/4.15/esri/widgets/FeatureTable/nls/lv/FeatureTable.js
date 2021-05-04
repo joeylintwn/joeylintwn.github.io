@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Elementu tabula",header:"{title} (Elementi: {count}, Izv\u0113l\u0113ti: {selected})",untitled:"Bez nosaukuma",relatedRecords:"Saist\u012btie ieraksti",attachments:"Pielikumi",loading:"Iel\u0101d\u0113...",syncing:"Sinhroniz\u0113...",errorData:"Datu k\u013c\u016bda.",errorLayer:"Sl\u0101\u0146a k\u013c\u016bda.",errorUpdateFailed:"Atjauno\u0161ana neizdev\u0101s.",errorDomainType:"Dom\u0113na veids nav atbalst\u012bts.",show:"Par\u0101d\u012bt",hide:"Pasl\u0113pt",options:"Opcijas",
+allColums:"Visas kolonnas",sortAsc:"K\u0101rtot augo\u0161\u0101 sec\u012bb\u0101",sortDesc:"K\u0101rtot dilsto\u0161\u0101 sec\u012bb\u0101",toggleColumns:"R\u0101d\u012bt/pasl\u0113pt kolonnas",clearSelection:"Not\u012br\u012bt izv\u0113li",centerOnSelection:"Centr\u0113t uz izv\u0113li",showSelected:"R\u0101d\u012bt atlas\u012btos ierakstus",filter:"Filtr\u0113t",addField:"Pievienot lauku",refreshData:"Atjaunot datus",date:"Datums",number:"Skaitlis",string:"Virkne"});

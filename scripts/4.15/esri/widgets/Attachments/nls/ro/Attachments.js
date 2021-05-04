@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Fi\u0219iere ata\u0219ate",attachmentDetails:"Detaliile fi\u0219ierelor ata\u0219ate",add:"Ad\u0103ugare",update:"Actualizare",cancel:"Anulare",noTitle:"F\u0103r\u0103 titlu","delete":"\u015etergere",selectFile:"Selectare fi\u015fier",changeFile:"Schimba\u021bi fi\u0219ierul",noAttachments:"Nu exist\u0103 fi\u0219iere ata\u0219ate",addErrorMessage:"Eroare la ad\u0103ugarea fi\u0219ierelor ata\u0219ate. \u00cencerca\u021bi din nou.",deleteErrorMessage:"Eroare la \u0219tergerea fi\u0219ierului ata\u0219at. \u00cencerca\u021bi din nou.",
+updateErrorMessage:"Eroare la actualizarea fi\u0219ierului ata\u0219at. \u00cencerca\u021bi din nou."});

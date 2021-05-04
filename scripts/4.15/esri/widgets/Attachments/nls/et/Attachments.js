@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Manused",attachmentDetails:"Manuse \u00fcksikasjad",add:"Lisa",update:"Uuenda",cancel:"T\u00fchista",noTitle:"Pealkirjata","delete":"Kustuta",selectFile:"Vali fail",changeFile:"Muuda faili",noAttachments:"Manuseid pole",addErrorMessage:"T\u00f5rge manuse lisamisel Palun proovige uuesti",deleteErrorMessage:"T\u00f5rge manuse kustutamisel. Palun proovige uuesti",updateErrorMessage:"T\u00f5rge manuse uuendamisel. Palun proovige uuesti"});

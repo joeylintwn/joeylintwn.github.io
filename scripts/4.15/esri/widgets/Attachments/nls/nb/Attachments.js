@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Vedlegg",attachmentDetails:"Vedleggsdetaljer",add:"Legg til",update:"Oppdater",cancel:"Avbryt",noTitle:"Uten tittel","delete":"Slett",selectFile:"Velg fil",changeFile:"Endre fil",noAttachments:"Ingen vedlegg",addErrorMessage:"Feil ved tillegging av vedlegget. Pr\u00f8v p\u00e5 nytt.",deleteErrorMessage:"Feil ved sletting av vedlegget. Pr\u00f8v p\u00e5 nytt.",updateErrorMessage:"Feil ved oppdatering av vedlegget. Pr\u00f8v p\u00e5 nytt."});

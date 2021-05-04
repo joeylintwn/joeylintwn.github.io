@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u9644\u4ef6",attachmentDetails:"\u9644\u4ef6\u8a73\u7d30\u8cc7\u8a0a",add:"\u65b0\u589e",update:"\u66f4\u65b0",cancel:"\u53d6\u6d88",noTitle:"\u7121\u6a19\u984c","delete":"\u522a\u9664",selectFile:"\u9078\u64c7\u6a94\u6848",changeFile:"\u8b8a\u66f4\u6a94\u6848",noAttachments:"\u7121\u9644\u4ef6",addErrorMessage:"\u65b0\u589e\u9644\u4ef6\u6642\u767c\u751f\u932f\u8aa4\u3002 \u8acb\u518d\u8a66\u4e00\u6b21\u3002",deleteErrorMessage:"\u522a\u9664\u9644\u4ef6\u6642\u767c\u751f\u932f\u8aa4\u3002 \u8acb\u518d\u8a66\u4e00\u6b21\u3002",
+updateErrorMessage:"\u66f4\u65b0\u9644\u4ef6\u6642\u767c\u751f\u932f\u8aa4\u3002 \u8acb\u518d\u8a66\u4e00\u6b21\u3002"});

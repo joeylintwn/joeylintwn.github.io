@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Objekttabel",header:"{title} (objekter: {count}, markeret {selected})",untitled:"Uden titel",relatedRecords:"Relaterede poster",attachments:"Vedh\u00e6ftninger",loading:"Indl\u00e6ser...",syncing:"Synkroniserer\u2026",errorData:"Datafejl.",errorLayer:"Lagfejl.",errorUpdateFailed:"Opdatering mislykkedes.",errorDomainType:"Dom\u00e6netype underst\u00f8ttes ikke.",show:"Vis",hide:"Hide",options:"Indstillinger",allColums:"Alle kolonner",sortAsc:"Sort\u00e9r stigende",sortDesc:"Sort\u00e9r faldende",
+toggleColumns:"Vis/skjul kolonner",clearSelection:"Ryd markering",centerOnSelection:"Center af markering",showSelected:"Vis valgte poster",filter:"Filtr\u00e9r",addField:"Tilf\u00f8j felt",refreshData:"Opdat\u00e9r data",date:"Dato",number:"Nummer",string:"Streng"});

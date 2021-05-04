@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Tabela de Fei\u00e7\u00f5es",header:"{title} (Fei\u00e7\u00f5es: {count}, Selecionadas {selected})",untitled:"Sem t\u00edtulo",relatedRecords:"Registros relacionados",attachments:"Anexos",loading:"Carregando...",syncing:"Sincronizando...",errorData:"Erro de dados.",errorLayer:"Erro de camada.",errorUpdateFailed:"Falha ao atualizar.",errorDomainType:"O tipo de dom\u00ednio n\u00e3o \u00e9 suportado.",show:"Mostrar",hide:"Ocultar",options:"Op\u00e7\u00f5es",allColums:"Todas as colunas",
+sortAsc:"Ordem crescente",sortDesc:"Ordem decrescente",toggleColumns:"Mostrar/ocultar colunas",clearSelection:"Limpar sele\u00e7\u00e3o",centerOnSelection:"Centralizar na sele\u00e7\u00e3o",showSelected:"Mostrar registros selecionados",filter:"Filtrar",addField:"Adicionar campo",refreshData:"Atualizar dados",date:"Data",number:"N\u00famero",string:"Texto"});

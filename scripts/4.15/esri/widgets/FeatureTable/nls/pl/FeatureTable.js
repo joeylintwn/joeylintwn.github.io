@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Tabela obiekt\u00f3w",header:"{title} (liczba obiekt\u00f3w: {count}, wybrane: {selected})",untitled:"Brak tytu\u0142u",relatedRecords:"Powi\u0105zane rekordy",attachments:"Za\u0142\u0105czniki",loading:"Wczytywanie...",syncing:"Synchronizowanie...",errorData:"B\u0142\u0105d danych.",errorLayer:"B\u0142\u0105d warstwy.",errorUpdateFailed:"Aktualizacja nie powiod\u0142a si\u0119.",errorDomainType:"Typ domeny nie jest obs\u0142ugiwany.",show:"Poka\u017c",hide:"Ukryj",options:"Opcje",
+allColums:"Wszystkie kolumny",sortAsc:"Sortuj rosn\u0105co",sortDesc:"Sortuj malej\u0105co",toggleColumns:"Poka\u017c/ukryj kolumny",clearSelection:"Wyczy\u015b\u0107 selekcj\u0119",centerOnSelection:"Wy\u015brodkuj dla wybranych",showSelected:"Poka\u017c wybrane rekordy",filter:"Filtruj",addField:"Dodaj pole",refreshData:"Od\u015bwie\u017cenie danych",date:"Data",number:"Liczba",string:"Ci\u0105g znakowy"});

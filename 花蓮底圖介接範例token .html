@@ -1,0 +1,104 @@
+﻿<html class="dj_webkit dj_chrome dj_contentbox">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>花蓮底圖介接範例 (使用token介接加密服務)</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/themes/light/main.css">
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/dojo/nls/dojo_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/MapView.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/layers/TileLayer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/identity/IdentityManager.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/nls/MapView_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/identity/nls/IdentityManager_zh-tw.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/webgl.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/mapViewDeps.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/layers/TileLayerView2D.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/Container.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/BitmapTileContainer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/webgl/definitions.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://js.arcgis.com/4.13/esri/views/2d/engine/DisplayObject.js"></script>
+    <script src="https://js.arcgis.com/4.13/"></script>
+    <script src="handleArcgisToken.js"></script>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #info-div {
+            background-color: white;
+            border-radius: 8px;
+            padding: 8px;
+            opacity: 0.92;
+        }
+    </style>
+
+    <script>
+        require([
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/layers/TileLayer",
+          "esri/identity/IdentityManager"
+        ], function (Map, MapView, TileLayer, esriId) {
+
+            // 設定token
+            (function () {
+                function refreshToken() {
+                    var token = arcgisTokenModule.getCurrentValidToken();
+                    if (token) {
+                        esriId.registerToken({
+                            "token": token,
+                            "server": "https://map.hl.gov.tw/arcgis/rest/services"
+                        });
+                    }
+                }
+                refreshToken();
+                setInterval(refreshToken, 10000);
+            })();
+
+            // 產生圖層
+            var tokenLayer = new TileLayer({
+                url: "https://map.hl.gov.tw/arcgis/rest/services/HLforApplication/HL_Image_Y94_97_TokenSample/MapServer"
+            });
+
+            // 加到地圖
+            var map = new Map({
+                layers: [tokenLayer]
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 8,
+                center: [121.4690817, 23.7420447]
+            });
+
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv" class="esri-view esri-view-height-small esri-view-height-greater-than-xsmall esri-view-height-less-than-medium esri-view-height-less-than-large esri-view-height-less-than-xlarge esri-view-orientation-landscape esri-view-width-medium esri-view-width-greater-than-xsmall esri-view-width-greater-than-small esri-view-width-less-than-large esri-view-width-less-than-xlarge"><div class="esri-view-root"><div class="esri-view-surface esri-view-surface--inset-outline" role="application" tabindex="0"></div><div class="esri-overlay-surface"><div style="visibility: hidden;"></div></div><div class="esri-ui" style="inset: 0px;"><div class="esri-ui-inner-container esri-ui-corner-container" style="inset: 15px 15px 30px;"><div class="esri-ui-top-left esri-ui-corner"><div class="esri-component esri-zoom esri-widget"><div class="esri-widget--button esri-widget esri-disabled" role="button" tabindex="-1" title="放大(Z)"><span aria-hidden="true" role="presentation" class="esri-icon esri-icon-plus"></span><span class="esri-icon-font-fallback-text">放大(Z)</span></div><div class="esri-widget--button esri-widget esri-disabled" role="button" tabindex="-1" title="縮小(O)"><span aria-hidden="true" role="presentation" class="esri-icon esri-icon-minus"></span><span class="esri-icon-font-fallback-text">縮小(O)</span></div></div></div><div class="esri-ui-top-right esri-ui-corner"></div><div class="esri-ui-bottom-left esri-ui-corner"></div><div class="esri-ui-bottom-right esri-ui-corner"></div></div><div class="esri-ui-inner-container esri-ui-manual-container"><div class="esri-component esri-attribution esri-widget"><div class="esri-attribution__sources esri-interactive" tabindex="0" role="button"></div><div class="esri-attribution__powered-by">Powered by <a class="esri-attribution__link esri-widget__anchor" href="http://www.esri.com/" target="_blank" rel="noreferrer">Esri</a></div></div><div class="esri-component esri-popup" role="presentation"></div></div></div></div><div class="esri-view-user-storage"></div></div>
+
+
+    <div class="esri-widget esriSignInDialog esriIdentityDialog esriIdentityDialog--visible dijitDialog dijitDialogError dijitError" role="dialog" aria-labelledby="dijit_Dialog_0_title" id="dijit_Dialog_0" widgetid="dijit_Dialog_0" style="width: 18em; position: absolute; touch-action: none; opacity: 1; left: 283px; top: 160px; z-index: 950;">
+        <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+            <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="dijit_Dialog_0_title" role="heading" level="1">登入</span>
+            <span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon" data-dojo-attach-event="ondijitclick: onCancel" title="取消" role="button" tabindex="-1">
+                <span data-dojo-attach-point="closeText" class="closeText" title="取消">x</span>
+            </span>
+        </div>
+        <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent dijitDialogSingleChild"><form data-dojo-attach-point="containerNode" data-dojo-attach-event="onreset:_onReset,onsubmit:_onSubmit" id="dijit_form_Form_0" class="esriIdForm" widgetid="dijit_form_Form_0"><div class="dijitDialogPaneContentArea"><div style="padding-bottom: 5px; word-wrap: break-word;">請登入以存取 <span class="serverLink" style="word-wrap: break-word;" title="https://map.hl.gov.tw/arcgis">https://map.hl.gov.tw/arcgis </span> <span class="resLink" style="word-wrap: break-word;" title="https://map.hl.gov.tw/arcgis/sharing">(項目)</span> 上的項目</div><div style="margin: 0px; padding: 0px; height: 10px;"></div><div class="esriErrorMsg" style="display: none; color: white; background-color: #D46464; text-align: center; padding-top: 3px; padding-bottom: 3px;">輸入的使用者名稱或密碼不正確。</div><div style="margin: 0px; padding: 0px; height: 10px;"></div><table style="width: 100%;"><tbody><tr><td><label>使用者名稱:<br><div class="dijit dijitReset dijitInline dijitLeft esriIdUser dijitTextBox dijitValidationTextBox dijitTextBoxError dijitValidationTextBoxError dijitError" id="widget_dijit_form_ValidationTextBox_0" role="presentation" widgetid="dijit_form_ValidationTextBox_0" style="width: 100%;"><div class="dijitReset dijitValidationContainer"><input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="Χ " type="text" tabindex="-1" readonly="readonly" role="presentation"></div><div class="dijitReset dijitInputField dijitInputContainer"><input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" autocomplete="off" type="text" tabindex="0" id="dijit_form_ValidationTextBox_0" aria-required="true" autocapitalize="none" spellcheck="false" value="" aria-invalid="true"></div></div></label></td></tr><tr><td><label>密碼:<br><div class="dijit dijitReset dijitInline dijitLeft esriIdPwd dijitTextBox dijitValidationTextBox dijitTextBoxIncomplete dijitValidationTextBoxIncomplete dijitIncomplete" id="widget_dijit_form_ValidationTextBox_1" role="presentation" widgetid="dijit_form_ValidationTextBox_1" style="width: 100%;"><div class="dijitReset dijitValidationContainer"><input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="Χ " type="text" tabindex="-1" readonly="readonly" role="presentation"></div><div class="dijitReset dijitInputField dijitInputContainer"><input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" autocomplete="off" type="password" tabindex="0" id="dijit_form_ValidationTextBox_1" aria-required="true" value="" aria-invalid="false"></div></div></label></td></tr></tbody></table></div><div class="dijitDialogPaneActionBar"><span class="dijit dijitReset dijitInline dijitButton esriIdSubmit" role="presentation" widgetid="dijit_form_Button_0"><span class="dijitReset dijitInline dijitButtonNode" data-dojo-attach-event="ondijitclick:__onClick" role="presentation"><span class="dijitReset dijitStretch dijitButtonContents" data-dojo-attach-point="titleNode,focusNode" role="button" aria-labelledby="dijit_form_Button_0_label" tabindex="0" id="dijit_form_Button_0" style="user-select: none;"><span class="dijitReset dijitInline dijitIcon dijitNoIcon" data-dojo-attach-point="iconNode"></span><span class="dijitReset dijitToggleButtonIconChar">●</span><span class="dijitReset dijitInline dijitButtonText" id="dijit_form_Button_0_label" data-dojo-attach-point="containerNode">確定</span></span></span><input type="button" value="" class="dijitOffScreen" data-dojo-attach-event="onclick:_onClick" tabindex="-1" aria-hidden="true" data-dojo-attach-point="valueNode"></span><span class="dijit dijitReset dijitInline dijitButton esriIdCancel" role="presentation" widgetid="dijit_form_Button_1"><span class="dijitReset dijitInline dijitButtonNode" data-dojo-attach-event="ondijitclick:__onClick" role="presentation"><span class="dijitReset dijitStretch dijitButtonContents" data-dojo-attach-point="titleNode,focusNode" role="button" aria-labelledby="dijit_form_Button_1_label" tabindex="0" id="dijit_form_Button_1" style="user-select: none;"><span class="dijitReset dijitInline dijitIcon dijitNoIcon" data-dojo-attach-point="iconNode"></span><span class="dijitReset dijitToggleButtonIconChar">●</span><span class="dijitReset dijitInline dijitButtonText" id="dijit_form_Button_1_label" data-dojo-attach-point="containerNode">取消</span></span></span><input type="button" value="" class="dijitOffScreen" data-dojo-attach-event="onclick:_onClick" tabindex="-1" aria-hidden="true" data-dojo-attach-point="valueNode"></span></div></form></div>
+
+    </div><div class="dijitDialogUnderlayWrapper" id="dijit_DialogUnderlay_0" widgetid="dijit_DialogUnderlay_0" style="z-index: 949; display: block; top: 0px; left: 0px;"><div class="dijitDialogUnderlay _underlay esri-widget_underlay esriSignInDialog_underlay esriIdentityDialog_underlay" tabindex="-1" data-dojo-attach-point="node" id="dijit_Dialog_0_underlay" style="width: 835px; height: 665px;"></div></div><div class="dijitTooltip dijitTooltipRight" id="dijit__MasterTooltip_0" data-dojo-attach-event="mouseenter:onMouseEnter,mouseleave:onMouseLeave" widgetid="dijit__MasterTooltip_0" style=""><div class="dijitTooltipConnector" data-dojo-attach-point="connectorNode" style="top: 17.6px;"></div><div class="dijitTooltipContainer dijitTooltipContents" data-dojo-attach-point="containerNode" role="alert" align="left"></div></div>
+</body>
+</html>

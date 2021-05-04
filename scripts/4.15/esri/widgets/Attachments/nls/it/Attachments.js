@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Allegati",attachmentDetails:"Dettagli allegato",add:"Aggiungi",update:"Aggiorna",cancel:"Annulla",noTitle:"Senza titolo","delete":"Elimina",selectFile:"Seleziona file",changeFile:"Modifica file",noAttachments:"Allegati non disponibili",addErrorMessage:"Errore durante l'aggiunta dell'allegato. Riprovare.",deleteErrorMessage:"Errore durante l'eliminazione dell'allegato. Riprovare.",updateErrorMessage:"Errore durante l'aggiornamento dell'allegato. Riprovare."});

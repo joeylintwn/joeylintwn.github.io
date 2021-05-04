@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Pi\u00e8ces jointes",attachmentDetails:"D\u00e9tails de la pi\u00e8ce jointe",add:"Ajouter",update:"Mettre \u00e0 jour",cancel:"Annuler",noTitle:"Sans titre","delete":"Supprimer",selectFile:"S\u00e9lectionner un fichier",changeFile:"Modifier le fichier",noAttachments:"Aucune pi\u00e8ce jointe",addErrorMessage:"Erreur lors de l\u2019ajout de la pi\u00e8ce jointe. R\u00e9essayez ult\u00e9rieurement.",deleteErrorMessage:"Erreur lors de la suppression de la pi\u00e8ce jointe. R\u00e9essayez ult\u00e9rieurement.",
+updateErrorMessage:"Erreur lors de la mise \u00e0 jour de la pi\u00e8ce jointe. R\u00e9essayez ult\u00e9rieurement."});

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Vedh\u00e6ftninger",attachmentDetails:"Oplysninger om vedh\u00e6ftning",add:"Tilf\u00f8j",update:"Opdat\u00e9r",cancel:"Annull\u00e9r",noTitle:"Uden titel","delete":"Slet",selectFile:"V\u00e6lg fil",changeFile:"Skift fil",noAttachments:"Ingen vedh\u00e6ftninger",addErrorMessage:"Der opstod en fejl under tilf\u00f8jelse af vedh\u00e6ftningen. Pr\u00f8v igen.",deleteErrorMessage:"Der opstod en fejl under sletning af vedh\u00e6ftningen. Pr\u00f8v igen.",updateErrorMessage:"Der opstod en fejl under opdatering af vedh\u00e6ftningen. Pr\u00f8v igen."});

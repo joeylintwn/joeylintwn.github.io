@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>宜蘭縣水資中心</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                          
+                            <h4>設備資料卡</h4>
+                            
+                            <form class="pt-3" id="queryresult">
+                                
+                             
+
+
+
+                                <div class="mt-3">
+                                    <!--       <a class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" href="../../index.html">註冊</a>
+                -->
+                                    <button type="button" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" id="bt_reg">取得</button>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/jquery.loading.min.js"></script>
+    
+    <!-- endinject -->
+    <script type="text/javascript">
+        var mname = '';
+        var mid = '';
+        $(function () {
+            console.log('---page ready---');
+            getquery();
+            //---連接伺服器取得群組內容---
+
+            //getquery();
+            //===連接伺服器取得群組內容===
+
+            //---必填驗證---
+            //---除了傳送只傳text,textarea,所以checkbox,sel,radiobox 都要有一個連動的text去接，然後設placeholder來做必填提示
+            //---data-ng-required="true" 此屬性判斷必填，空白值即為未輸入
+            //--下拉式選單連動--
+            $('#sel_group').on('change', function (e) {
+                $('#tx_group').val($('#sel_group').val());
+            });
+
+            //--checkbox,radio連動，接收text的設定id , radio、checkbox 設定name，命名規則: tx_名稱,chk_名稱,rdo_名稱，名稱需相同--
+            $('input[type=checkbox],input[type=radio]').on('click', function (e) {
+                var checkedval = '';
+                $('input[name=' + $(this).attr('name') + ']').each(function (idx) {
+                    if ($(this).prop('checked') == true) {
+                        checkedval += $(this).val() + '|';
+                    } else {
+                        
+                    }
+                });
+                (checkedval.length > 1) ? checkedval = checkedval.substring(0, checkedval.length - 1) : '';
+                
+                $('#tx_' + $(this).attr('name').replace(($(this).attr('type').toLowerCase() == 'radio') ? 'rdo_' : 'chk_', '')).val(checkedval);
+                
+   
+            });
+
+            function fn_checkreqinput() {
+                var checkmsg = '';
+                $('*[data-ng-required=true]').each(function (idx) {//必填檢查
+                    console.log(idx + ':' + $(this).attr('id'));
+                    if ($(this).val() == "") {
+                        $(this).css("border", "red 1px solid");
+                        ($(this).attr('placeholder') != undefined) ? checkmsg += $(this).attr('placeholder') + '<br>' : '';
+                    } else {
+                        $(this).css("border", "");
+                    }
+                })
+
+                if (checkmsg != '') {
+                    checkmsg += '<span style="color:red">以上欄位為必填，請檢查</span>';
+                    //alert(checkmsg);
+                    $('body').loading({ message: checkmsg, stoppable: true, theme: 'dark' });
+                }
+                //--通過驗證後開始連接資料庫
+                console.log('連線伺服器驗證中...')
+            }
+
+            //===必填驗證===
+
+            $('#bt_reg').on('click', function (e) {
+                //fn_checkreqinput();
+                getquery();
+                
+                
+            })
+
+
+
+        })
+
+        function getqrcode() {
+            let githubURL = new URL(location.href);
+            uuid = githubURL.searchParams.get('uuid');
+                var WA;
+            // WA = window.open("https://chart.googleapis.com/chart?cht=qr&chs=128x128&chl=" + location.href, "", "toolbar=no,location=no,directories=no");
+                WA = window.open("wrqrcode_win.html?cht=qr&chs=128x128&chl=" + location.href + '?q=' + String((new Date).getTime()), "", "toolbar=no,location=no,directories=no,width=300,height=300");
+                WA.onload = function () {
+                    $(WA.document.getElementById("qrccodeimg")).attr('src', "https://chart.googleapis.com/chart?cht=qr&chs=128x128&chl=" + location.href);
+                    $(WA.document.getElementById("mname")).html(mname);
+                    $(WA.document.getElementById("mid")).html(mid);
+                
+                    
+
+                }
+        }
+        
+
+        function getquery() {
+            console.log('開始傳送資料');
+            $('body').loading({ message: '取得設備資料卡中…', stoppable: false, theme: 'dark' });
+            let githubURL = new URL(location.href);
+            uuid=githubURL.searchParams.get('uuid');
+
+            var formdata = {
+                callfun: 'wrqrcode',
+                // cond: ["姓名|%|林一", "地址|=|宜蘭"], //1.欄位|2.=全部符合 %部份符合|3.值
+                //cond: ["uuid|%|16a7d9f3-dc9e-46a6-8828-27125e9e7336", "地址|=|宜蘭"], //複合式條件
+                cond: ["uuid|%|" + uuid],
+                //$('#參數').val()
+                postsize: 0
+            }
+            //計算post長度
+            var totallen = 0;
+            $.each(Object.keys(formdata), function (j, keyar_val) {
+                if (formdata[keyar_val].length) {
+                    totallen += parseInt(formdata[keyar_val].length);
+                    console.log(keyar_val + ' 長度: ' + formdata[keyar_val].length);
+                } else {
+                    console.log(keyar_val + ' 取無長度 ');
+                    totallen += 10;
+                }
+
+            });
+            console.log(formdata.toString().length);
+            formdata.postsize = parseInt(formdata.postsize) + totallen;
+            console.log(formdata.postsize);
+            $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbzZY0pSKZBPyJ2idcN9UKot25ejJpZ-2d5Bo2ElKh9DhVhqa2s/exec',
+                data: formdata,
+                type: 'POST',
+                timeout: 10000, //超過5秒沒回應就timeout
+                cache: false,
+                error: function (xhr, status, error) {
+                    ajax_loading = 0;
+                    console.log(error)
+                    alert('伺服器連線失敗\n1.請檢查您的網路狀態\n2.請稍候再試');
+                },
+                success: function (data) {
+                    //成功寫入資料
+                    ajax_loading = 0;
+                    console.log(data);
+                    console.log("======");
+                    //console.log(data.rtn.parameters['cond[]']);
+                    console.log(data.rtn3);
+                    if (data.rtn3.length > 0) {
+                        var appendstr = '';
+                        appendstr += '<div class="mt-3">';
+                        appendstr += '<button type="button" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" id="bt_getqrcode" onClick="getqrcode()">取得QRCODE</button>';
+                        appendstr += '</div><br>';
+
+                        $.each(Object.keys(data.rtn3[0]), function (j, keyar_val) {
+                            if (j > 0) {
+                                appendstr += '<div class="form-group"><b>' + keyar_val + '</b>';
+                                if (keyar_val == "設備名稱") {
+                                    mname = data.rtn3[0][keyar_val] ;
+                                } else if (keyar_val == "設備編號") {
+                                    mid = data.rtn3[0][keyar_val];
+                                }
+                                
+                                /*
+                                if (keyar_val == "設備名稱") {
+                                    appendstr += '<div class="card-body">' + data.rtn3[0][keyar_val] + '</div>';
+                                    
+                                } else {
+                                    appendstr += '<input type="text" class="form-control form-control-lg"  data-ng-required="true" value="' + data.rtn3[0][keyar_val] + '">';
+                                }
+                                */
+                                appendstr += '<div class="card-body">' + data.rtn3[0][keyar_val] + '</div>';
+                            
+                            appendstr += '</div>'
+                            }
+                            //appendstr += '<input ' + keyar_val + ' type="text" value="' + data.rtn3[0][keyar_val] + '" >';
+                        });
+                        console.log('appendstr: ' + appendstr);
+
+                      
+                        $('#queryresult').html(appendstr);
+                    }
+                    
+                    //saveloading.savedone(fileName);
+                    //alert(data);
+                    //alert('php save OK');
+                    
+                    $('body').loading('stop');
+                }
+
+            });
+        }
+        
+   
+
+    </script>
+    
+</body>
+</html>

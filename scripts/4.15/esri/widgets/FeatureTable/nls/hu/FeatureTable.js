@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Vektoroselem-t\u00e1bla",header:"{title} (Vektoros elemek: {count}, Kiv\u00e1lasztva: {selected})",untitled:"C\u00edm n\u00e9lk\u00fcl",relatedRecords:"Kapcsolt rekordok",attachments:"Csatolm\u00e1nyok",loading:"Bet\u00f6lt\u00e9s...",syncing:"Szinkroniz\u00e1l\u00e1s...",errorData:"Adathiba.",errorLayer:"R\u00e9teghiba.",errorUpdateFailed:"Sikertelen friss\u00edt\u00e9s.",errorDomainType:"A tartom\u00e1nyt\u00edpus nem t\u00e1mogatott.",show:"Megjelen\u00edt\u00e9s",hide:"Elrejt\u00e9s",
+options:"Be\u00e1ll\u00edt\u00e1sok",allColums:"\u00d6sszes oszlop",sortAsc:"Rendez\u00e9s n\u00f6vekv\u0151 sorrendben",sortDesc:"Rendez\u00e9s cs\u00f6kken\u0151 sorrendben",toggleColumns:"Oszlopok megjelen\u00edt\u00e9se/elrejt\u00e9se",clearSelection:"Kijel\u00f6l\u00e9s megsz\u00fcntet\u00e9se",centerOnSelection:"Kijel\u00f6lt r\u00e9sz a f\u00f3kuszban",showSelected:"Kiv\u00e1lasztott rekordok megjelen\u00edt\u00e9se",filter:"Sz\u0171r\u0151",addField:"Mez\u0151 hozz\u00e1ad\u00e1sa",refreshData:"Adatok friss\u00edt\u00e9se",
+date:"D\u00e1tum",number:"Sz\u00e1m",string:"Sz\u00f6veg"});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Objektitabel",header:"{title} (Objektid: {count}, valitud: {selected})",untitled:"Pealkirjata",relatedRecords:"Seotud kirjed",attachments:"Manused",loading:"Laadimine...",syncing:"S\u00fcnkroonimine\u2026",errorData:"Andmet\u00f5rge",errorLayer:"Kihi t\u00f5rge",errorUpdateFailed:"Uuendamine nurjus.",errorDomainType:"Domeeni t\u00fc\u00fcp ei ole toetatud.",show:"Kuva",hide:"Peida",options:"Valikud",allColums:"K\u00f5ik veerud",sortAsc:"Sorteeri kasvavalt",sortDesc:"Sorteeri kahanevalt",
+toggleColumns:"Kuva/peida veerud",clearSelection:"T\u00fchista valik",centerOnSelection:"Paiguta valitu kohale",showSelected:"N\u00e4ita valitud kirjeid",filter:"Filter",addField:"Lisa v\u00e4li",refreshData:"V\u00e4rskenda andmeid",date:"Kuup\u00e4ev",number:"Number",string:"String"});

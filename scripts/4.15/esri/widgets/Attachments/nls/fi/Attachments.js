@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Liitteet",attachmentDetails:"Liitteen tiedot",add:"Lis\u00e4\u00e4",update:"P\u00e4ivit\u00e4",cancel:"Peruuta",noTitle:"Nimet\u00f6n","delete":"Poista",selectFile:"Valitse tiedosto",changeFile:"Vaihda tiedosto",noAttachments:"Ei liitteit\u00e4",addErrorMessage:"Virhe liitteen lis\u00e4\u00e4misess\u00e4. Yrit\u00e4 uudelleen.",deleteErrorMessage:"Virhe liitteen poistossa. Yrit\u00e4 uudelleen.",updateErrorMessage:"Virhe liitteen p\u00e4ivityksess\u00e4. Yrit\u00e4 uudelleen."});

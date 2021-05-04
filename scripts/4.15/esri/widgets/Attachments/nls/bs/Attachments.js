@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Privitci",attachmentDetails:"Pojedinosti privitka",add:"Dodaj",update:"A\u017euriraj",cancel:"Odustani",noTitle:"Neimenovano","delete":"Izbri\u0161i",selectFile:"Odaberi datoteku",changeFile:"Promijeni datoteku",noAttachments:"Nema privitaka",addErrorMessage:"Do\u0161lo je do pogre\u0161ke pri dodavanju privitka. Poku\u0161ajte ponovno.",deleteErrorMessage:"Pogre\u0161ka prilikom brisanja privitka. Poku\u0161ajte ponovno.",updateErrorMessage:"Pogre\u0161ka prilikom a\u017euriranja privitka. Poku\u0161ajte ponovno."});

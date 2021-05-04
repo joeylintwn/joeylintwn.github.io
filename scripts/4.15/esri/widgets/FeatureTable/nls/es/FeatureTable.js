@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Tabla de entidades",header:"{title} (entidades: {count}, seleccionadas: {selected})",untitled:"Sin t\u00edtulo",relatedRecords:"Registros relacionados",attachments:"Adjuntos",loading:"Cargando...",syncing:"Sincronizando...",errorData:"Error de datos.",errorLayer:"Error de capa.",errorUpdateFailed:"Error de actualizaci\u00f3n.",errorDomainType:"No se permite el tipo de dominio.",show:"Mostrar",hide:"Ocultar",options:"Opciones",allColums:"Todas las columnas",sortAsc:"Orden ascendente",
+sortDesc:"Orden descendente",toggleColumns:"Mostrar/ocultar columnas",clearSelection:"Borrar selecci\u00f3n",centerOnSelection:"Centrar en la selecci\u00f3n",showSelected:"Mostrar registros seleccionados",filter:"Filtro",addField:"Agregar campo",refreshData:"Actualizar datos",date:"fecha",number:"N\u00famero",string:"Cadena de caracteres"});

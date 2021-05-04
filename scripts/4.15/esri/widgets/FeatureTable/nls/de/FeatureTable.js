@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Feature-Tabelle",header:"{title} (Features: {count}, ausgew\u00e4hlt: {selected})",untitled:"Ohne Titel",relatedRecords:"Zugeh\u00f6rige Datens\u00e4tze",attachments:"Anlagen",loading:"Wird geladen...",syncing:"Wird synchronisiert...",errorData:"Datenfehler.",errorLayer:"Layer-Fehler.",errorUpdateFailed:"Aktualisierung fehlgeschlagen.",errorDomainType:"Dom\u00e4nentyp wird nicht unterst\u00fctzt.",show:"Anzeigen",hide:"Ausblenden",options:"Optionen",allColums:"Alle Spalten",sortAsc:"Aufsteigend sortieren",
+sortDesc:"Absteigend sortieren",toggleColumns:"Spalten ein-/ausblenden",clearSelection:"Auswahl aufheben",centerOnSelection:"Auf Auswahl zentrieren",showSelected:"Ausgew\u00e4hlte Datens\u00e4tze anzeigen",filter:"Filtern",addField:"Feld hinzuf\u00fcgen",refreshData:"Daten aktualisieren",date:"Datum",number:"Zahl",string:"Zeichenfolge"});

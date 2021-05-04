@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u5716\u5fb5\u8868\u683c",header:"{title} (\u5716\u5fb5: {count} \u500b\uff0c\u5df2\u9078: {selected} \u500b)",untitled:"\u7121\u6a19\u984c",relatedRecords:"\u76f8\u95dc\u8a18\u9304",attachments:"\u9644\u4ef6",loading:"\u6b63\u5728\u8f09\u5165...",syncing:"\u6b63\u5728\u540c\u6b65...",errorData:"\u8cc7\u6599\u932f\u8aa4\u3002",errorLayer:"\u5716\u5c64\u932f\u8aa4\u3002",errorUpdateFailed:"\u66f4\u65b0\u5931\u6557.",errorDomainType:"\u7db2\u57df\u985e\u578b\u4e0d\u53d7\u652f\u63f4\u3002",
+show:"\u986f\u793a",hide:"\u96b1\u85cf",options:"\u9078\u9805",allColums:"\u6240\u6709\u6b04",sortAsc:"\u5347\u51aa\u6392\u5217",sortDesc:"\u964d\u51aa\u6392\u5217",toggleColumns:"\u986f\u793a/\u96b1\u85cf\u6b04",clearSelection:"\u6e05\u9664\u6240\u9078\u5167\u5bb9",centerOnSelection:"\u7f6e\u4e2d\u9078\u64c7",showSelected:"\u986f\u793a\u6240\u9078\u8a18\u9304",filter:"\u7be9\u9078\u5668",addField:"\u65b0\u589e\u6b04\u4f4d",refreshData:"\u91cd\u65b0\u6574\u7406\u8cc7\u6599",date:"\u65e5\u671f",number:"\u6578\u5b57",
+string:"\u5b57\u4e32"});

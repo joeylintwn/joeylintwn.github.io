@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Fitxers adjunts",attachmentDetails:"Detalls del fitxer adjunt",add:"Afegeix",update:"Actualitza",cancel:"Cancel\u00b7la",noTitle:"Sense t\u00edtol","delete":"Suprimeix",selectFile:"Seleccioneu el fitxer",changeFile:"Canvia el fitxer",noAttachments:"No hi ha fitxers adjunts",addErrorMessage:"S'ha produ\u00eft un error en afegir el fitxer adjunt. Torneu-ho a provar.",deleteErrorMessage:"S'ha produ\u00eft un error en eliminar el fitxer adjunt. Torneu-ho a provar.",updateErrorMessage:"S'ha produ\u00eft un error en actualitzar el fitxer adjunt. Torneu-ho a provar."});

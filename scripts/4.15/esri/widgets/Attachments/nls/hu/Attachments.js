@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Csatolm\u00e1nyok",attachmentDetails:"Csatolm\u00e1ny adatai",add:"Hozz\u00e1ad\u00e1s",update:"Friss\u00edt\u00e9s",cancel:"M\u00e9gse",noTitle:"C\u00edm n\u00e9lk\u00fcl","delete":"T\u00f6rl\u00e9s",selectFile:"F\u00e1jl kiv\u00e1laszt\u00e1sa",changeFile:"F\u00e1jl m\u00f3dos\u00edt\u00e1sa",noAttachments:"Nincsenek csatolm\u00e1nyok",addErrorMessage:"Hiba t\u00f6rt\u00e9nt a csatolm\u00e1ny hozz\u00e1ad\u00e1sakor. Pr\u00f3b\u00e1lja meg \u00fajra.",deleteErrorMessage:"Hiba t\u00f6rt\u00e9nt a csatolm\u00e1ny t\u00f6rl\u00e9sekor. Pr\u00f3b\u00e1lja meg \u00fajra.",
+updateErrorMessage:"Hiba a csatolm\u00e1ny friss\u00edt\u00e9sekor. Pr\u00f3b\u00e1lja meg \u00fajra."});

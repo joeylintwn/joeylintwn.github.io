@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Bilagor",attachmentDetails:"Bilagans information",add:"L\u00e4gg till",update:"Uppdatera",cancel:"Avbryt",noTitle:"Namnl\u00f6s","delete":"Ta bort",selectFile:"V\u00e4lj fil",changeFile:"\u00c4ndra fil",noAttachments:"Inga bilagor",addErrorMessage:"Fel n\u00e4r bilagan lades till. F\u00f6rs\u00f6k igen.",deleteErrorMessage:"Fel n\u00e4r bilagan togs bort. F\u00f6rs\u00f6k igen.",updateErrorMessage:"Fel n\u00e4r bilagan uppdaterades. F\u00f6rs\u00f6k igen."});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Detay tablosu",header:"{title} (Detaylar: {count}, Se\u00e7ilen: {selected})",untitled:"Ads\u0131z",relatedRecords:"\u0130lgili kay\u0131tlar",attachments:"Eklentiler",loading:"Y\u00fckleniyor...",syncing:"Senkronize Ediliyor...",errorData:"Veri hatas\u0131.",errorLayer:"Katman hatas\u0131.",errorUpdateFailed:"G\u00fcncelleme ba\u015far\u0131s\u0131z.",errorDomainType:"Domain t\u00fcr\u00fc desteklenmiyor.",show:"G\u00f6ster",hide:"Gizle",options:"Se\u00e7enekler",allColums:"T\u00fcm s\u00fctunlar",
+sortAsc:"Artan s\u0131ralama",sortDesc:"Azalan s\u0131ralama",toggleColumns:"S\u00fctunlar\u0131 g\u00f6ster/gizle",clearSelection:"Se\u00e7imi temizle",centerOnSelection:"Se\u00e7imi ortala",showSelected:"Se\u00e7ilen kay\u0131tlar\u0131 g\u00f6ster",filter:"Filtrele",addField:"Alan ekle",refreshData:"Verileri yenile",date:"Tarih",number:"Say\u0131",string:"Dize"});

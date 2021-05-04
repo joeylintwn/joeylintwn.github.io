@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Element\u0173 lentel\u0117",header:"{title} (elementai: {count}, pasirinkti: {selected})",untitled:"Bevardis",relatedRecords:"Susij\u0119 \u012fra\u0161ai",attachments:"Priedai",loading:"\u012ekeliama...",syncing:"Sinchronizuojama...",errorData:"Duomen\u0173 klaida.",errorLayer:"Sluoksnio klaida.",errorUpdateFailed:"Nepavyko atnaujinti.",errorDomainType:"Nepalaikomas domeno tipas.",show:"Rodyti",hide:"Sl\u0117pti",options:"Parinktys",allColums:"Visi stulpeliai",sortAsc:"R\u016b\u0161iuoti did\u0117jimo tvarka",
+sortDesc:"R\u016b\u0161iuoti ma\u017e\u0117jimo tvarka",toggleColumns:"Rodyti / sl\u0117pti stulpelius",clearSelection:"Valyti i\u0161rank\u0105",centerOnSelection:"Centruoti pa\u017eym\u0117tus",showSelected:"Rodyti pasirinktus \u012fra\u0161us",filter:"Filtruoti",addField:"Prid\u0117ti lauk\u0105",refreshData:"Atnaujinti duomenis",date:"Data",number:"Skai\u010dius",string:"Eilut\u0117"});

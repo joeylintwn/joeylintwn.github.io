@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Table d\u2019entit\u00e9s",header:"{title} (Entit\u00e9s\u00a0: {count}, S\u00e9lectionn\u00e9es\u00a0: {selected})",untitled:"Sans titre",relatedRecords:"Enregistrements associ\u00e9s",attachments:"Pi\u00e8ces jointes",loading:"Chargement en cours...",syncing:"Synchronisation...",errorData:"Erreur li\u00e9e aux donn\u00e9es.",errorLayer:"Erreur li\u00e9e \u00e0 la couche.",errorUpdateFailed:"La mise \u00e0 jour a \u00e9chou\u00e9.",errorDomainType:"Le type de domaine n\u2019est pas pris en charge.",
+show:"Afficher",hide:"Masquer",options:"Options",allColums:"Toutes les colonnes",sortAsc:"Tri croissant",sortDesc:"Tri d\u00e9croissant",toggleColumns:"Afficher/masquer les colonnes",clearSelection:"Effacer la s\u00e9lection",centerOnSelection:"Centrer sur la s\u00e9lection",showSelected:"Afficher les enregistrements s\u00e9lectionn\u00e9s",filter:"Filtre",addField:"Ajouter un champ",refreshData:"Actualiser les donn\u00e9es",date:"Date",number:"Nombre",string:"Cha\u00eene"});

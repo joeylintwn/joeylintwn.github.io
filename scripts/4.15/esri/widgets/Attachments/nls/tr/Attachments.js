@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.15/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Eklentiler",attachmentDetails:"Eklentinin ayr\u0131nt\u0131lar\u0131",add:"Ekle",update:"G\u00fcncelle",cancel:"\u0130ptal",noTitle:"Ads\u0131z","delete":"Sil",selectFile:"Dosya se\u00e7in",changeFile:"Dosyay\u0131 de\u011fi\u015ftir",noAttachments:"Ek Yok",addErrorMessage:"Eklenti eklenirken bir hata olu\u015ftu. Yeniden deneyin.",deleteErrorMessage:"Eklenti silinirken bir hata olu\u015ftu. Yeniden deneyin.",updateErrorMessage:"Eklenti g\u00fcncellenirken bir hata olu\u015ftu. Yeniden deneyin."});

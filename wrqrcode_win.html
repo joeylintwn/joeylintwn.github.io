@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>宜蘭縣水資中心</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+                <div class="row w-100 mx-0">
+                    <div id="appendbody" class="col-lg-8 mx-auto">
+                        <div id="cardbody" class="card-body">
+                            <h4 style="position:absolute;left:0px; text-align:center;width:100%"><span id="mname">設備名稱</span><br><span id="mid">設備編號</span></h4>
+                            <!--
+                            <button type="submit" class="btn btn-primary mr-2" style="position:absolute;left:0px;" onclick="screenshot()">下載圖片</button>
+                            -->
+                            <div style="width:100%;text-align:center;margin-top:40px">
+                            <img id="qrccodeimg" src="" width="200" height="200">
+                            <br><img id="qrccodeimg1" src="" width="200" height="200">
+                                </div>
+                        </div>
+                    </div>
+           
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/jquery.loading.min.js"></script>
+    <script src="../../js/html2canvas.min.js"></script>
+    
+    <!-- endinject -->
+    <script type="text/javascript">
+        var imgobj = new Image();
+        imgobj.crossOrigin = "*"; 
+        document.getElementById('qrccodeimg').addEventListener("load", function () {
+
+            imgobj.src = $('#qrccodeimg').attr('src');
+            
+            console.log(imgobj.src);
+            imgobj.addEventListener("load", function () {
+                setTimeout(function(){
+                    console.log(456);
+                    var base64 = getBase64Image(imgobj);
+                    console.log(base64);
+                    $('#qrccodeimg1').attr('src',base64);
+                    document.getElementById('qrccodeimg1').addEventListener("load", function () {
+                        $('#qrccodeimg').hide();
+                    html2canvas(document.querySelector("#cardbody")).then(canvas => {
+                        document.getElementById("appendbody").appendChild(canvas)
+                        $('#cardbody').hide();
+                    });
+                    });
+
+                },100);
+             
+            }, false);
+            
+        }, false);
+
+        $(function () {
+           // alert('done')
+        }
+        );
+   
+
+        function screenshot() {
+       
+            html2canvas(document.querySelector("#cardbody")).then(canvas => {
+                document.body.appendChild(canvas)
+
+            });
+            /*
+            html2canvas(document.getElementById('qrccodeimg')).then(function (canvas) {
+                document.body.appendChild(canvas);
+                var a = document.createElement('a');
+                a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                a.download = 'image.jpg';
+                a.click();
+            });
+            */
+        }
+
+        function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var dataURL = canvas.toDataURL("image/png");  // 可選其他值 image/jpeg
+            return dataURL;
+        }
+    </script>
+    
+</body>
+</html>
