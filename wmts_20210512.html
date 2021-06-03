@@ -1,0 +1,274 @@
+﻿<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <!--
+  ArcGIS API for JavaScript, https://js.arcgis.com
+  For more information about the layers-wmts sample, read the original sample description at developers.arcgis.com.
+  https://developers.arcgis.com/javascript/latest/sample-code/layers-wmts/index.html
+  -->
+<title>WMTSLayer - 4.15</title>
+    <link
+      rel="stylesheet"
+      href="scripts/4.15/esri/themes/light/main.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .esri-layer-list {
+        width: 310px;
+      }
+       html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .esri-layer-list {
+            width: 310px;
+        }
+
+         .esri-editor .esri-item-list__scroller {
+            max-height: 350px;
+        }
+
+        #info {
+            background-color: black;
+            opacity: 0.75;
+            color: orange;
+            font-size: 18pt;
+            padding: 8px;
+            visibility: hidden;
+        }
+    </style>
+
+    <script src="scripts/4.15/dojo/dojo.js"></script>
+
+    <script>
+      var map, view;
+      var featureLayer;
+
+      require(["esri/geometry/Point"], function (Point) { /* code goes here */ });
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/WMTSLayer",
+        "esri/widgets/LayerList",
+        "esri/geometry/Point",
+        "esri/Graphic",
+      "esri/layers/GraphicsLayer",
+      "esri/views/draw/Draw",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/BasemapGallery",
+      "esri/widgets/CoordinateConversion",
+      "esri/widgets/Editor"
+      ], function (Map, MapView, WMTSLayer, LayerList, Point, Graphic, GraphicsLayer, Draw, FeatureLayer, BasemapGallery, CoordinateConversion, Editor) {
+        
+        
+        
+          featureLayer = new FeatureLayer({
+              url: "https://wragis.e-land.gov.tw/arcgis/rest/services/HDST/HDST_m/MapServer/3002"
+          });
+
+        
+         
+
+        layer = new WMTSLayer({
+           
+            url: "https://wmts.nlsc.gov.tw/wmts",
+            //url: "https://wmts.nlsc.gov.tw/97/wmts",
+          copyright:
+            "",
+          activeLayer: {
+              id: "EMAP15"
+              //id: "EMAP3826"
+          }
+        });
+
+     
+
+        var map = new Map({
+           basemap: "hybrid", //ARCGIS 衛星影像底圖
+            layers: [layer]
+        })
+
+      
+
+
+        var pt = new Point({
+            x: 326724.245,
+            y: 2736112.743,
+            spatialReference: {
+                wkid: 3826 //座標系統
+            }
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: pt,
+          extent: {
+              // autocasts as new Extent()
+              xmin: 121.7563,
+              ymin: 24.7021,
+              xmax: 121.6563,
+              ymax: 24.6021
+              
+          },
+          scale: 500000 //縮放比例，越小越近
+        });
+
+
+        view.when(function() {
+            view.extent = layer.fullExtent;
+
+            //圖層清單Widget
+          var layerList = new LayerList({
+            view: view
+          });
+      
+          view.ui.add(layerList, "bottom-left");
+
+            //底圖切換Widget
+            /*
+          var basemapGallery = new BasemapGallery({
+              view: view
+          });
+          view.ui.add(basemapGallery, {
+              position: "top-right"
+          });
+          */
+
+            //點位顯示Widget
+            /*
+          var ccWidget = new CoordinateConversion({
+              view: view
+          });
+
+          view.ui.add(ccWidget, "bottom-left");
+          */
+
+            //編輯Widget
+
+          const pointInfos = {
+              layer: featureLayer,
+              fieldConfig: [{
+                  name: "Name",
+                  label: "Name"
+              }]
+          };
+
+            console.log('--------------9999-------------')
+          const editor = new Editor({
+              view: view,
+              layerInfos: [{
+                  layer: featureLayer,
+                  fieldConfig: [pointInfos]
+              }
+              ],
+              // Set the snapping options for the Editor. By default, snapping is enabled. This can be toggled on/off using the CTRL key.
+              snappingOptions: {
+                  enabled: true,
+                  selfEnabled: true,
+                  featureEnabled: true,
+                  featureSources: [{
+                      layer: featureLayer
+                  }]
+              }
+
+          });
+          console.log(featureLayer);
+            // Add widget to top-right of the view
+          view.ui.add(editor, "top-right");
+          console.log('--------------1111-------------')
+
+        }).then(function (layerView) {
+            //view.on("pointer-move", eventHandler);
+            view.on("pointer-down", eventHandler);
+
+            function eventHandler(event) {
+                // only include graphics from hurricanesLayer in the hitTest
+                const opts = {
+                    include: featureLayer
+                }
+                // the hitTest() checks to see if any graphics from the hurricanesLayer
+                // intersect the x, y coordinates of the pointer
+                view.hitTest(event, opts).then(getGraphics);
+
+                function getGraphics(response) {
+                    // the topmost graphic from the hurricanesLayer
+                    // and display select attribute values from the
+                    // graphic to the user
+                    if (response.results.length) {
+                        console.log(response.results);
+                        const graphic = response.results[0].graphic;
+
+                      //點擊顯示屬性
+                        const name = graphic.attributes.Name;
+                        const town = graphic.attributes.Town;
+                        console.log(name);
+                        console.log(town);
+                    }
+                }
+            }
+
+           
+        });
+
+          //---顯示圖徵
+    
+      map.add(featureLayer);
+
+        var graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
+        var point = {
+            type: "point",
+            longitude: 326724.245,
+            latitude: 2706112.743
+        };
+
+        var simpleMarkerSymbol = {
+            type: "simple-marker",
+            color: [255, 0, 0],  // orange
+            outline: {
+                color: [255, 0, 0], // white
+                width: 1000
+            }
+        };
+
+        var pointGraphic = new Graphic({
+            geometry: pt,
+            symbol: simpleMarkerSymbol
+        });
+          //點位圖層
+       graphicsLayer.add(pointGraphic);
+
+
+      });
+
+
+    </script>
+  </head>
+  <body>
+      <div id="viewDiv"></div>
+      <div id="info">
+          <span id="name"></span> <br />
+          <span id="category"></span> <br />
+          <span id="wind"></span>
+      </div>
+  </body>
+</html>

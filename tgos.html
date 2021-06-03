@@ -1,0 +1,52 @@
+﻿<!--程式碼範例-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>TGOS MAP API for Web 地圖類型控制</title>
+    <script type="text/javascript" src="https://api.tgos.tw/TGOS_API/tgos?ver=2&AppID=yourID&APIKey=yourkey" charset="utf-8"></script>
+    <!--下載後請將yourID及yourkey取代為您申請所取得的APPID及APIKEY方能正確顯示服務-->
+    <script type="text/javascript">
+        var pMap;
+        function InitWnd() {
+            var pOMap = document.getElementById("TGMap");
+            pMap = new TGOS.TGOnlineMap(pOMap, TGOS.TGCoordSys.EPSG3826);
+        }
+        function setMapType(type) {
+            pMap.setMapTypeId(type); //設定目前地圖的地圖類型
+        }
+        function getMapType() {
+            alert("目前地圖類型為 " + pMap.getMapTypeId()); //取得目前地圖的地圖類型
+        }
+    </script>
+</head>
+<body style="margin: 0px" onload="InitWnd();">
+    <div id="TGMap" style="width: 720px; height: 480px; border: 1px solid #C0C0C0;">
+    </div>
+    <br />
+    <button onclick="setMapType('TGOSMAP');">
+        台灣通用電子地圖
+    </button>
+    <button onclick="setMapType('F2IMAGE');">
+        福衛二號衛星影像
+    </button>
+    <button onclick="setMapType('NLSCMAP');">
+        台灣通用電子地圖
+    </button>
+    <button onclick="setMapType('ROADMAP');">
+        福衛混和地圖
+    </button>
+    <button onclick="setMapType('HILLSHADE');">
+        地形暈渲圖
+    </button>
+    <button onclick="setMapType('HILLSHADEMIX');">
+        地形暈渲混和地圖
+    </button>
+    <button onclick="setMapType('SEGISMAP');">
+        統計區MAP
+    </button><br />
+    <button onclick="getMapType();">
+        取得地圖類型
+    </button>
+</body>
+</html>                            
