@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>宜蘭縣水資中心</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                          
+                            <h4></h4>
+                            
+                            <form class="pt-3" id="queryresult">
+                                
+                             
+
+
+
+                                <div class="mt-3">
+                                    <!--       <a class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" href="../../index.html">註冊</a>
+                -->
+                                    <button type="button" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" id="bt_reg">取得</button>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/jquery.loading.min.js"></script>
+    
+    <!-- endinject -->
+    <script type="text/javascript">
+     
+   
+        var dbobj = [{ "DisasterName": "測試", "DisasterYear": "2021", "EventCount": 0, "EventID": "637560009723076245", "Lat": 24.13248, "Lng": 120.646233, "PhotoDate": "2021-05-07T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "0", "Note": "", "Description": "手機拍攝，含EXIF資料", "County": "臺中市", "CreateTime": "2021-05-07T16:19:00" }, { "DisasterName": "測試", "DisasterYear": "2021", "EventCount": 0, "EventID": "637560011622634904", "Lat": 24.1324, "Lng": 120.648048, "PhotoDate": "2021-05-07T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "0", "Note": "", "Description": "手機拍攝，含EXIF資料, 同上一張特寫畫面，里未自動帶入", "County": "臺中市", "CreateTime": "2021-05-07T16:23:00" }, { "DisasterName": "測試", "DisasterYear": "2021", "EventCount": 0, "EventID": "637560026119525221", "Lat": 24.13241, "Lng": 120.648079, "PhotoDate": "2021-05-07T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "0", "Note": "", "Description": "去除EXIF資訊上傳-手動輸入縣市鄉鎮村里, 座標位置定位, 日期", "County": "臺中市", "CreateTime": "2021-05-07T16:48:00" }, { "DisasterName": "", "DisasterYear": "0", "EventCount": 0, "EventID": "637579916185395330", "Lat": 0.0, "Lng": 0.0, "PhotoDate": "2021-05-30T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "0", "Note": ",災害紀錄。綜合", "Description": "1999 - 48028906203", "County": "", "CreateTime": "2021-05-30T17:14:00" }, { "DisasterName": "桃芝颱風", "DisasterYear": "2001", "EventCount": 0, "EventID": "637579923751498927", "Lat": 0.0, "Lng": 0.0, "PhotoDate": "2021-05-30T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "0", "Note": ",災害紀錄。綜合", "Description": "三叉坑 - 48029133808", "County": "臺中市", "CreateTime": "2021-05-30T17:26:00" }, { "DisasterName": "重要地景", "DisasterYear": "2021", "EventCount": 0, "EventID": "637579923804141619", "Lat": 0.0, "Lng": 0.0, "PhotoDate": "2021-05-30T00:00:00", "MaxPhotoDate": "0001-01-01T00:00:00", "MinPhotoDate": "0001-01-01T00:00:00", "PhotoType": "6", "Note": ",災害紀錄。綜合", "Description": "九份地滑 (7) - 40940295733", "County": "新北市", "CreateTime": "2021-05-30T17:26:00" }]
+        var resultstr = '';
+        var appendstr = '';
+     $.each(dbobj, function (i, dbobjval) {
+         var keyar = Object.keys(dbobjval);
+         appendstr += '<div class="form-group"><b>================</b>';
+
+
+         appendstr += '<div class="card-body">第' + (i+1) + '筆</div>';
+
+         appendstr += '</div>'
+             $.each(keyar, function (j, keyar_val) {
+                 resultstr +=dbobjval[keyar_val] +'|'
+                 appendstr += '<div class="form-group"><b>' + keyar_val + '</b>';
+   
+
+                 appendstr += '<div class="card-body">' + dbobjval[keyar_val] + '</div>';
+
+                 appendstr += '</div>'
+             });
+             resultstr +=  '\r\n'
+            
+     });
+        
+     console.log(resultstr);
+     $('#queryresult').html(appendstr);
+    </script>
+    
+</body>
+</html>
+
+
+window.open(' https://wra.e-land.gov.tw/HDST/WaterAdmin/Check/CheckA?checkID=23348', '23348', config='height=300,width=300');
