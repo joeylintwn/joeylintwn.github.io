@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>永續工項整理器</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="main-panel w-100  documentation">
+        <div class="content-wrapper">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 doc-header">
+                <h1 class="text-primary mt-4">永續工項整理器</h1>
+              </div>
+            </div>
+            <div class="row doc-content">
+              <div class="col-12 col-md-10 offset-md-1">
+                <div class="col-12 grid-margin" id="doc-intro">
+                    
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- partial:../partials/_footer.html -->
+
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">永續發展工程學會</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"><i class="icon-heart"></i></span>
+          </div>
+        </footer>
+
+        <!-- partial -->
+      </div>
+    </div>
+  </div>
+<!-- plugins:js -->
+<script src="../vendors/base/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="../js/off-canvas.js"></script>
+<script src="../js/hoverable-collapse.js"></script>
+<script src="../js/template.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="utapp.js"></script> 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1542701942071586"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $('#bt_getqrcode').on('click', function (e) {
+            getqrcode($('#bt_getqrcode_val').val())
+        });
+
+        function getqrcode(gourl) {
+            let githubURL = new URL(location.href);
+            uuid = githubURL.searchParams.get('uuid');
+            var WA;
+            WA = window.open("https://chart.googleapis.com/chart?cht=qr&chs=128x128&chl=" + gourl, "", "toolbar=no,location=no,directories=no");
+        }
+    </script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
